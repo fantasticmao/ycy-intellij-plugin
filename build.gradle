@@ -1,0 +1,22 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.4.7'
+}
+
+group 'cn.fantasticmao.ycy'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+}
+
+intellij {
+    version '2018.3.5'
+    updateSinceUntilBuild false
+}

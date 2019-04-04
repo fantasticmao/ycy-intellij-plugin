@@ -1,0 +1,37 @@
+<idea-plugin url="https://www.jetbrains.com/idea">
+    <id>cn.fantasticmao.ycy.intellij.plugin</id>
+    <name>超越鼓励师</name>
+    <version>1.0</version>
+
+    <vendor email="fantasticmao@gmail.com" url="https://github.com/FantasticMao/ycy-intellij-plugin">FantasticMao</vendor>
+
+    <description><![CDATA[
+        写代码不再孤单，有杨超越与你同在！<br>
+        在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～<br>
+        <br>
+        Coding won't be lonely anymore with Chaoyue Yang's accompany!<br>
+        Chaoyue Yang will remind you when you work constantly for an hour at IntelliJ IDEA~
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li>Initial release</li>
+        </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <idea-version since-build="171.0"/>
+
+    <application-components>
+        <component>
+            <interface-class>
+                cn.fantasticmao.ycy.intellij.plugin.ui.YcyReminderComponent
+            </interface-class>
+
+            <implementation-class>
+                cn.fantasticmao.ycy.intellij.plugin.ui.YcyReminderComponentImpl
+            </implementation-class>
+        </component>
+    </application-components>
+</idea-plugin>
