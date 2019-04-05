@@ -12,7 +12,7 @@ public interface Config {
 
     String PLUGIN_NAME = "超越鼓励师";
 
-    String PLUGIN_VERSION = VersionEnum.V_1_0.version;
+    String PLUGIN_VERSION = VersionEnum.V_1_1.version;
 
     String JAR_NAME = "ycy-intellij-plugin-" + PLUGIN_VERSION + ".jar";
 }

@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'cn.fantasticmao.ycy'
-version '1.0'
+version '1.1'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

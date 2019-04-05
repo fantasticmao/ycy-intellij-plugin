@@ -1,7 +1,7 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>超越鼓励师</name>
-    <version>1.0</version>
+    <version>1.1</version>
 
     <vendor email="fantasticmao@gmail.com" url="https://github.com/FantasticMao/ycy-intellij-plugin">FantasticMao
     </vendor>
@@ -9,18 +9,23 @@
     <description>
         <![CDATA[
         写代码不再孤单，有杨超越与你同在！<br>
-        在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～
+        在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～<br>
+        <br>
+        Write code is no longer alone, Yang Chaoyue is being with you!<br>
+        Write code continuously for one hour in IntelliJ IDEA, there will be Yang Chaoyue to remind you to have a rest~
         ]]>
     </description>
 
     <change-notes>
         <![CDATA[
-        <h3>1.0</h3>
+        <h3>1.1</h3>
         <ul>
-            <li>Initial release</li>
+            <li>更新插件描述</li>
         </ul>
         ]]>
     </change-notes>
+
+    <depends>com.intellij.modules.lang</depends>
 
     <idea-version since-build="173.0"/>
 
