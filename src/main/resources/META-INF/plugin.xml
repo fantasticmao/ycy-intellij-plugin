@@ -1,16 +1,16 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
-    <name>超越鼓励师</name>
+    <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
     <version>1.0</version>
 
     <vendor email="fantasticmao@gmail.com" url="https://github.com/FantasticMao/ycy-intellij-plugin">FantasticMao</vendor>
 
     <description><![CDATA[
-        写代码不再孤单，有杨超越与你同在！<br>
-        在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～<br>
-        <br>
         Coding won't be lonely anymore with Chaoyue Yang's accompany!<br>
-        Chaoyue Yang will remind you when you work constantly for an hour at IntelliJ IDEA~
+        Chaoyue Yang will remind you to have a rest when you work constantly for an hour at IntelliJ IDEA~<br>
+        <br>
+        写代码不再孤单，有杨超越与你同在！<br>
+        在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～
     ]]></description>
 
     <change-notes><![CDATA[
