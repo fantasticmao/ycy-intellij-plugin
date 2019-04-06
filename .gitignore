@@ -3,6 +3,7 @@
 
 /build
 /out
+/javadoc
 
 *.iml
 *.ipr
