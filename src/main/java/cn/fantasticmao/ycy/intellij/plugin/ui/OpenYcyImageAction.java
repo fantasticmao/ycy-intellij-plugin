@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.net.URL;
 
 /**
- * OpenYcyImageAction
+ * 打开杨超越图片 Action
  *
  * @author maomao
  * @since 2019-04-04
@@ -32,30 +32,39 @@ class OpenYcyImageAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
+        // 1. 获取 IDEA 正在使用的 Project
         Project currentProject = event.getData(PlatformDataKeys.PROJECT);
         if (currentProject == null) {
             return;
         }
 
+        // 2. 获取即将用于展示的杨超越图片
         URL ycyImageUrl = YcyImageManager.getInstance().getImageUrl();
         VirtualFile ycyImage = VfsUtil.findFileByURL(ycyImageUrl);
         if (ycyImage == null) {
             return;
         }
 
+        // 3. 获取当前 Project 中，正在使用的 EditorWindow
         FileEditorManagerEx fileEditorManager = FileEditorManagerEx.getInstanceEx(currentProject);
         EditorWindow currentWindow = fileEditorManager.getCurrentWindow();
         if (currentWindow == null || currentWindow.getTabCount() == 0) {
+            // 3.1 如果没有打开 EditorWindow 或者 EditorWindow 打开的 tab 为零，那就直接打开杨超越图片
             fileEditorManager.openFile(ycyImage, true);
         } else {
+            // 4 获取下一个 EditorWindow
             EditorWindow nextWindow = fileEditorManager.getNextWindow(currentWindow);
-            if (nextWindow == currentWindow) { // 下一个 EditorWindow 还是它自己，表示 IDEA 只打开了一个 EditorWindow
+            if (nextWindow == currentWindow) {
+                // 4.1 如果下一个 EditorWindow 还是它自己，表示 IDEA 只打开了一个 EditorWindow
+                // 4.1 那则需要创建一个垂直分屏，再打开杨超越图片
                 currentWindow.split(SwingConstants.VERTICAL, true, ycyImage, true);
-            } else { // 从下一个 EditorWindow 打开 ycyImage
+            } else {
+                // 4.2 在下一个 EditorWindow 打开杨超越图片
                 fileEditorManager.openFileWithProviders(ycyImage, true, nextWindow);
             }
         }
 
+        // 5. 使「打开杨超越图片 Action」失效，避免重复点击的情况
         notification.expire();
     }
 
