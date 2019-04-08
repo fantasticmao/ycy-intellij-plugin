@@ -6,6 +6,7 @@ import com.intellij.notification.Notification;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
 import com.intellij.openapi.fileEditor.impl.EditorWindow;
 import com.intellij.openapi.project.Project;
@@ -23,6 +24,8 @@ import java.net.URL;
  * @since 2019-04-04
  */
 class OpenYcyImageAction extends AnAction {
+    private static final Logger LOG = Logger.getInstance(OpenYcyImageAction.class);
+
     private final Notification notification;
 
     OpenYcyImageAction(Notification notification) {
@@ -35,6 +38,7 @@ class OpenYcyImageAction extends AnAction {
         // 1. 获取 IDEA 正在使用的 Project
         Project currentProject = event.getData(PlatformDataKeys.PROJECT);
         if (currentProject == null) {
+            LOG.warn("no Project is active");
             return;
         }
 
@@ -42,6 +46,7 @@ class OpenYcyImageAction extends AnAction {
         URL ycyImageUrl = YcyImageManager.getInstance().getImageUrl();
         VirtualFile ycyImage = VfsUtil.findFileByURL(ycyImageUrl);
         if (ycyImage == null) {
+            LOG.error("ycyImage cannot be null, URL: " + ycyImageUrl.toString());
             return;
         }
 
@@ -63,9 +68,11 @@ class OpenYcyImageAction extends AnAction {
                 fileEditorManager.openFileWithProviders(ycyImage, true, nextWindow);
             }
         }
+        LOG.info("ycyImage has been opened");
 
         // 5. 使「打开杨超越图片 Action」失效，避免重复点击的情况
         notification.expire();
+        LOG.info("ycyImage has been expired");
     }
 
 }
