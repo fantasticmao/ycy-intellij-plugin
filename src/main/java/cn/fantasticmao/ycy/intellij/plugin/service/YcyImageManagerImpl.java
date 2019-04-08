@@ -9,8 +9,6 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -71,9 +69,8 @@ public class YcyImageManagerImpl implements YcyImageManager {
             throw new NullPointerException("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
         }
         File pluginPath = plugin.getPath();
-        Path pluginJarPath = Paths.get(pluginPath.toURI()).resolve("lib").resolve(Config.JAR_NAME);
         try {
-            return new URL("jar:" + pluginJarPath.toUri().toString() + "!/images/超越妹妹.jpg");
+            return new URL("jar:file:" + pluginPath.getPath() + "!/images/超越妹妹.jpg");
         } catch (MalformedURLException e) {
             throw new RuntimeException("fail to find the default imageUrl", e);
         }
