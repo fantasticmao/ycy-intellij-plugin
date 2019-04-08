@@ -3,6 +3,7 @@ package cn.fantasticmao.ycy.intellij.plugin.service;
 import cn.fantasticmao.ycy.intellij.plugin.common.Config;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 
 import javax.annotation.Nonnull;
@@ -22,6 +23,8 @@ import java.util.List;
  * @since 2019-04-05
  */
 public class YcyImageManagerImpl implements YcyImageManager {
+    private static final Logger LOG = Logger.getInstance(YcyImageManagerImpl.class);
+
     /**
      * 默认图片
      */
@@ -68,6 +71,7 @@ public class YcyImageManagerImpl implements YcyImageManager {
         PluginId pluginId = PluginId.getId(Config.PLUGIN_ID);
         IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
         if (plugin == null) {
+            LOG.error("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
             throw new NullPointerException("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
         }
         File pluginPath = plugin.getPath();
@@ -75,6 +79,7 @@ public class YcyImageManagerImpl implements YcyImageManager {
         try {
             return new URL("jar:" + pluginJarPath.toUri().toString() + "!/images/超越妹妹.jpg");
         } catch (MalformedURLException e) {
+            LOG.error("fail to find the default imageUrl", e);
             throw new RuntimeException("fail to find the default imageUrl", e);
         }
     }

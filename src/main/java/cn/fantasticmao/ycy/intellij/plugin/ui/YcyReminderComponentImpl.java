@@ -5,6 +5,7 @@ import cn.fantasticmao.ycy.intellij.plugin.common.NotifyConfig;
 import com.intellij.concurrency.JobScheduler;
 import com.intellij.notification.*;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +16,13 @@ import java.util.concurrent.TimeUnit;
  * @since 2019-04-03
  */
 public class YcyReminderComponentImpl implements YcyReminderComponent {
+    private static final Logger LOG = Logger.getInstance(YcyReminderComponentImpl.class);
 
     public YcyReminderComponentImpl() {
         ApplicationManager.getApplication().invokeLater(() ->
                 JobScheduler.getScheduler().scheduleWithFixedDelay(new Reminder(),
                         50, 60, TimeUnit.MINUTES));
+        LOG.info("=== start scheduled task Programmer Motivator: Chaoyue Yang(超越鼓励师) ===");
     }
 
     /**
