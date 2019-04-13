@@ -36,4 +36,8 @@
             </implementation-class>
         </component>
     </application-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable groupId="other" instance="cn.fantasticmao.ycy.intellij.plugin.ui.config.PluginSettingPage"/>
+    </extensions>
 </idea-plugin>
