@@ -35,6 +35,7 @@ class OpenYcyImageAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
+        // FIXME 2017.1 版本无法打开图片问题 https://github.com/FantasticMao/ycy-intellij-plugin/issues/9
         // 1. 获取 IDEA 正在使用的 Project
         Project currentProject = event.getData(PlatformDataKeys.PROJECT);
         if (currentProject == null) {
