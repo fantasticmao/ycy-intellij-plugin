@@ -1,6 +1,6 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
-import com.intellij.util.xmlb.annotations.Attribute;
+import com.intellij.util.xmlb.annotations.OptionTag;
 
 import java.util.Objects;
 
@@ -8,25 +8,26 @@ import java.util.Objects;
  * 配置状态类
  *
  * @author maomao
+ * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
  * @since 2019-04-14
  */
 public class ConfigState {
-    @Attribute("remindType")
+    @OptionTag
     private Integer remindType;
-    @Attribute("remindImagePath")
+    @OptionTag
     private String remindImagePath;
-    @Attribute("periodMinutes")
+    @OptionTag
     private Integer periodMinutes;
-    @Attribute("notifyTitle")
+    @OptionTag
     private String notifyTitle;
-    @Attribute("notifyContent")
+    @OptionTag
     private String notifyContent;
-    @Attribute("notifyAction")
+    @OptionTag
     private String notifyAction;
 
     public enum RemindTypeEnum {
-        DIRECT(1, "打开图片"),
-        INDIRECT(2, "消息通知 -> 打开图片");
+        DIRECT(0, "打开图片"),
+        INDIRECT(1, "消息通知 -> 打开图片");
 
         public final int index;
         public final String description;
@@ -37,6 +38,15 @@ public class ConfigState {
         }
     }
 
+    /**
+     * 默认配置对象
+     *
+     * <p>在 {@link ConfigService#setState(ConfigState)} 时，新配置对象会与默认配置对象作比较，
+     * IDEA 会保存有差异的字段至 {@link ConfigServiceImpl} 指定的 {@code ycyReminder.xml} 中</p>
+     *
+     * @see ConfigService#getState()
+     * @see ConfigService#setState(ConfigState)
+     */
     public ConfigState() {
         // 第一次开启插件时，应该使用默认配置
         this.remindType = DefaultConfig.REMIND_TYPE;

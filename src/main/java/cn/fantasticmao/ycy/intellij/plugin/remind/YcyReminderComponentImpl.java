@@ -1,7 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.config.DefaultConfig;
 import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
+import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
+import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.concurrency.JobScheduler;
 import com.intellij.notification.*;
 import com.intellij.openapi.application.ApplicationManager;
@@ -19,9 +20,12 @@ public class YcyReminderComponentImpl implements YcyReminderComponent {
     private static final Logger LOG = Logger.getInstance(YcyReminderComponentImpl.class);
 
     public YcyReminderComponentImpl() {
-        ApplicationManager.getApplication().invokeLater(() ->
-                JobScheduler.getScheduler().scheduleWithFixedDelay(new Reminder(),
-                        50, 60, TimeUnit.MINUTES));
+        ApplicationManager.getApplication().invokeLater(() -> {
+            ConfigState configState = ConfigService.getInstance().getState();
+
+            JobScheduler.getScheduler().scheduleWithFixedDelay(new Reminder(),
+                    configState.getPeriodMinutes(), configState.getPeriodMinutes(), TimeUnit.MINUTES);
+        });
         LOG.info("=== start scheduled task Programmer Motivator: Chaoyue Yang(超越鼓励师) ===");
     }
 
@@ -38,10 +42,13 @@ public class YcyReminderComponentImpl implements YcyReminderComponent {
 
         @Override
         public void run() {
-            Notification notification = notificationGroup.createNotification(DefaultConfig.NOTIFY_TITLE,
-                    DefaultConfig.NOTIFY_CONTENT, NotificationType.INFORMATION, null);
-            OpenYcyImageAction openYcyImageAction = new OpenYcyImageAction(notification);
+            ConfigState configState = ConfigService.getInstance().getState();
+
+            Notification notification = notificationGroup.createNotification(configState.getNotifyTitle(),
+                    configState.getNotifyContent(), NotificationType.INFORMATION, null);
+            OpenYcyImageAction openYcyImageAction = new OpenYcyImageAction(configState.getNotifyAction(), notification);
             notification.addAction(openYcyImageAction);
+
             Notifications.Bus.notify(notification);
         }
     }

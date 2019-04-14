@@ -1,8 +1,6 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
@@ -19,8 +17,10 @@ import javax.swing.*;
  * @since 2019-04-12
  */
 public class PluginSettingPage implements SearchableConfigurable {
+    /**
+     * 插件设置页面的表单对象
+     */
     private PluginSettingForm form;
-    private ConfigService configService = ServiceManager.getService(ConfigService.class);
 
     @NotNull
     @Override
@@ -37,59 +37,69 @@ public class PluginSettingPage implements SearchableConfigurable {
     @Nullable
     @Override
     public String getHelpTopic() {
-        // called when "show help content" button is pressed
-        System.out.println("getHelpTopic");
         return null;
     }
 
+    /**
+     * 创建插件设置页面
+     *
+     * @return 由 {@code UI Designer} 生成的 {@link PluginSettingForm} 页面
+     */
     @Nullable
     @Override
     public JComponent createComponent() {
         if (this.form == null) {
             this.form = new PluginSettingForm();
-            ConfigState configState = configService.getState();
-            if (configState == null) {
-                reset();
-            } else {
-                this.form.setRemindTypeOption(configState.getRemindType());
-                this.form.setRemindImagePath(configState.getRemindImagePath());
-                this.form.setPeriodMinutes(configState.getPeriodMinutes());
-                this.form.setNotifyTitle(configState.getNotifyTitle());
-                this.form.setNotifyContent(configState.getNotifyContent());
-                this.form.setNotifyAction(configState.getNotifyAction());
-            }
         }
         return this.form.getPluginSettingPanel();
     }
 
+    /**
+     * 是否将设置页面的 "Apply" 按钮设置为可点击
+     *
+     * @return true 是；false 否
+     */
     @Override
     public boolean isModified() {
-        // enable/disable "apply" button in the Setting dialog
         return this.form != null;
     }
 
+    /**
+     * 用户点击 "Apply" 或 "OK" 按钮之后，会调用此方法
+     */
     @Override
     public void apply() throws ConfigurationException {
-        // called when "apply" or "ok" button is pressed
-        if (this.form != null) {
-            System.out.println("apply");
-            PropertiesComponent.getInstance().setValue("", "");
-        }
+        if (this.form == null) return;
+
+        ConfigState configState = ConfigService.getInstance().getState();
+        configState.setRemindType(this.form.getRemindTypeOption());
+        configState.setRemindImagePath(this.form.getRemindImagePath());
+        configState.setPeriodMinutes(this.form.getPeriodMinutes());
+        configState.setNotifyTitle(this.form.getNotifyTitle());
+        configState.setNotifyContent(this.form.getNotifyContent());
+        configState.setNotifyAction(this.form.getNotifyAction());
+        ConfigService.getInstance().setState(configState);
     }
 
+    /**
+     * IDEA 初始化设置页面或者用户点击 "Reset" 按钮之后，会调用此方法
+     */
     @Override
     public void reset() {
-        // called when "reset" button is pressed
-        if (this.form != null) {
-            this.form.setRemindTypeOption(DefaultConfig.REMIND_TYPE);
-            this.form.setRemindImagePath(DefaultConfig.REMIND_IMAGE_PATH);
-            this.form.setPeriodMinutes(DefaultConfig.PERIOD_MINUTES);
-            this.form.setNotifyTitle(DefaultConfig.NOTIFY_TITLE);
-            this.form.setNotifyContent(DefaultConfig.NOTIFY_CONTENT);
-            this.form.setNotifyAction(DefaultConfig.NOTIFY_ACTION);
-        }
+        if (form == null) return;
+
+        ConfigState configState = ConfigService.getInstance().getState();
+        this.form.setRemindTypeOption(configState.getRemindType());
+        this.form.setRemindImagePath(configState.getRemindImagePath());
+        this.form.setPeriodMinutes(configState.getPeriodMinutes());
+        this.form.setNotifyTitle(configState.getNotifyTitle());
+        this.form.setNotifyContent(configState.getNotifyContent());
+        this.form.setNotifyAction(configState.getNotifyAction());
     }
 
+    /**
+     * IDEA 销毁设置页面后，会调用此方法
+     */
     @Override
     public void disposeUIResources() {
         this.form = null;

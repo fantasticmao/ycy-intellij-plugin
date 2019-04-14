@@ -34,21 +34,29 @@ public class PluginSettingForm {
         this.remindTypeOptions.addItem(ConfigState.RemindTypeEnum.INDIRECT.description);
     }
 
+    public int getRemindTypeOption() {
+        return this.remindTypeOptions.getSelectedIndex();
+    }
+
     /**
      * 设置提醒方式
      *
      * <p>optionIndex 参数值：</p>
-     * <ol>
-     * <li>消息通知 -> 打开图片</li>
-     * <li>打开图片</li>
-     * </ol>
+     * <ul>
+     * <li>0. 消息通知 -> 打开图片</li>
+     * <li>1. 打开图片</li>
+     * </ul>
      *
-     * @param optionIndex 1 或 2
+     * @param optionIndex 0 或 1
      */
     public void setRemindTypeOption(int optionIndex) {
-        optionIndex = Math.max(optionIndex, 1);
-        optionIndex = Math.min(optionIndex, 2);
-        this.remindTypeOptions.setSelectedIndex(optionIndex - 1);
+        optionIndex = Math.max(optionIndex, 0);
+        optionIndex = Math.min(optionIndex, 1);
+        this.remindTypeOptions.setSelectedIndex(optionIndex);
+    }
+
+    public String getRemindImagePath() {
+        return this.remindImagePath.getText();
     }
 
     /**
@@ -56,6 +64,14 @@ public class PluginSettingForm {
      */
     public void setRemindImagePath(String imagePath) {
         this.remindImagePath.setText(imagePath);
+    }
+
+    public int getPeriodMinutes() {
+        try {
+            return Integer.parseInt(this.periodMinutes.getText());
+        } catch (NumberFormatException e) {
+            return DefaultConfig.PERIOD_MINUTES;
+        }
     }
 
     /**
@@ -67,6 +83,10 @@ public class PluginSettingForm {
         this.periodMinutes.setText(String.valueOf(periodMinutes));
     }
 
+    public String getNotifyTitle() {
+        return this.notifyTitle.getText();
+    }
+
     /**
      * 设置通知文案的标题
      */
@@ -74,11 +94,19 @@ public class PluginSettingForm {
         this.notifyTitle.setText(notifyTitle);
     }
 
+    public String getNotifyContent() {
+        return this.notifyContent.getText();
+    }
+
     /**
      * 设置通知文案的内容
      */
     public void setNotifyContent(String notifyContent) {
         this.notifyContent.setText(notifyContent);
+    }
+
+    public String getNotifyAction() {
+        return this.notifyAction.getText();
     }
 
     /**
