@@ -1,6 +1,6 @@
-package cn.fantasticmao.ycy.intellij.plugin.service;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.common.Config;
+import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.diagnostic.Logger;
@@ -15,8 +15,6 @@ import java.util.List;
 /**
  * {@link YcyImageManager} 实现类
  *
- * <p>TODO 支持图片的可配置功能</p>
- *
  * @author maomao
  * @since 2019-04-05
  */
@@ -30,6 +28,8 @@ public class YcyImageManagerImpl implements YcyImageManager {
 
     /**
      * 可配置的图片列表
+     *
+     * <p>TODO 支持图片的可配置功能</p>
      */
     private List<URL> imageUrlList;
 
@@ -66,11 +66,11 @@ public class YcyImageManagerImpl implements YcyImageManager {
      * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/超越妹妹.jpg"</p>
      */
     private URL getDefaultUrl() {
-        PluginId pluginId = PluginId.getId(Config.PLUGIN_ID);
+        PluginId pluginId = PluginId.getId(GlobalConfig.PLUGIN_ID);
         IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
         if (plugin == null) {
-            LOG.error("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
-            throw new NullPointerException("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
+            LOG.error("fail to get plugin \"" + GlobalConfig.PLUGIN_ID + "\"");
+            throw new NullPointerException("fail to get plugin \"" + GlobalConfig.PLUGIN_ID + "\"");
         }
         File pluginPath = plugin.getPath();
         try {

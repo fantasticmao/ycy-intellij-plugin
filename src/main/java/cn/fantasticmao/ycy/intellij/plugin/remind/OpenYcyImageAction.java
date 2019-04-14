@@ -1,7 +1,6 @@
-package cn.fantasticmao.ycy.intellij.plugin.ui;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.common.NotifyConfig;
-import cn.fantasticmao.ycy.intellij.plugin.service.YcyImageManager;
+import cn.fantasticmao.ycy.intellij.plugin.config.DefaultConfig;
 import com.intellij.notification.Notification;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -29,7 +28,7 @@ class OpenYcyImageAction extends AnAction {
     private final Notification notification;
 
     OpenYcyImageAction(Notification notification) {
-        super(NotifyConfig.getInstance().getActionText());
+        super(DefaultConfig.NOTIFY_ACTION);
         this.notification = notification;
     }
 

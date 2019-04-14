@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="cn.fantasticmao.ycy.intellij.plugin.ui.config.PluginSettingForm">
-  <grid id="27dc6" binding="pluginSettingPanel" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="cn.fantasticmao.ycy.intellij.plugin.config.PluginSettingForm">
+  <grid id="27dc6" binding="pluginSettingPanel" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="250"/>
@@ -17,18 +17,12 @@
           <text value="提醒方式："/>
         </properties>
       </component>
-      <component id="43e46" class="javax.swing.JComboBox" binding="reminderOptions">
+      <component id="43e46" class="javax.swing.JComboBox" binding="remindTypeOptions" custom-create="true">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="250" height="-1"/>
+            <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
-        <properties>
-          <model>
-            <item value="消息通知 -&gt; 打开图片"/>
-            <item value="打开图片"/>
-          </model>
-        </properties>
       </component>
       <component id="b691c" class="javax.swing.JLabel">
         <constraints>
@@ -42,11 +36,11 @@
       <component id="b9ffe" class="javax.swing.JTextField" binding="remindImagePath">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="250" height="-1"/>
+            <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
         <properties>
-          <toolTipText value="本地图片的绝对地址"/>
+          <toolTipText value="本地图片的绝对路径"/>
         </properties>
       </component>
       <component id="f4ce1" class="javax.swing.JLabel">
@@ -58,10 +52,10 @@
           <text value="间隔时间（分钟）："/>
         </properties>
       </component>
-      <component id="79da7" class="javax.swing.JSpinner" binding="periodMinutes">
+      <component id="79da7" class="javax.swing.JTextField" binding="periodMinutes">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="250" height="-1"/>
+            <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
         <properties/>
@@ -78,7 +72,7 @@
       <component id="97bda" class="javax.swing.JTextField" binding="notifyTitle">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="250" height="-1"/>
+            <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
         <properties/>
@@ -95,7 +89,7 @@
       <component id="729df" class="javax.swing.JTextField" binding="notifyContent">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="250" height="-1"/>
+            <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
         <properties/>
@@ -112,7 +106,7 @@
       <component id="ca864" class="javax.swing.JTextField" binding="notifyAction">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="250" height="-1"/>
+            <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
         <properties/>
@@ -122,6 +116,11 @@
           <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
+      <hspacer id="ebe8a">
+        <constraints>
+          <grid row="0" column="2" row-span="6" col-span="1" vsize-policy="1" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
     </children>
   </grid>
 </form>

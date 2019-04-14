@@ -27,17 +27,16 @@
 
     <application-components>
         <component>
-            <interface-class>
-                cn.fantasticmao.ycy.intellij.plugin.ui.YcyReminderComponent
-            </interface-class>
+            <interface-class>cn.fantasticmao.ycy.intellij.plugin.remind.YcyReminderComponent</interface-class>
 
-            <implementation-class>
-                cn.fantasticmao.ycy.intellij.plugin.ui.YcyReminderComponentImpl
-            </implementation-class>
+            <implementation-class>cn.fantasticmao.ycy.intellij.plugin.remind.YcyReminderComponentImpl</implementation-class>
         </component>
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable groupId="other" instance="cn.fantasticmao.ycy.intellij.plugin.ui.config.PluginSettingPage"/>
+        <applicationConfigurable groupId="other" instance="cn.fantasticmao.ycy.intellij.plugin.config.PluginSettingPage"/>
+
+        <applicationService serviceInterface="cn.fantasticmao.ycy.intellij.plugin.config.ConfigService"
+                            serviceImplementation="cn.fantasticmao.ycy.intellij.plugin.config.ConfigServiceImpl"/>
     </extensions>
 </idea-plugin>

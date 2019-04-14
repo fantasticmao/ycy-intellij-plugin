@@ -1,4 +1,4 @@
-package cn.fantasticmao.ycy.intellij.plugin.ui;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
 /**
  * 杨超越定时提醒 Component

@@ -1,7 +1,7 @@
-package cn.fantasticmao.ycy.intellij.plugin.ui;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.common.Config;
-import cn.fantasticmao.ycy.intellij.plugin.common.NotifyConfig;
+import cn.fantasticmao.ycy.intellij.plugin.config.DefaultConfig;
+import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
 import com.intellij.concurrency.JobScheduler;
 import com.intellij.notification.*;
 import com.intellij.openapi.application.ApplicationManager;
@@ -32,15 +32,14 @@ public class YcyReminderComponentImpl implements YcyReminderComponent {
         private NotificationGroup notificationGroup;
 
         private Reminder() {
-            this.notificationGroup = new NotificationGroup("Plugins " + Config.PLUGIN_NAME,
+            this.notificationGroup = new NotificationGroup("Plugins " + GlobalConfig.PLUGIN_NAME,
                     NotificationDisplayType.STICKY_BALLOON, true);
         }
 
         @Override
         public void run() {
-            NotifyConfig notifyConfig = NotifyConfig.getInstance();
-            Notification notification = notificationGroup.createNotification(notifyConfig.getTitle(),
-                    notifyConfig.getContent(), NotificationType.INFORMATION, null);
+            Notification notification = notificationGroup.createNotification(DefaultConfig.NOTIFY_TITLE,
+                    DefaultConfig.NOTIFY_CONTENT, NotificationType.INFORMATION, null);
             OpenYcyImageAction openYcyImageAction = new OpenYcyImageAction(notification);
             notification.addAction(openYcyImageAction);
             Notifications.Bus.notify(notification);

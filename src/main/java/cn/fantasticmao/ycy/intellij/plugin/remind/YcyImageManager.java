@@ -1,4 +1,4 @@
-package cn.fantasticmao.ycy.intellij.plugin.service;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
 import javax.annotation.Nonnull;
 import java.net.URL;
