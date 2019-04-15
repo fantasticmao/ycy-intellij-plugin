@@ -5,7 +5,9 @@ import com.intellij.openapi.components.ServiceManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 配置 Service
+ * 配置参数持久化服务
+ *
+ * <p>依赖于 Intellij Platform 的 {@link PersistentStateComponent} 组件实现</p>
  *
  * @author maomao
  * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
@@ -13,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ConfigService extends PersistentStateComponent<ConfigState> {
 
+    /**
+     * 由 Intellij Platform 保证的单例模式
+     */
     static ConfigService getInstance() {
         return ServiceManager.getService(ConfigService.class);
     }

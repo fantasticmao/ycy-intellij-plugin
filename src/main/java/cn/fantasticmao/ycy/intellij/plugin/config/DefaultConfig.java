@@ -1,6 +1,6 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
-import cn.fantasticmao.ycy.intellij.plugin.remind.YcyImageManager;
+import cn.fantasticmao.ycy.intellij.plugin.remind.ImageManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +20,7 @@ public interface DefaultConfig {
     /**
      * 默认提醒图片的绝对路径
      */
-    String REMIND_IMAGE_PATH = YcyImageManager.getInstance().getImageUrl().getPath();
+    String REMIND_IMAGE_PATH = ImageManager.getInstance().getImageUrl().getPath();
 
     /**
      * 默认提醒间隔时间

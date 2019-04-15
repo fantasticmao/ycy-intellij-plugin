@@ -13,13 +13,15 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * {@link YcyImageManager} 实现类
+ * {@inheritDoc}
+ *
+ * <p>{@link ImageManager} 实现类</p>
  *
  * @author maomao
  * @since 2019-04-05
  */
-public class YcyImageManagerImpl implements YcyImageManager {
-    private static final Logger LOG = Logger.getInstance(YcyImageManagerImpl.class);
+public class ImageManagerImpl implements ImageManager {
+    private static final Logger LOG = Logger.getInstance(ImageManagerImpl.class);
 
     /**
      * 默认图片
@@ -36,19 +38,19 @@ public class YcyImageManagerImpl implements YcyImageManager {
     /**
      * 单例模式
      */
-    private static YcyImageManagerImpl instance;
+    private static ImageManagerImpl instance;
 
-    private YcyImageManagerImpl() {
+    private ImageManagerImpl() {
         this.defaultImageUrl = this.getDefaultUrl();
     }
 
     /**
      * 单例模式
      *
-     * @return {@link YcyImageManagerImpl}
+     * @return {@link ImageManagerImpl}
      */
-    static YcyImageManagerImpl getInstance() {
-        return instance != null ? instance : (instance = new YcyImageManagerImpl());
+    static ImageManagerImpl getInstance() {
+        return instance != null ? instance : (instance = new ImageManagerImpl());
     }
 
     /**
@@ -61,7 +63,7 @@ public class YcyImageManagerImpl implements YcyImageManager {
     }
 
     /**
-     * 从插件 jar 中获取默认的杨超越图片
+     * 从插件 jar 中获取默认的图片
      *
      * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/超越妹妹.jpg"</p>
      */

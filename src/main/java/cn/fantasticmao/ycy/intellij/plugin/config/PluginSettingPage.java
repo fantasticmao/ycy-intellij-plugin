@@ -1,6 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
+import cn.fantasticmao.ycy.intellij.plugin.remind.ImageRemindTask;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
@@ -22,18 +23,27 @@ public class PluginSettingPage implements SearchableConfigurable {
      */
     private PluginSettingForm form;
 
+    /**
+     * {@inheritDoc}
+     */
     @NotNull
     @Override
     public String getId() {
         return GlobalConfig.PLUGIN_ID;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
         return GlobalConfig.PLUGIN_NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Nullable
     @Override
     public String getHelpTopic() {
@@ -79,6 +89,7 @@ public class PluginSettingPage implements SearchableConfigurable {
         configState.setNotifyContent(this.form.getNotifyContent());
         configState.setNotifyAction(this.form.getNotifyAction());
         ConfigService.getInstance().setState(configState);
+        ImageRemindTask.refresh();
     }
 
     /**

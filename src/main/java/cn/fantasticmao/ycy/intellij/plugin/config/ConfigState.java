@@ -25,6 +25,9 @@ public class ConfigState {
     @OptionTag
     private String notifyAction;
 
+    /**
+     * 提醒方式枚举类
+     */
     public enum RemindTypeEnum {
         DIRECT(0, "打开图片"),
         INDIRECT(1, "消息通知 -> 打开图片");
