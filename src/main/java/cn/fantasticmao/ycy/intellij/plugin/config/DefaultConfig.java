@@ -21,7 +21,7 @@ public interface DefaultConfig {
     /**
      * 默认提醒图片的绝对路径
      */
-    String REMIND_IMAGE_PATH = ImageManager.getInstance().getImageUrl().getPath();
+    String REMIND_IMAGE_URL = ImageManager.getInstance().getImageUrl().toString();
 
     /**
      * 默认提醒间隔时间

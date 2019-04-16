@@ -1,5 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin.remind;
 
+import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
+import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.notification.Notification;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -13,6 +15,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -52,7 +55,15 @@ class OpenImageAction extends AnAction {
         }
 
         // 2. 获取即将用于展示的图片
-        URL imageUrl = ImageManager.getInstance().getImageUrl();
+        ConfigState configState = ConfigService.getInstance().getState();
+        String imageUrlStr = configState.getRemindImageUrl();
+        URL imageUrl;
+        try {
+            imageUrl = new URL(imageUrlStr);
+        } catch (MalformedURLException e) {
+            LOG.error("parse image URL \"" + imageUrlStr + "\" error", e);
+            return;
+        }
         VirtualFile image = VfsUtil.findFileByURL(imageUrl);
         if (image == null) {
             LOG.error("image cannot be null, URL: " + imageUrl.toString());

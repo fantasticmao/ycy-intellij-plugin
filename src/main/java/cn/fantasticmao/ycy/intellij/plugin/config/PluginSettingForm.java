@@ -3,6 +3,7 @@ package cn.fantasticmao.ycy.intellij.plugin.config;
 import com.intellij.openapi.ui.ComboBox;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * 插件设置页面的表单对象
@@ -18,7 +19,8 @@ public class PluginSettingForm {
     private JPanel pluginSettingPanel;
 
     private JComboBox<String> remindTypeOptions;
-    private JTextField remindImagePath;
+    private JTextField remindImageUrl;
+    private JButton useDefaultImage;
     private JTextField periodMinutes;
     private JTextField notifyTitle;
     private JTextField notifyContent;
@@ -34,6 +36,13 @@ public class PluginSettingForm {
         for (ConfigState.RemindTypeEnum remindType : ConfigState.RemindTypeEnum.values()) {
             this.remindTypeOptions.addItem(remindType.description);
         }
+        this.useDefaultImage = new JButton();
+        this.useDefaultImage.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remindImageUrl.setText(DefaultConfig.REMIND_IMAGE_URL);
+            }
+        });
     }
 
     /**
@@ -65,15 +74,15 @@ public class PluginSettingForm {
     /**
      * 获取提醒图片的绝对路径
      */
-    public String getRemindImagePath() {
-        return this.remindImagePath.getText();
+    public String getRemindImageUrl() {
+        return this.remindImageUrl.getText();
     }
 
     /**
      * 设置提醒图片的绝对路径
      */
-    public void setRemindImagePath(String imagePath) {
-        this.remindImagePath.setText(imagePath);
+    public void setRemindImageUrl(String imageUrl) {
+        this.remindImageUrl.setText(imageUrl);
     }
 
     /**

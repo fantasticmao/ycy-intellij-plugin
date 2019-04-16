@@ -84,7 +84,7 @@ public class PluginSettingPage implements SearchableConfigurable {
 
         ConfigState configState = ConfigService.getInstance().getState();
         configState.setRemindType(this.form.getRemindTypeOption());
-        configState.setRemindImagePath(this.form.getRemindImagePath());
+        configState.setRemindImageUrl(this.form.getRemindImageUrl());
         configState.setPeriodMinutes(this.form.getPeriodMinutes());
         configState.setNotifyTitle(this.form.getNotifyTitle());
         configState.setNotifyContent(this.form.getNotifyContent());
@@ -102,7 +102,7 @@ public class PluginSettingPage implements SearchableConfigurable {
 
         ConfigState configState = ConfigService.getInstance().getState();
         this.form.setRemindTypeOption(configState.getRemindType());
-        this.form.setRemindImagePath(configState.getRemindImagePath());
+        this.form.setRemindImageUrl(configState.getRemindImageUrl());
         this.form.setPeriodMinutes(configState.getPeriodMinutes());
         this.form.setNotifyTitle(configState.getNotifyTitle());
         this.form.setNotifyContent(configState.getNotifyContent());

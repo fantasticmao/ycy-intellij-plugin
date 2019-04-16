@@ -16,7 +16,7 @@ public class ConfigState {
     @OptionTag
     private Integer remindType;
     @OptionTag
-    private String remindImagePath;
+    private String remindImageUrl;
     @OptionTag
     private Integer periodMinutes;
     @OptionTag
@@ -54,7 +54,7 @@ public class ConfigState {
     public ConfigState() {
         // 第一次开启插件时，应该使用默认配置
         this.remindType = DefaultConfig.REMIND_TYPE;
-        this.remindImagePath = DefaultConfig.REMIND_IMAGE_PATH;
+        this.remindImageUrl = DefaultConfig.REMIND_IMAGE_URL;
         this.periodMinutes = DefaultConfig.PERIOD_MINUTES;
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
         this.notifyContent = DefaultConfig.NOTIFY_CONTENT;
@@ -67,7 +67,7 @@ public class ConfigState {
         if (o == null || getClass() != o.getClass()) return false;
         ConfigState that = (ConfigState) o;
         return Objects.equals(remindType, that.remindType) &&
-                Objects.equals(remindImagePath, that.remindImagePath) &&
+                Objects.equals(remindImageUrl, that.remindImageUrl) &&
                 Objects.equals(periodMinutes, that.periodMinutes) &&
                 Objects.equals(notifyTitle, that.notifyTitle) &&
                 Objects.equals(notifyContent, that.notifyContent) &&
@@ -76,7 +76,7 @@ public class ConfigState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(remindType, remindImagePath, periodMinutes, notifyTitle, notifyContent, notifyAction);
+        return Objects.hash(remindType, remindImageUrl, periodMinutes, notifyTitle, notifyContent, notifyAction);
     }
 
     // getter and setter
@@ -89,12 +89,12 @@ public class ConfigState {
         this.remindType = remindType;
     }
 
-    public String getRemindImagePath() {
-        return remindImagePath;
+    public String getRemindImageUrl() {
+        return remindImageUrl;
     }
 
-    public void setRemindImagePath(String remindImagePath) {
-        this.remindImagePath = remindImagePath;
+    public void setRemindImageUrl(String remindImageUrl) {
+        this.remindImageUrl = remindImageUrl;
     }
 
     public Integer getPeriodMinutes() {
