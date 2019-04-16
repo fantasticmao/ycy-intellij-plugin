@@ -14,6 +14,7 @@ import javax.swing.*;
  * 插件设置页面
  *
  * @author maomao
+ * @version 1.2
  * @see <a href="http://corochann.com/intellij-plugin-development-introduction-applicationconfigurable-projectconfigurable-873.html">一篇很不错的关于开发 Intellij Plugin 配置页面的博客</a>
  * @since 2019-04-12
  */
@@ -51,7 +52,7 @@ public class PluginSettingPage implements SearchableConfigurable {
     }
 
     /**
-     * 创建插件设置页面
+     * IDEA 初始化设置页面时，会调用此方法
      *
      * @return 由 {@code UI Designer} 生成的 {@link PluginSettingForm} 页面
      */
@@ -65,7 +66,7 @@ public class PluginSettingPage implements SearchableConfigurable {
     }
 
     /**
-     * 是否将设置页面的 "Apply" 按钮设置为可点击
+     * IDEA 初始化设置页面时，判断 "Apply" 按钮是否为可用
      *
      * @return true 是；false 否
      */
@@ -75,7 +76,7 @@ public class PluginSettingPage implements SearchableConfigurable {
     }
 
     /**
-     * 用户点击 "Apply" 或 "OK" 按钮之后，会调用此方法
+     * 用户点击 "Apply" 按钮或 "OK" 按钮之后，会调用此方法
      */
     @Override
     public void apply() throws ConfigurationException {

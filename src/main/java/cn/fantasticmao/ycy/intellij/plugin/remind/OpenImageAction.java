@@ -19,6 +19,7 @@ import java.net.URL;
  * 打开图片的动作事件
  *
  * @author maomao
+ * @version 1.0
  * @since 2019-04-04
  */
 class OpenImageAction extends AnAction {
@@ -26,6 +27,12 @@ class OpenImageAction extends AnAction {
 
     private final Notification notification;
 
+    /**
+     * 构造方法
+     *
+     * @param text         通知中可点击的按钮的文案
+     * @param notification 通知对象，在点击按钮之后需要调用 {@link Notification#expire()}
+     */
     OpenImageAction(String text, Notification notification) {
         super(text);
         this.notification = notification;

@@ -4,11 +4,10 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 
 /**
- * {@inheritDoc}
- *
- * <p>{@link ReminderComponent} 实现类</p>
+ * {@link ReminderComponent} 实现类
  *
  * @author maomao
+ * @version 1.0
  * @since 2019-04-03
  */
 public class ReminderComponentImpl implements ReminderComponent {

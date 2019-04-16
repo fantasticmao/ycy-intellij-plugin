@@ -7,9 +7,10 @@ import javax.swing.*;
 /**
  * 插件设置页面的表单对象
  *
- * <p>表单对象的实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成。</p>
+ * <p>表单对象的实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成</p>
  *
  * @author maomao
+ * @version 1.2
  * @see PluginSettingPage#createComponent()
  * @since 2019-04-13
  */
@@ -30,10 +31,16 @@ public class PluginSettingForm {
     private void createUIComponents() {
         // place custom component creation code here
         this.remindTypeOptions = new ComboBox<>();
-        this.remindTypeOptions.addItem(ConfigState.RemindTypeEnum.DIRECT.description);
-        this.remindTypeOptions.addItem(ConfigState.RemindTypeEnum.INDIRECT.description);
+        for (ConfigState.RemindTypeEnum remindType : ConfigState.RemindTypeEnum.values()) {
+            this.remindTypeOptions.addItem(remindType.description);
+        }
     }
 
+    /**
+     * 获取提醒方式
+     *
+     * @return {@code cn.fantasticmao.ycy.intellij.plugin.config.ConfigState.RemindTypeEnum}
+     */
     public int getRemindTypeOption() {
         return this.remindTypeOptions.getSelectedIndex();
     }
@@ -55,6 +62,9 @@ public class PluginSettingForm {
         this.remindTypeOptions.setSelectedIndex(optionIndex);
     }
 
+    /**
+     * 获取提醒图片的绝对路径
+     */
     public String getRemindImagePath() {
         return this.remindImagePath.getText();
     }
@@ -66,6 +76,9 @@ public class PluginSettingForm {
         this.remindImagePath.setText(imagePath);
     }
 
+    /**
+     * 获取提醒间隔时间，单位分钟
+     */
     public int getPeriodMinutes() {
         try {
             return Integer.parseInt(this.periodMinutes.getText());
@@ -78,11 +91,12 @@ public class PluginSettingForm {
      * 设置提醒间隔时间，单位分钟
      */
     public void setPeriodMinutes(int periodMinutes) {
-        periodMinutes = Math.max(periodMinutes, 1);
-        periodMinutes = Math.min(periodMinutes, 60);
         this.periodMinutes.setText(String.valueOf(periodMinutes));
     }
 
+    /**
+     * 获取通知文案的标题
+     */
     public String getNotifyTitle() {
         return this.notifyTitle.getText();
     }
@@ -94,6 +108,9 @@ public class PluginSettingForm {
         this.notifyTitle.setText(notifyTitle);
     }
 
+    /**
+     * 获取通知文案的内容
+     */
     public String getNotifyContent() {
         return this.notifyContent.getText();
     }
@@ -105,6 +122,9 @@ public class PluginSettingForm {
         this.notifyContent.setText(notifyContent);
     }
 
+    /**
+     * 获取通知文案的按钮
+     */
     public String getNotifyAction() {
         return this.notifyAction.getText();
     }

@@ -7,6 +7,7 @@ import java.net.URL;
  * 图片管理器
  *
  * @author maomao
+ * @version 1.0
  * @since 2019-04-05
  */
 public interface ImageManager {
@@ -14,7 +15,7 @@ public interface ImageManager {
     /**
      * 单例模式
      *
-     * @return {@link ImageManager}
+     * @return {@link ImageManagerImpl}
      */
     static ImageManager getInstance() {
         return ImageManagerImpl.getInstance();

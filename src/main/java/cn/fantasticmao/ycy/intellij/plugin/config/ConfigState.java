@@ -8,6 +8,7 @@ import java.util.Objects;
  * 配置状态类
  *
  * @author maomao
+ * @version 1.2
  * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
  * @since 2019-04-14
  */
@@ -45,7 +46,7 @@ public class ConfigState {
      * 默认配置对象
      *
      * <p>在 {@link ConfigService#setState(ConfigState)} 时，新配置对象会与默认配置对象作比较，
-     * IDEA 会保存有差异的字段至 {@link ConfigServiceImpl} 指定的 {@code ycyReminder.xml} 中</p>
+     * IDEA 会保存有差异的字段至 {@link ConfigServiceImpl} 指定的 {@code ycyReminder.xml} 配置文件中</p>
      *
      * @see ConfigService#getState()
      * @see ConfigService#setState(ConfigState)

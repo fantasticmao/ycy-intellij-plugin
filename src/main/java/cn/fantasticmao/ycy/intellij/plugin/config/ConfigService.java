@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>依赖于 Intellij Platform 的 {@link PersistentStateComponent} 组件实现</p>
  *
  * @author maomao
+ * @version 1.2
  * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
  * @since 2019-04-14
  */
@@ -25,9 +26,6 @@ public interface ConfigService extends PersistentStateComponent<ConfigState> {
     /**
      * 获取插件配置
      *
-     * <p>当用户是第一次开启插件时，则使用默认配置对象 {@code new ConfigState()}，
-     * 否则是用从 {@link ConfigServiceImpl} 指定的 {@code ycyReminder.xml} 配置文件中解析生成的配置对象</p>
-     *
      * @return {@link ConfigState}
      */
     @NotNull
@@ -35,8 +33,6 @@ public interface ConfigService extends PersistentStateComponent<ConfigState> {
 
     /**
      * 修改插件配置
-     *
-     * <p>调用此方法，会将配置数据持久化至 {@link ConfigServiceImpl} 指定的 {@code ycyReminder.xml} 配置文件</p>
      *
      * @param state 将被保存的新配置对象
      */

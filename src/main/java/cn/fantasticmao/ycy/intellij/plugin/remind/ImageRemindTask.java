@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * 定时提醒任务
  *
  * @author maomao
+ * @version 1.2
  * @since 2019-04-16
  */
 public class ImageRemindTask {
@@ -34,6 +35,7 @@ public class ImageRemindTask {
         ConfigState configState = ConfigService.getInstance().getState();
         ScheduledFuture scheduledFuture = JobScheduler.getScheduler().scheduleWithFixedDelay(new Reminder(),
                 configState.getPeriodMinutes(), configState.getPeriodMinutes(), TimeUnit.MINUTES);
+        // 保存 ScheduledFuture 引用至 ThreadLocal 上下文中，用于后续注销定时任务
         SCHEDULED_FUTURE_CONTEXT.set(scheduledFuture);
 
     }
@@ -45,7 +47,7 @@ public class ImageRemindTask {
         ScheduledFuture existScheduledFuture = SCHEDULED_FUTURE_CONTEXT.get();
         if (existScheduledFuture != null) {
             existScheduledFuture.cancel(true);
-            SCHEDULED_FUTURE_CONTEXT.set(null);
+            SCHEDULED_FUTURE_CONTEXT.remove();
         } else {
             // 还未开启定时任务
         }
@@ -53,6 +55,8 @@ public class ImageRemindTask {
 
     /**
      * 实现定时提醒任务逻辑的线程
+     *
+     * @version 1.0
      */
     static class Reminder implements Runnable {
         private NotificationGroup notificationGroup;

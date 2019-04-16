@@ -13,11 +13,10 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * {@inheritDoc}
- *
- * <p>{@link ImageManager} 实现类</p>
+ * {@link ImageManager} 实现类
  *
  * @author maomao
+ * @version 1.0
  * @since 2019-04-05
  */
 public class ImageManagerImpl implements ImageManager {
@@ -63,7 +62,7 @@ public class ImageManagerImpl implements ImageManager {
     }
 
     /**
-     * 从插件 jar 中获取默认的图片
+     * 从插件 jar 中获取默认图片
      *
      * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/超越妹妹.jpg"</p>
      */

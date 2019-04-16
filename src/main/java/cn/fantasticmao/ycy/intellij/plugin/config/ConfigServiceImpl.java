@@ -6,11 +6,10 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * {@inheritDoc}
- *
- * <p>{@link ConfigService} 实现类</p>
+ * {@link ConfigService} 实现类
  *
  * @author maomao
+ * @version 1.2
  * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
  * @since 2019-04-14
  */
@@ -24,6 +23,8 @@ public class ConfigServiceImpl implements ConfigService {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>若用户是第一次开启插件时，则使用默认配置对象 {@code new ConfigState()}，否则使用从 {@code ycyReminder.xml} 配置文件中解析生成的配置对象</p>
      */
     @NotNull
     @Override
@@ -33,6 +34,8 @@ public class ConfigServiceImpl implements ConfigService {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>调用此方法，会将配置数据持久化至 {@code ycyReminder.xml} 配置文件中</p>
      */
     @Override
     public void setState(@NotNull ConfigState state) {
