@@ -35,10 +35,10 @@
         </constraints>
         <properties>
           <labelFor value="b9ffe"/>
-          <text value="提醒图片地址："/>
+          <text value="图片 URL："/>
         </properties>
       </component>
-      <component id="b9ffe" class="javax.swing.JTextField" binding="remindImageUrl">
+      <component id="b9ffe" class="javax.swing.JTextField" binding="imageUrl">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="300" height="-1"/>

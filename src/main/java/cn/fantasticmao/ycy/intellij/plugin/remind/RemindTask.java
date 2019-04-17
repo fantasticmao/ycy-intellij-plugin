@@ -1,10 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.concurrency.JobScheduler;
-import com.intellij.notification.*;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -16,20 +14,20 @@ import java.util.concurrent.TimeUnit;
  * @version 1.2
  * @since 2019-04-16
  */
-public class ImageRemindTask {
+public class RemindTask {
     private static final ThreadLocal<ScheduledFuture> SCHEDULED_FUTURE_CONTEXT = new ThreadLocal<>();
 
     /**
      * 开启定时提醒任务
      */
     public static void init() {
-        refresh();
+        restart();
     }
 
     /**
      * 重新开启定时提醒任务
      */
-    public static void refresh() {
+    public static void restart() {
         destroy();
 
         ConfigState configState = ConfigService.getInstance().getState();
@@ -59,23 +57,14 @@ public class ImageRemindTask {
      * @version 1.0
      */
     static class Reminder implements Runnable {
-        private NotificationGroup notificationGroup;
-
-        private Reminder() {
-            this.notificationGroup = new NotificationGroup("Plugins " + GlobalConfig.PLUGIN_NAME,
-                    NotificationDisplayType.STICKY_BALLOON, true);
-        }
 
         @Override
         public void run() {
             ConfigState configState = ConfigService.getInstance().getState();
+            ConfigState.RemindTypeEnum remindType = ConfigState.RemindTypeEnum.valueOf(configState.getRemindType());
 
-            Notification notification = notificationGroup.createNotification(configState.getNotifyTitle(),
-                    configState.getNotifyContent(), NotificationType.INFORMATION, null);
-            OpenImageAction openImageAction = new OpenImageAction(configState.getNotifyAction(), notification);
-            notification.addAction(openImageAction);
-
-            Notifications.Bus.notify(notification);
+            RemindStrategy remindStrategy = RemindStrategy.getRemindStrategy(remindType);
+            remindStrategy.remind();
         }
     }
 }

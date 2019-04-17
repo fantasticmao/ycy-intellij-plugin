@@ -9,5 +9,5 @@ package cn.fantasticmao.ycy.intellij.plugin.remind;
  * @version 1.0
  * @since 2019-04-03
  */
-public interface ReminderComponent {
+public interface RemindComponent {
 }

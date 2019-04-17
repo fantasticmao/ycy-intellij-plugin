@@ -6,12 +6,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * ImageUrlTest
+ * ImageManagerTest
  *
  * @author maomao
  * @since 2019-04-17
  */
-public class ImageUrlTest extends LightPlatformCodeInsightFixtureTestCase {
+public class ImageManagerTest extends LightPlatformCodeInsightFixtureTestCase {
+
+    public void testGetInstance() {
+        URL url = ImageManager.getInstance().getImageUrl();
+        assertNotNull(url);
+        System.out.println(url.toString());
+    }
 
     public void testPathToUrl() throws MalformedURLException {
         URL imageUrl = ImageManager.getInstance().getImageUrl();

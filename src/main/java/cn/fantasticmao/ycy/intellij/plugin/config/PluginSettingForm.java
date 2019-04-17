@@ -19,7 +19,7 @@ public class PluginSettingForm {
     private JPanel pluginSettingPanel;
 
     private JComboBox<String> remindTypeOptions;
-    private JTextField remindImageUrl;
+    private JTextField imageUrl;
     private JButton useDefaultImage;
     private JTextField periodMinutes;
     private JTextField notifyTitle;
@@ -36,11 +36,12 @@ public class PluginSettingForm {
         for (ConfigState.RemindTypeEnum remindType : ConfigState.RemindTypeEnum.values()) {
             this.remindTypeOptions.addItem(remindType.description);
         }
+
         this.useDefaultImage = new JButton();
         this.useDefaultImage.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                remindImageUrl.setText(DefaultConfig.REMIND_IMAGE_URL);
+                imageUrl.setText(DefaultConfig.REMIND_IMAGE_URL);
             }
         });
     }
@@ -74,15 +75,15 @@ public class PluginSettingForm {
     /**
      * 获取提醒图片的绝对路径
      */
-    public String getRemindImageUrl() {
-        return this.remindImageUrl.getText();
+    public String getImageUrl() {
+        return this.imageUrl.getText();
     }
 
     /**
      * 设置提醒图片的绝对路径
      */
-    public void setRemindImageUrl(String imageUrl) {
-        this.remindImageUrl.setText(imageUrl);
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl.setText(imageUrl);
     }
 
     /**

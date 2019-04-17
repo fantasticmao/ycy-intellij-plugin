@@ -1,7 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
-import cn.fantasticmao.ycy.intellij.plugin.remind.ImageRemindTask;
+import cn.fantasticmao.ycy.intellij.plugin.remind.RemindTask;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
@@ -19,6 +20,7 @@ import javax.swing.*;
  * @since 2019-04-12
  */
 public class PluginSettingPage implements SearchableConfigurable {
+    private static final Logger LOG = Logger.getInstance(PluginSettingPage.class);
     /**
      * 插件设置页面的表单对象
      */
@@ -84,13 +86,16 @@ public class PluginSettingPage implements SearchableConfigurable {
 
         ConfigState configState = ConfigService.getInstance().getState();
         configState.setRemindType(this.form.getRemindTypeOption());
-        configState.setRemindImageUrl(this.form.getRemindImageUrl());
+        configState.setRemindImageUrl(this.form.getImageUrl());
         configState.setPeriodMinutes(this.form.getPeriodMinutes());
         configState.setNotifyTitle(this.form.getNotifyTitle());
         configState.setNotifyContent(this.form.getNotifyContent());
         configState.setNotifyAction(this.form.getNotifyAction());
         ConfigService.getInstance().setState(configState);
-        ImageRemindTask.refresh();
+        LOG.info("apply and save user setting");
+
+        RemindTask.restart();
+        LOG.info("restart scheduled remind task");
     }
 
     /**
@@ -102,11 +107,12 @@ public class PluginSettingPage implements SearchableConfigurable {
 
         ConfigState configState = ConfigService.getInstance().getState();
         this.form.setRemindTypeOption(configState.getRemindType());
-        this.form.setRemindImageUrl(configState.getRemindImageUrl());
+        this.form.setImageUrl(configState.getRemindImageUrl());
         this.form.setPeriodMinutes(configState.getPeriodMinutes());
         this.form.setNotifyTitle(configState.getNotifyTitle());
         this.form.setNotifyContent(configState.getNotifyContent());
         this.form.setNotifyAction(configState.getNotifyAction());
+        LOG.info("reset user setting");
     }
 
     /**

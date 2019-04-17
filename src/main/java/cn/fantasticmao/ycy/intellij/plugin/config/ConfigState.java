@@ -3,6 +3,7 @@ package cn.fantasticmao.ycy.intellij.plugin.config;
 import com.intellij.util.xmlb.annotations.OptionTag;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * 配置状态类
@@ -28,9 +29,17 @@ public class ConfigState {
 
     /**
      * 提醒方式枚举类
+     *
+     * @see cn.fantasticmao.ycy.intellij.plugin.remind.RemindStrategy
      */
     public enum RemindTypeEnum {
+        /**
+         * 直接打开图片
+         */
         DIRECT(0, "打开图片"),
+        /**
+         * 间接打开图片
+         */
         INDIRECT(1, "消息通知 -> 打开图片");
 
         public final int index;
@@ -39,6 +48,13 @@ public class ConfigState {
         RemindTypeEnum(int index, String description) {
             this.index = index;
             this.description = description;
+        }
+
+        public static RemindTypeEnum valueOf(int index) {
+            return Stream.of(RemindTypeEnum.values())
+                    .filter(remindType -> index == remindType.index)
+                    .findFirst()
+                    .orElseThrow(NullPointerException::new);
         }
     }
 
