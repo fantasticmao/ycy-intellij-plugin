@@ -3,6 +3,7 @@ package cn.fantasticmao.ycy.intellij.plugin.remind;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.concurrency.JobScheduler;
+import com.intellij.openapi.application.ApplicationManager;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -64,7 +65,11 @@ public class RemindTask {
             ConfigState.RemindTypeEnum remindType = ConfigState.RemindTypeEnum.valueOf(configState.getRemindType());
 
             RemindStrategy remindStrategy = RemindStrategy.getRemindStrategy(remindType);
-            remindStrategy.remind();
+            /*
+             * 2019-04-18 fix a bug: Access is allowed from event dispatch thread only. according to:
+             * https://intellij-support.jetbrains.com/hc/en-us/community/posts/206124399-Error-Write-access-is-allowed-from-event-dispatch-thread-only
+             */
+            ApplicationManager.getApplication().invokeLater(remindStrategy::remind);
         }
     }
 }
