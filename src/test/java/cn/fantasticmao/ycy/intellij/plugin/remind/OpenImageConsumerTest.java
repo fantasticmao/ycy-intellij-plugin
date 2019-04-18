@@ -1,7 +1,9 @@
 package cn.fantasticmao.ycy.intellij.plugin.remind;
 
 import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
+import com.intellij.util.Consumer;
 
 /**
  * OpenImageConsumerTest
@@ -12,8 +14,8 @@ import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCa
 public class OpenImageConsumerTest extends LightPlatformCodeInsightFixtureTestCase {
 
     public void testAccept() {
-        DataManager.getInstance().getDataContextFromFocusAsync()
-                .onSuccess(dataContext -> new OpenImageConsumer().accept(dataContext))
-                .onError(Throwable::printStackTrace);
+        DataManager.getInstance().getDataContextFromFocus()
+                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
+                .doWhenRejected((Consumer<String>) System.out::println);
     }
 }
