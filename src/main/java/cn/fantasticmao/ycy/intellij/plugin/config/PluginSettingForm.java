@@ -1,6 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ public class PluginSettingForm {
     private JPanel pluginSettingPanel;
 
     private JComboBox<String> remindTypeOptions;
-    private JTextField imageUrl;
+    private TextFieldWithBrowseButton imageUrl;
     private JButton useDefaultImage;
     private JTextField periodMinutes;
     private JTextField notifyTitle;
@@ -36,6 +37,10 @@ public class PluginSettingForm {
         for (ConfigState.RemindTypeEnum remindType : ConfigState.RemindTypeEnum.values()) {
             this.remindTypeOptions.addItem(remindType.description);
         }
+
+        this.imageUrl = new TextFieldWithBrowseButton();
+        this.imageUrl.addBrowseFolderListener("图片 URL", null, null,
+                PluginSettingConfig.IMAGE_FILE_CHOOSER, PluginSettingConfig.TEXT_ACCESSOR_WITH_FILE_PROTOCOL);
 
         this.useDefaultImage = new JButton();
         this.useDefaultImage.addActionListener(new AbstractAction() {

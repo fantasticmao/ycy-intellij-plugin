@@ -75,7 +75,7 @@ public class ImageManagerImpl implements ImageManager {
         }
         File pluginPath = plugin.getPath();
         try {
-            return new URL("jar:file:" + pluginPath.getPath() + "!/images/超越妹妹.jpg");
+            return new URL("jar:file://" + pluginPath.getPath() + "!/images/超越妹妹.jpg");
         } catch (MalformedURLException e) {
             LOG.error("fail to get the default imageUrl", e);
             throw new RuntimeException("fail to get the default imageUrl", e);
