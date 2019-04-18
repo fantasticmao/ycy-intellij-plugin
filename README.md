@@ -7,6 +7,8 @@
 ## 在线演示
 ![usage](doc/usage.gif)
 
+![config](doc/config.png)
+
 ## 特性列表
 * [x] 定时提醒
 * [x] 可配置提醒方式
