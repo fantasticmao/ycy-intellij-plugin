@@ -1,11 +1,15 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.ui.ComponentWithBrowseButton.BrowseFolderActionListener;
 import com.intellij.openapi.ui.TextComponentAccessor;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,17 +48,20 @@ public interface PluginSettingConfig {
     };
 
     /**
-     * 文本组件的填充对象
+     * 图片选择器的监听事件
      */
-    TextComponentAccessor<JTextField> TEXT_ACCESSOR_WITH_FILE_PROTOCOL = new TextComponentAccessor<JTextField>() {
-        @Override
-        public String getText(JTextField textField) {
-            return textField.getText();
-        }
-
-        @Override
-        public void setText(JTextField textField, @NotNull String text) {
-            textField.setText("file://" + text);
-        }
-    };
+    static BrowseFolderActionListener newBrowseFolderActionListener(TextFieldWithBrowseButton textField) {
+        return new BrowseFolderActionListener<JTextField>("图片 URL", null, textField, null,
+                PluginSettingConfig.IMAGE_FILE_CHOOSER, TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT) {
+            @NotNull
+            @Override
+            protected String chosenFileToResultingText(@NotNull VirtualFile chosenFile) {
+                try {
+                    return VfsUtil.toUri(chosenFile).toURL().toString(); // 选择图片时，返回文件完整的 URL 而不仅仅是 Path
+                } catch (MalformedURLException e) {
+                    return DefaultConfig.REMIND_IMAGE_URL;
+                }
+            }
+        };
+    }
 }

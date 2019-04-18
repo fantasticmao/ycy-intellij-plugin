@@ -39,8 +39,7 @@ public class PluginSettingForm {
         }
 
         this.imageUrl = new TextFieldWithBrowseButton();
-        this.imageUrl.addBrowseFolderListener("图片 URL", null, null,
-                PluginSettingConfig.IMAGE_FILE_CHOOSER, PluginSettingConfig.TEXT_ACCESSOR_WITH_FILE_PROTOCOL);
+        this.imageUrl.addActionListener(PluginSettingConfig.newBrowseFolderActionListener(this.imageUrl));
 
         this.useDefaultImage = new JButton();
         this.useDefaultImage.addActionListener(new AbstractAction() {
