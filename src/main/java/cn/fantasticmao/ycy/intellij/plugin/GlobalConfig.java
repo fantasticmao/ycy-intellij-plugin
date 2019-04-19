@@ -1,4 +1,4 @@
-package cn.fantasticmao.ycy.intellij.plugin.common;
+package cn.fantasticmao.ycy.intellij.plugin;
 
 /**
  * 全局配置接口
@@ -6,7 +6,7 @@ package cn.fantasticmao.ycy.intellij.plugin.common;
  * @author maomao
  * @since 2019-04-05
  */
-public interface Config {
+public interface GlobalConfig {
 
     /**
      * 插件标识

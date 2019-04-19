@@ -1,7 +1,7 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <vendor email="fantasticmao@gmail.com" url="https://github.com/FantasticMao/ycy-intellij-plugin">FantasticMao</vendor>
 
@@ -17,7 +17,11 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Bugfix <a href="https://github.com/FantasticMao/ycy-intellij-plugin/issues/4">#4</a></li>
+            <li>可配置提醒方式</li>
+            <li>可配置提醒图片</li>
+            <li>可配置提醒时间</li>
+            <li>可配置提醒文案</li>
+            <li>Bugfix <a href="https://github.com/FantasticMao/ycy-intellij-plugin/issues/9">#9</a></li>
         </ul>
     ]]></change-notes>
 
@@ -27,13 +31,16 @@
 
     <application-components>
         <component>
-            <interface-class>
-                cn.fantasticmao.ycy.intellij.plugin.ui.YcyReminderComponent
-            </interface-class>
+            <interface-class>cn.fantasticmao.ycy.intellij.plugin.remind.RemindComponent</interface-class>
 
-            <implementation-class>
-                cn.fantasticmao.ycy.intellij.plugin.ui.YcyReminderComponentImpl
-            </implementation-class>
+            <implementation-class>cn.fantasticmao.ycy.intellij.plugin.remind.RemindComponentImpl</implementation-class>
         </component>
     </application-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable groupId="other" instance="cn.fantasticmao.ycy.intellij.plugin.config.PluginSettingPage"/>
+
+        <applicationService serviceInterface="cn.fantasticmao.ycy.intellij.plugin.config.ConfigService"
+                            serviceImplementation="cn.fantasticmao.ycy.intellij.plugin.config.ConfigServiceImpl"/>
+    </extensions>
 </idea-plugin>

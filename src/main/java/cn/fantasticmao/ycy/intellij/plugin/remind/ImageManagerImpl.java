@@ -1,6 +1,6 @@
-package cn.fantasticmao.ycy.intellij.plugin.service;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.common.Config;
+import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.diagnostic.Logger;
@@ -13,15 +13,14 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * {@link YcyImageManager} 实现类
- *
- * <p>TODO 支持图片的可配置功能</p>
+ * {@link ImageManager} 实现类
  *
  * @author maomao
+ * @version 1.0
  * @since 2019-04-05
  */
-public class YcyImageManagerImpl implements YcyImageManager {
-    private static final Logger LOG = Logger.getInstance(YcyImageManagerImpl.class);
+public class ImageManagerImpl implements ImageManager {
+    private static final Logger LOG = Logger.getInstance(ImageManagerImpl.class);
 
     /**
      * 默认图片
@@ -30,25 +29,27 @@ public class YcyImageManagerImpl implements YcyImageManager {
 
     /**
      * 可配置的图片列表
+     *
+     * <p>TODO 支持图片的可配置功能</p>
      */
     private List<URL> imageUrlList;
 
     /**
      * 单例模式
      */
-    private static YcyImageManagerImpl instance;
+    private static ImageManagerImpl instance;
 
-    private YcyImageManagerImpl() {
+    private ImageManagerImpl() {
         this.defaultImageUrl = this.getDefaultUrl();
     }
 
     /**
      * 单例模式
      *
-     * @return {@link YcyImageManagerImpl}
+     * @return {@link ImageManagerImpl}
      */
-    static YcyImageManagerImpl getInstance() {
-        return instance != null ? instance : (instance = new YcyImageManagerImpl());
+    static ImageManagerImpl getInstance() {
+        return instance != null ? instance : (instance = new ImageManagerImpl());
     }
 
     /**
@@ -61,23 +62,23 @@ public class YcyImageManagerImpl implements YcyImageManager {
     }
 
     /**
-     * 从插件 jar 中获取默认的杨超越图片
+     * 从插件 jar 中获取默认图片
      *
      * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/超越妹妹.jpg"</p>
      */
     private URL getDefaultUrl() {
-        PluginId pluginId = PluginId.getId(Config.PLUGIN_ID);
+        PluginId pluginId = PluginId.getId(GlobalConfig.PLUGIN_ID);
         IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
         if (plugin == null) {
-            LOG.error("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
-            throw new NullPointerException("fail to get plugin \"" + Config.PLUGIN_ID + "\"");
+            LOG.error("fail to get plugin \"" + GlobalConfig.PLUGIN_ID + "\"");
+            throw new NullPointerException("fail to get plugin \"" + GlobalConfig.PLUGIN_ID + "\"");
         }
         File pluginPath = plugin.getPath();
         try {
-            return new URL("jar:file:" + pluginPath.getPath() + "!/images/超越妹妹.jpg");
+            return new URL("jar:" + pluginPath.toURI().toURL().toString() + "!/images/超越妹妹.jpg");
         } catch (MalformedURLException e) {
-            LOG.error("fail to find the default imageUrl", e);
-            throw new RuntimeException("fail to find the default imageUrl", e);
+            LOG.error("fail to get the default imageUrl", e);
+            throw new RuntimeException("fail to get the default imageUrl", e);
         }
     }
 }

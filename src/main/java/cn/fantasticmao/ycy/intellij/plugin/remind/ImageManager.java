@@ -1,27 +1,28 @@
-package cn.fantasticmao.ycy.intellij.plugin.service;
+package cn.fantasticmao.ycy.intellij.plugin.remind;
 
 import javax.annotation.Nonnull;
 import java.net.URL;
 
 /**
- * 杨超越图片管理器
+ * 图片管理器
  *
  * @author maomao
+ * @version 1.0
  * @since 2019-04-05
  */
-public interface YcyImageManager {
+public interface ImageManager {
 
     /**
      * 单例模式
      *
-     * @return {@link YcyImageManager}
+     * @return {@link ImageManagerImpl}
      */
-    static YcyImageManager getInstance() {
-        return YcyImageManagerImpl.getInstance();
+    static ImageManager getInstance() {
+        return ImageManagerImpl.getInstance();
     }
 
     /**
-     * 获取即将用于展示的杨超越图片
+     * 获取即将用于展示的图片
      *
      * <p>URL 仅支持 "file" 和 "jar" 两种协议</p>
      *
