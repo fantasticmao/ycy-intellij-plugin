@@ -26,7 +26,7 @@
       </component>
       <hspacer id="7bfcd">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="6" col-span="1" vsize-policy="1" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
       <component id="b691c" class="javax.swing.JLabel">
@@ -38,23 +38,12 @@
           <text value="图片 URL："/>
         </properties>
       </component>
-      <component id="b9ffe" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="imageUrl" custom-create="true">
+      <component id="b9ffe" class="javax.swing.JPanel" binding="imageUrlList" custom-create="true">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="300" height="-1"/>
+            <preferred-size width="300" height="200"/>
           </grid>
         </constraints>
-        <properties>
-          <toolTipText value="本地图片的绝对路径"/>
-        </properties>
-      </component>
-      <component id="44b44" class="javax.swing.JButton" binding="useDefaultImage" custom-create="true">
-        <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="使用默认图片"/>
-        </properties>
       </component>
       <component id="f4ce1" class="javax.swing.JLabel">
         <constraints>
@@ -71,13 +60,7 @@
             <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
       </component>
-      <hspacer id="90cb5">
-        <constraints>
-          <grid row="2" column="2" row-span="4" col-span="1" vsize-policy="1" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
       <component id="e3280" class="javax.swing.JLabel">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -93,7 +76,6 @@
             <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
       </component>
       <component id="30d3d" class="javax.swing.JLabel">
         <constraints>
@@ -127,7 +109,6 @@
             <preferred-size width="300" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
       </component>
       <vspacer id="262f">
         <constraints>

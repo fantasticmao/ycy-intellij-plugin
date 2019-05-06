@@ -1,10 +1,11 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.ui.ToolbarDecorator;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 插件设置页面的表单对象
@@ -20,8 +21,7 @@ public class PluginSettingForm {
     private JPanel pluginSettingPanel;
 
     private JComboBox<String> remindTypeOptions;
-    private TextFieldWithBrowseButton imageUrl;
-    private JButton useDefaultImage;
+    private JPanel imageUrlList;
     private JTextField periodMinutes;
     private JTextField notifyTitle;
     private JTextField notifyContent;
@@ -38,16 +38,13 @@ public class PluginSettingForm {
             this.remindTypeOptions.addItem(remindType.description);
         }
 
-        this.imageUrl = new TextFieldWithBrowseButton();
-        this.imageUrl.addActionListener(PluginSettingConfig.newBrowseFolderActionListener(this.imageUrl));
-
-        this.useDefaultImage = new JButton();
-        this.useDefaultImage.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                imageUrl.setText(DefaultConfig.REMIND_IMAGE_URL);
-            }
-        });
+        // TODO 使用配置文件中的图片地址
+        List<String> list = new ArrayList<>();
+        list.add(DefaultConfig.REMIND_IMAGE_URL);
+        list.add("test 1");
+        list.add("test 2");
+        PluginSettingTable imageUrlListTable = new PluginSettingTable(list);
+        this.imageUrlList = ToolbarDecorator.createDecorator(imageUrlListTable).createPanel();
     }
 
     /**
@@ -74,20 +71,6 @@ public class PluginSettingForm {
         optionIndex = Math.max(optionIndex, 0);
         optionIndex = Math.min(optionIndex, 1);
         this.remindTypeOptions.setSelectedIndex(optionIndex);
-    }
-
-    /**
-     * 获取提醒图片的绝对路径
-     */
-    public String getImageUrl() {
-        return this.imageUrl.getText();
-    }
-
-    /**
-     * 设置提醒图片的绝对路径
-     */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl.setText(imageUrl);
     }
 
     /**
