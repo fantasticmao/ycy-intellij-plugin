@@ -5,10 +5,8 @@ import com.intellij.util.ui.EditableModel;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -23,6 +21,7 @@ public class PluginSettingTable extends JBTable {
 
     public PluginSettingTable(List<String> imageUrlList) {
         super(new ModelAdapter(imageUrlList));
+        super.setStriped(true);
 
         final TableColumnModel columnModel = getColumnModel();
         final TableColumn orderColumn = columnModel.getColumn(ORDER_COLUMN);
@@ -30,6 +29,20 @@ public class PluginSettingTable extends JBTable {
 
         final TableColumn urlColumn = columnModel.getColumn(URL_COLUMN);
         urlColumn.setPreferredWidth(280);
+    }
+
+    /**
+     * 标识为可编辑的表格
+     *
+     * @see com.intellij.ui.ToolbarDecorator#createDecorator(JTable)
+     */
+    @Override
+    public ModelAdapter getModel() {
+        return (ModelAdapter) super.getModel();
+    }
+
+    public void resetToDefault() {
+        getModel().resetToDefault();
     }
 
     private static class ModelAdapter extends AbstractTableModel implements EditableModel {
@@ -83,30 +96,40 @@ public class PluginSettingTable extends JBTable {
 
         @Override
         public void addRow() {
-
+            // TODO 添加记录
+            System.out.println("TODO 添加记录");
         }
 
+        /**
+         * 交换表格行的具体实现
+         */
         @Override
         public void exchangeRows(int oldIndex, int newIndex) {
-
+            final String oldImgUrl = imageUrlList.get(oldIndex);
+            final String newImgUrl = imageUrlList.get(newIndex);
+            imageUrlList.set(oldIndex, newImgUrl);
+            imageUrlList.set(newIndex, oldImgUrl);
         }
 
+        /**
+         * 标识表格的行可以互相交换
+         */
         @Override
         public boolean canExchangeRows(int oldIndex, int newIndex) {
-            return false;
+            return true;
         }
 
+        /**
+         * 删除表格的行
+         */
         @Override
         public void removeRow(int idx) {
-
+            imageUrlList.remove(idx);
         }
-    }
 
-    private static class OrderRenderer extends DefaultTableCellRenderer {
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            return super.getTableCellRendererComponent(table, value, isSelected, false, row, column);
+        public void resetToDefault() {
+            // TODO 使用默认图片配置
+            System.out.println("TODO 使用默认图片配置");
         }
     }
 }

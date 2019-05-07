@@ -1,6 +1,9 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
+import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
 
 import javax.swing.*;
@@ -44,7 +47,14 @@ public class PluginSettingForm {
         list.add("test 1");
         list.add("test 2");
         PluginSettingTable imageUrlListTable = new PluginSettingTable(list);
-        this.imageUrlList = ToolbarDecorator.createDecorator(imageUrlListTable).createPanel();
+        this.imageUrlList = ToolbarDecorator.createDecorator(imageUrlListTable)
+                .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Reset_to_default) {
+                    @Override
+                    public void actionPerformed(AnActionEvent e) {
+                        imageUrlListTable.resetToDefault();
+                    }
+                })
+                .createPanel();
     }
 
     /**
