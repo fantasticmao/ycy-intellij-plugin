@@ -1,5 +1,10 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.FileChooserDialog;
+import com.intellij.openapi.fileChooser.FileChooserFactory;
+import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.EditableModel;
 
@@ -7,7 +12,11 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * PluginSettingTable
@@ -96,8 +105,23 @@ public class PluginSettingTable extends JBTable {
 
         @Override
         public void addRow() {
-            // TODO 添加记录
-            System.out.println("TODO 添加记录");
+            FileChooserDescriptor descriptor = PluginSettingConfig.IMAGE_FILE_CHOOSER;
+            FileChooserDialog dialog = FileChooserFactory.getInstance().createFileChooser(descriptor, null, null);
+            VirtualFile[] files = dialog.choose(null);
+            List<String> chosenImageUrlList = Stream.of(files)
+                    .map(imageFile -> {
+                        try {
+                            return VfsUtil.toUri(imageFile).toURL().toString();
+                        } catch (MalformedURLException e) {
+                            // ignore
+                            e.printStackTrace();
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .filter(imageUrl -> !imageUrlList.contains(imageUrl))
+                    .collect(Collectors.toList());
+            imageUrlList.addAll(chosenImageUrlList);
         }
 
         /**
