@@ -2,6 +2,7 @@ package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.util.xmlb.annotations.OptionTag;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -17,7 +18,7 @@ public class ConfigState {
     @OptionTag
     private Integer remindType;
     @OptionTag
-    private String remindImageUrl;
+    private List<String> remindImageList;
     @OptionTag
     private Integer periodMinutes;
     @OptionTag
@@ -70,7 +71,7 @@ public class ConfigState {
     public ConfigState() {
         // 第一次开启插件时，应该使用默认配置
         this.remindType = DefaultConfig.REMIND_TYPE;
-        this.remindImageUrl = DefaultConfig.REMIND_IMAGE_URL;
+        this.remindImageList = DefaultConfig.REMIND_IMAGE_LIST;
         this.periodMinutes = DefaultConfig.PERIOD_MINUTES;
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
         this.notifyContent = DefaultConfig.NOTIFY_CONTENT;
@@ -83,7 +84,7 @@ public class ConfigState {
         if (o == null || getClass() != o.getClass()) return false;
         ConfigState that = (ConfigState) o;
         return Objects.equals(remindType, that.remindType) &&
-                Objects.equals(remindImageUrl, that.remindImageUrl) &&
+                Objects.equals(remindImageList, that.remindImageList) &&
                 Objects.equals(periodMinutes, that.periodMinutes) &&
                 Objects.equals(notifyTitle, that.notifyTitle) &&
                 Objects.equals(notifyContent, that.notifyContent) &&
@@ -92,7 +93,7 @@ public class ConfigState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(remindType, remindImageUrl, periodMinutes, notifyTitle, notifyContent, notifyAction);
+        return Objects.hash(remindType, remindImageList, periodMinutes, notifyTitle, notifyContent, notifyAction);
     }
 
     // getter and setter
@@ -105,12 +106,12 @@ public class ConfigState {
         this.remindType = remindType;
     }
 
-    public String getRemindImageUrl() {
-        return remindImageUrl;
+    public List<String> getRemindImageList() {
+        return remindImageList;
     }
 
-    public void setRemindImageUrl(String remindImageUrl) {
-        this.remindImageUrl = remindImageUrl;
+    public void setRemindImageList(List<String> remindImageList) {
+        this.remindImageList = remindImageList;
     }
 
     public Integer getPeriodMinutes() {

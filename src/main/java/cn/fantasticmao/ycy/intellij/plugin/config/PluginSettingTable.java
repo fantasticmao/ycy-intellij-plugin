@@ -1,5 +1,6 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDialog;
 import com.intellij.openapi.fileChooser.FileChooserFactory;
@@ -25,6 +26,7 @@ import java.util.stream.Stream;
  * @since 2019-05-05
  */
 public class PluginSettingTable extends JBTable {
+    private static final Logger LOG = Logger.getInstance(PluginSettingTable.class);
     private static final int ORDER_COLUMN = 0;
     private static final int URL_COLUMN = 1;
 
@@ -52,6 +54,7 @@ public class PluginSettingTable extends JBTable {
 
     public void resetToDefault() {
         getModel().resetToDefault();
+        LOG.info("reset image url list to default");
     }
 
     private static class ModelAdapter extends AbstractTableModel implements EditableModel {
@@ -152,8 +155,8 @@ public class PluginSettingTable extends JBTable {
         }
 
         public void resetToDefault() {
-            // TODO 使用默认图片配置
-            System.out.println("TODO 使用默认图片配置");
+            imageUrlList.clear();
+            imageUrlList.addAll(DefaultConfig.REMIND_IMAGE_LIST);
         }
     }
 }

@@ -7,7 +7,6 @@ import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,12 +40,9 @@ public class PluginSettingForm {
             this.remindTypeOptions.addItem(remindType.description);
         }
 
-        // TODO 使用配置文件中的图片地址
-        List<String> list = new ArrayList<>();
-        list.add(DefaultConfig.REMIND_IMAGE_URL);
-        list.add("test 1");
-        list.add("test 2");
-        PluginSettingTable imageUrlListTable = new PluginSettingTable(list);
+        ConfigState configState = ConfigService.getInstance().getState();
+        List<String> imageList = configState.getRemindImageList();
+        PluginSettingTable imageUrlListTable = new PluginSettingTable(imageList);
         this.imageUrlList = ToolbarDecorator.createDecorator(imageUrlListTable)
                 .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Reset_to_default) {
                     @Override
