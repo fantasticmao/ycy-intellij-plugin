@@ -4,6 +4,7 @@ import com.intellij.util.xmlb.annotations.OptionTag;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Stream;
 
 /**
@@ -94,6 +95,14 @@ public class ConfigState {
     @Override
     public int hashCode() {
         return Objects.hash(remindType, remindImageList, periodMinutes, notifyTitle, notifyContent, notifyAction);
+    }
+
+    /**
+     * 随机获取待展示的图片
+     */
+    public String getRandomRemindImage() {
+        int imageIndex = new Random().nextInt(this.remindImageList.size());
+        return this.remindImageList.get(imageIndex);
     }
 
     // getter and setter

@@ -29,6 +29,11 @@ public interface ImageManager {
      */
     List<URL> getDefaultImageUrlList();
 
+    /**
+     * 获取默认图片列表
+     *
+     * @return {@link java.lang.String}
+     */
     default List<String> getDefaultImageList() {
         return this.getDefaultImageUrlList().stream()
                 .map(URL::toString)

@@ -14,7 +14,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import javax.swing.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Random;
 import java.util.function.Consumer;
 
 /**
@@ -41,8 +40,7 @@ public class OpenImageConsumer implements Consumer<DataContext> {
 
         // 2. 获取即将用于展示的图片
         ConfigState configState = ConfigService.getInstance().getState();
-        int imageIndex = new Random().nextInt(10);
-        String imageUrlStr = configState.getRemindImageList().get(imageIndex);
+        String imageUrlStr = configState.getRandomRemindImage();
         URL imageUrl;
         try {
             imageUrl = new URL(imageUrlStr);

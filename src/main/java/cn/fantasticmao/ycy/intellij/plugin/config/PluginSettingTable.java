@@ -14,6 +14,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -30,8 +31,8 @@ public class PluginSettingTable extends JBTable {
     private static final int ORDER_COLUMN = 0;
     private static final int URL_COLUMN = 1;
 
-    public PluginSettingTable(List<String> imageUrlList) {
-        super(new ModelAdapter(imageUrlList));
+    public PluginSettingTable(List<String> defaultImageUrlList) {
+        super(new ModelAdapter(defaultImageUrlList));
         super.setStriped(true);
 
         final TableColumnModel columnModel = getColumnModel();
@@ -43,7 +44,7 @@ public class PluginSettingTable extends JBTable {
     }
 
     /**
-     * 标识为可编辑的表格
+     * 是否可以编辑表格
      *
      * @see com.intellij.ui.ToolbarDecorator#createDecorator(JTable)
      */
@@ -52,16 +53,22 @@ public class PluginSettingTable extends JBTable {
         return (ModelAdapter) super.getModel();
     }
 
+    /**
+     * 重置表格内容
+     */
     public void resetToDefault() {
         getModel().resetToDefault();
         LOG.info("reset image url list to default");
     }
 
     private static class ModelAdapter extends AbstractTableModel implements EditableModel {
+        private static final Logger LOG = Logger.getInstance(ModelAdapter.class);
         private final List<String> imageUrlList;
 
-        public ModelAdapter(List<String> imageUrlList) {
-            this.imageUrlList = imageUrlList;
+        public ModelAdapter(List<String> defaultImageUrlList) {
+            // 使用深拷贝复制对象，避免修改默认图片配置
+            this.imageUrlList = new ArrayList<>(defaultImageUrlList.size());
+            this.imageUrlList.addAll(defaultImageUrlList);
         }
 
         @Override
@@ -83,7 +90,7 @@ public class PluginSettingTable extends JBTable {
         }
 
         /**
-         * 设置单元格对象 Class
+         * 设置单元格对象的 {@link java.lang.Class}
          */
         @Override
         public Class<?> getColumnClass(int columnIndex) {
@@ -106,6 +113,9 @@ public class PluginSettingTable extends JBTable {
             return columnIndex == ORDER_COLUMN ? String.valueOf(rowIndex) : imageUrlList.get(rowIndex);
         }
 
+        /**
+         * 添加表格行
+         */
         @Override
         public void addRow() {
             FileChooserDescriptor descriptor = PluginSettingConfig.IMAGE_FILE_CHOOSER;
@@ -125,10 +135,11 @@ public class PluginSettingTable extends JBTable {
                     .filter(imageUrl -> !imageUrlList.contains(imageUrl))
                     .collect(Collectors.toList());
             imageUrlList.addAll(chosenImageUrlList);
+            LOG.info("add row :" + chosenImageUrlList);
         }
 
         /**
-         * 交换表格行的具体实现
+         * 交换表格行
          */
         @Override
         public void exchangeRows(int oldIndex, int newIndex) {
@@ -136,10 +147,11 @@ public class PluginSettingTable extends JBTable {
             final String newImgUrl = imageUrlList.get(newIndex);
             imageUrlList.set(oldIndex, newImgUrl);
             imageUrlList.set(newIndex, oldImgUrl);
+            LOG.info(String.format("exchange rows: %d %d", oldIndex, newIndex));
         }
 
         /**
-         * 标识表格的行可以互相交换
+         * 是否可以交换表格行
          */
         @Override
         public boolean canExchangeRows(int oldIndex, int newIndex) {
@@ -147,16 +159,21 @@ public class PluginSettingTable extends JBTable {
         }
 
         /**
-         * 删除表格的行
+         * 删除表格行
          */
         @Override
         public void removeRow(int idx) {
             imageUrlList.remove(idx);
+            LOG.info("remove row: " + idx);
         }
 
+        /**
+         * 重置表格内容
+         */
         public void resetToDefault() {
             imageUrlList.clear();
             imageUrlList.addAll(DefaultConfig.REMIND_IMAGE_LIST);
+            LOG.info("reset to default");
         }
     }
 }
