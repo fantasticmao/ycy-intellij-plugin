@@ -19,7 +19,7 @@ public class ConfigState {
     @OptionTag
     private Integer remindType;
     @OptionTag
-    private List<String> remindImageList;
+    private List<String> remindImages;
     @OptionTag
     private Integer periodMinutes;
     @OptionTag
@@ -72,7 +72,7 @@ public class ConfigState {
     public ConfigState() {
         // 第一次开启插件时，应该使用默认配置
         this.remindType = DefaultConfig.REMIND_TYPE;
-        this.remindImageList = DefaultConfig.REMIND_IMAGE_LIST;
+        this.remindImages = DefaultConfig.REMIND_IMAGE_LIST;
         this.periodMinutes = DefaultConfig.PERIOD_MINUTES;
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
         this.notifyContent = DefaultConfig.NOTIFY_CONTENT;
@@ -85,7 +85,7 @@ public class ConfigState {
         if (o == null || getClass() != o.getClass()) return false;
         ConfigState that = (ConfigState) o;
         return Objects.equals(remindType, that.remindType) &&
-                Objects.equals(remindImageList, that.remindImageList) &&
+                Objects.equals(remindImages, that.remindImages) &&
                 Objects.equals(periodMinutes, that.periodMinutes) &&
                 Objects.equals(notifyTitle, that.notifyTitle) &&
                 Objects.equals(notifyContent, that.notifyContent) &&
@@ -94,15 +94,15 @@ public class ConfigState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(remindType, remindImageList, periodMinutes, notifyTitle, notifyContent, notifyAction);
+        return Objects.hash(remindType, remindImages, periodMinutes, notifyTitle, notifyContent, notifyAction);
     }
 
     /**
      * 随机获取待展示的图片
      */
     public String getRandomRemindImage() {
-        int imageIndex = new Random().nextInt(this.remindImageList.size());
-        return this.remindImageList.get(imageIndex);
+        int imageIndex = new Random().nextInt(this.remindImages.size());
+        return this.remindImages.get(imageIndex);
     }
 
     // getter and setter
@@ -115,12 +115,12 @@ public class ConfigState {
         this.remindType = remindType;
     }
 
-    public List<String> getRemindImageList() {
-        return remindImageList;
+    public List<String> getRemindImages() {
+        return remindImages;
     }
 
-    public void setRemindImageList(List<String> remindImageList) {
-        this.remindImageList = remindImageList;
+    public void setRemindImages(List<String> remindImages) {
+        this.remindImages = remindImages;
     }
 
     public Integer getPeriodMinutes() {

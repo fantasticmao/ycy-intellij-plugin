@@ -41,8 +41,9 @@ public class PluginSettingForm {
         }
 
         ConfigState configState = ConfigService.getInstance().getState();
-        List<String> imageList = configState.getRemindImageList();
-        PluginSettingTable imageUrlListTable = new PluginSettingTable(imageList);
+        List<String> remindImages = configState.getRemindImages();
+        PluginSettingTable imageUrlListTable = new PluginSettingTable(remindImages);
+        // FIXME Reset 按钮显示延迟问题
         this.imageUrlList = ToolbarDecorator.createDecorator(imageUrlListTable)
                 .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Reset_to_default) {
                     @Override

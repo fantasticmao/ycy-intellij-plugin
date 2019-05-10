@@ -21,14 +21,22 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * PluginSettingTable
+ * 插件设置页面的表格对象
  *
  * @author maomao
  * @since 2019-05-05
  */
 public class PluginSettingTable extends JBTable {
     private static final Logger LOG = Logger.getInstance(PluginSettingTable.class);
+
+    /**
+     * 序号列
+     */
     private static final int ORDER_COLUMN = 0;
+
+    /**
+     * 图片 URL 列
+     */
     private static final int URL_COLUMN = 1;
 
     public PluginSettingTable(List<String> defaultImageUrlList) {
@@ -44,7 +52,9 @@ public class PluginSettingTable extends JBTable {
     }
 
     /**
-     * 是否可以编辑表格
+     * 获取表格的 {@link javax.swing.table.TableModel}
+     *
+     * <p>将表格的 {@link javax.swing.table.TableModel} 实现 {@link com.intellij.util.ui.EditableModel} 表示表格是可编辑的</p>
      *
      * @see com.intellij.ui.ToolbarDecorator#createDecorator(JTable)
      */
@@ -54,28 +64,43 @@ public class PluginSettingTable extends JBTable {
     }
 
     /**
-     * 重置表格内容
+     * 重置表格数据
      */
     public void resetToDefault() {
         getModel().resetToDefault();
         LOG.info("reset image url list to default");
     }
 
+    /**
+     * 插件设置页面的表格对象的 {@link javax.swing.table.TableModel}
+     *
+     * <p>实现 {@link com.intellij.util.ui.EditableModel} 表示表格是可编辑的</p>
+     */
     private static class ModelAdapter extends AbstractTableModel implements EditableModel {
         private static final Logger LOG = Logger.getInstance(ModelAdapter.class);
+
+        /**
+         * 图片 URL 列表数据
+         */
         private final List<String> imageUrlList;
 
         public ModelAdapter(List<String> defaultImageUrlList) {
-            // 使用深拷贝复制对象，避免修改默认图片配置
+            // 复制表格数据（使用深拷贝模式），避免修改默认图片配置
             this.imageUrlList = new ArrayList<>(defaultImageUrlList.size());
             this.imageUrlList.addAll(defaultImageUrlList);
         }
 
+        /**
+         * 获取总行数
+         */
         @Override
         public int getRowCount() {
             return imageUrlList.size();
         }
 
+        /**
+         * 获取总列数
+         */
         @Override
         public int getColumnCount() {
             return 2;
@@ -147,7 +172,7 @@ public class PluginSettingTable extends JBTable {
             final String newImgUrl = imageUrlList.get(newIndex);
             imageUrlList.set(oldIndex, newImgUrl);
             imageUrlList.set(newIndex, oldImgUrl);
-            LOG.info(String.format("exchange rows: %d %d", oldIndex, newIndex));
+            LOG.info(String.format("exchange rows: %d -> %d", oldIndex, newIndex));
         }
 
         /**
@@ -168,7 +193,7 @@ public class PluginSettingTable extends JBTable {
         }
 
         /**
-         * 重置表格内容
+         * 重置表格数据
          */
         public void resetToDefault() {
             imageUrlList.clear();
