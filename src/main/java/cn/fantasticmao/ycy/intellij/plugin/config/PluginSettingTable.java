@@ -24,6 +24,7 @@ import java.util.stream.Stream;
  * 插件设置页面的表格对象
  *
  * @author maomao
+ * @version 1.3
  * @since 2019-05-05
  */
 public class PluginSettingTable extends JBTable {
@@ -151,16 +152,20 @@ public class PluginSettingTable extends JBTable {
                         try {
                             return VfsUtil.toUri(imageFile).toURL().toString();
                         } catch (MalformedURLException e) {
-                            // ignore
-                            e.printStackTrace();
+                            LOG.error("parse the image \"" + imageFile.getName() + "\" to URL error", e);
                             return null;
                         }
                     })
                     .filter(Objects::nonNull)
                     .filter(imageUrl -> !imageUrlList.contains(imageUrl))
                     .collect(Collectors.toList());
-            imageUrlList.addAll(chosenImageUrlList);
-            LOG.info("add row :" + chosenImageUrlList);
+            if (chosenImageUrlList.size() != 0) {
+                imageUrlList.addAll(chosenImageUrlList);
+                LOG.info("add rows: " + chosenImageUrlList);
+                super.fireTableRowsInserted(imageUrlList.size() - 1 - files.length, imageUrlList.size() - 1);
+            } else {
+                LOG.info("choose no files");
+            }
         }
 
         /**
@@ -172,7 +177,8 @@ public class PluginSettingTable extends JBTable {
             final String newImgUrl = imageUrlList.get(newIndex);
             imageUrlList.set(oldIndex, newImgUrl);
             imageUrlList.set(newIndex, oldImgUrl);
-            LOG.info(String.format("exchange rows: %d -> %d", oldIndex, newIndex));
+            LOG.info(String.format("exchange rows index: %d -> %d", oldIndex, newIndex));
+            super.fireTableRowsUpdated(Math.min(oldIndex, newIndex), Math.max(oldIndex, newIndex));
         }
 
         /**
@@ -189,7 +195,8 @@ public class PluginSettingTable extends JBTable {
         @Override
         public void removeRow(int idx) {
             imageUrlList.remove(idx);
-            LOG.info("remove row: " + idx);
+            LOG.info("remove row index: " + idx);
+            super.fireTableRowsDeleted(idx, idx);
         }
 
         /**
@@ -198,7 +205,8 @@ public class PluginSettingTable extends JBTable {
         public void resetToDefault() {
             imageUrlList.clear();
             imageUrlList.addAll(DefaultConfig.REMIND_IMAGE_LIST);
-            LOG.info("reset to default");
+            LOG.info("reset rows to default");
+            super.fireTableDataChanged();
         }
     }
 }
