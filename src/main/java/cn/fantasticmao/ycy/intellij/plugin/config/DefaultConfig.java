@@ -20,7 +20,7 @@ public interface DefaultConfig {
     Integer REMIND_TYPE = ConfigState.RemindTypeEnum.INDIRECT.index;
 
     /**
-     * 默认提醒图片的绝对路径
+     * 默认提醒图片列表
      */
     List<String> REMIND_IMAGE_LIST = ImageManager.getInstance().getDefaultImageList();
 

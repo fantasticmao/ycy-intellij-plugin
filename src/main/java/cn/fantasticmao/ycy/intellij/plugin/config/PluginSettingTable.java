@@ -15,6 +15,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -67,9 +68,26 @@ public class PluginSettingTable extends JBTable {
     /**
      * 重置表格数据
      */
-    public void resetToDefault() {
-        getModel().resetToDefault();
+    public void resetTableList() {
+        this.getModel().setRowsData(DefaultConfig.REMIND_IMAGE_LIST);
         LOG.info("reset image url list to default");
+    }
+
+    /**
+     * 获取表格数据
+     */
+    public List<String> getTableList() {
+        List<String> imageList = this.getModel().getRowsData();
+        LOG.info("get image url list: " + imageList);
+        return imageList;
+    }
+
+    /**
+     * 设置表格数据
+     */
+    public void setTableList(List<String> imageList) {
+        this.getModel().setRowsData(imageList);
+        LOG.info("set image url list to: " + imageList);
     }
 
     /**
@@ -200,12 +218,21 @@ public class PluginSettingTable extends JBTable {
         }
 
         /**
-         * 重置表格数据
+         * 获取表格行数据
          */
-        public void resetToDefault() {
+        public List<String> getRowsData() {
+            List<String> rows = Collections.unmodifiableList(new ArrayList<>(imageUrlList));
+            LOG.info("get rows data: " + rows);
+            return rows;
+        }
+
+        /**
+         * 设置表格行数据
+         */
+        public void setRowsData(List<String> list) {
             imageUrlList.clear();
-            imageUrlList.addAll(DefaultConfig.REMIND_IMAGE_LIST);
-            LOG.info("reset rows to default");
+            imageUrlList.addAll(list);
+            LOG.info("set rows data: " + list);
             super.fireTableDataChanged();
         }
     }

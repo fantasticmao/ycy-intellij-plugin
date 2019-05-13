@@ -71,10 +71,10 @@ public class ImageManagerImpl implements ImageManager {
 
         File pluginPath = plugin.getPath();
         try {
-            final String imageUrlPath = "jar:" + pluginPath.toURI().toURL().toString() + "!/images/%d.jpg";
             List<URL> defaultImageUrlList = new ArrayList<>(10);
             for (int i = 1; i <= 10; i++) {
-                URL imageUrl = new URL(String.format(imageUrlPath, i));
+                final String imageUrlPath = "jar:" + pluginPath.toURI().toURL().toString() + "!/images/" + i + ".jpg";
+                URL imageUrl = new URL(imageUrlPath);
                 defaultImageUrlList.add(imageUrl);
             }
             return defaultImageUrlList;

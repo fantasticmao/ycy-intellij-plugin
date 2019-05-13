@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class PluginSettingForm {
     private JPanel pluginSettingPanel;
+    private PluginSettingTable pluginSettingTable;
 
     private JComboBox<String> remindTypeOptions;
     private JPanel imageUrlList;
@@ -42,12 +43,12 @@ public class PluginSettingForm {
 
         ConfigState configState = ConfigService.getInstance().getState();
         List<String> remindImages = configState.getRemindImages();
-        PluginSettingTable imageUrlListTable = new PluginSettingTable(remindImages);
-        this.imageUrlList = ToolbarDecorator.createDecorator(imageUrlListTable)
+        this.pluginSettingTable = new PluginSettingTable(remindImages);
+        this.imageUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
                 .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Reset_to_default) {
                     @Override
                     public void actionPerformed(AnActionEvent e) {
-                        imageUrlListTable.resetToDefault();
+                        pluginSettingTable.resetTableList();
                     }
 
                     @Override
@@ -82,6 +83,20 @@ public class PluginSettingForm {
         optionIndex = Math.max(optionIndex, 0);
         optionIndex = Math.min(optionIndex, 1);
         this.remindTypeOptions.setSelectedIndex(optionIndex);
+    }
+
+    /**
+     * 获取提醒图片列表
+     */
+    public List<String> getImageUrlList() {
+        return this.pluginSettingTable.getTableList();
+    }
+
+    /**
+     * 设置提醒图片列表
+     */
+    public void setImageUrlList(List<String> imageList) {
+        this.pluginSettingTable.setTableList(imageList);
     }
 
     /**
