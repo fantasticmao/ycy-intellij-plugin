@@ -1,5 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
+import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
+import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.util.xmlb.annotations.OptionTag;
 
 import java.util.List;
@@ -101,7 +103,33 @@ public class ConfigState {
      * 随机获取待展示的图片
      */
     public String getRandomRemindImage() {
-        int imageIndex = new Random().nextInt(this.remindImages.size());
+        final String imageIndexCacheKey = GlobalConfig.PLUGIN_ID + "_showedImageIndex";
+        final int imageIndex;
+        if (this.remindImages.size() > 1) {
+            // 1. 获取上次展示的图片 index
+            final String prevImageIndexStr = PropertiesComponent.getInstance().getValue(imageIndexCacheKey);
+
+            // 2. 生成下次展示的图片 index
+            if (prevImageIndexStr != null) {
+                // 2.1 若上次展示的图片 index 存在，则生成下次展示的图片 index 时，需要避免与上次展示的重复
+                final int prevImageIndex = Integer.valueOf(prevImageIndexStr);
+                for (; ; ) { // 使用 for(; ;) 而不是 while(true)，让代码看起来更酷
+                    int nextImageIndex = new Random().nextInt(this.remindImages.size());
+                    if (nextImageIndex != prevImageIndex) {
+                        imageIndex = nextImageIndex;
+                        break;
+                    }
+                }
+            } else {
+                // 2.2 若上次展示的图片 index 不存在，则直接随机生成下次展示的图片 index
+                imageIndex = new Random().nextInt(this.remindImages.size());
+            }
+        } else {
+            imageIndex = 0;
+        }
+
+        // 保存这次展示的图片 index
+        PropertiesComponent.getInstance().setValue(imageIndexCacheKey, String.valueOf(imageIndex));
         return this.remindImages.get(imageIndex);
     }
 
