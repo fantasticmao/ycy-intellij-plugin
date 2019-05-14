@@ -56,7 +56,7 @@ public class PluginSettingTable extends JBTable {
     /**
      * 获取表格的 {@link javax.swing.table.TableModel}
      *
-     * <p>将表格的 {@link javax.swing.table.TableModel} 实现 {@link com.intellij.util.ui.EditableModel} 表示表格是可编辑的</p>
+     * <p>实现 {@link com.intellij.util.ui.EditableModel} 表示表格是可编辑的</p>
      *
      * @see com.intellij.ui.ToolbarDecorator#createDecorator(JTable)
      */
