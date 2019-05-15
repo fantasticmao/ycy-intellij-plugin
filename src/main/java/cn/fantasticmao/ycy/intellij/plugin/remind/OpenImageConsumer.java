@@ -40,7 +40,7 @@ public class OpenImageConsumer implements Consumer<DataContext> {
 
         // 2. 获取即将用于展示的图片
         ConfigState configState = ConfigService.getInstance().getState();
-        String imageUrlStr = configState.getRemindImageUrl();
+        String imageUrlStr = configState.getRandomRemindImage();
         URL imageUrl;
         try {
             imageUrl = new URL(imageUrlStr);

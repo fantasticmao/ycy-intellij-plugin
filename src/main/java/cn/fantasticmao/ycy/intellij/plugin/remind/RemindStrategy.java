@@ -75,7 +75,7 @@ public interface RemindStrategy {
     class RemindIndirect implements RemindStrategy {
         private static final Logger LOG = Logger.getInstance(RemindIndirect.class);
         /**
-         * IDEA Preferences -> Appearance & Behavior -> Notifications 中可设置的通知组
+         * <code>IDEA Preferences -> Appearance & Behavior -> Notifications</code> 中可设置的通知组
          */
         private static final NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("Plugins " + GlobalConfig.PLUGIN_NAME,
                 NotificationDisplayType.STICKY_BALLOON, true);

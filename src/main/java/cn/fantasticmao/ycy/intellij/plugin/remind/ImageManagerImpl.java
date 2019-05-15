@@ -6,10 +6,11 @@ import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,16 +24,9 @@ public class ImageManagerImpl implements ImageManager {
     private static final Logger LOG = Logger.getInstance(ImageManagerImpl.class);
 
     /**
-     * 默认图片
+     * 默认图片列表
      */
-    private URL defaultImageUrl;
-
-    /**
-     * 可配置的图片列表
-     *
-     * <p>TODO 支持图片的可配置功能</p>
-     */
-    private List<URL> imageUrlList;
+    private final List<URL> defaultImageUrlList;
 
     /**
      * 单例模式
@@ -40,7 +34,8 @@ public class ImageManagerImpl implements ImageManager {
     private static ImageManagerImpl instance;
 
     private ImageManagerImpl() {
-        this.defaultImageUrl = this.getDefaultUrl();
+        // 避免修改原始的默认值
+        this.defaultImageUrlList = Collections.unmodifiableList(this.init());
     }
 
     /**
@@ -52,32 +47,39 @@ public class ImageManagerImpl implements ImageManager {
         return instance != null ? instance : (instance = new ImageManagerImpl());
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
-    @Nonnull
-    public URL getImageUrl() {
-        return defaultImageUrl;
+    public List<URL> getDefaultImageUrlList() {
+        return this.defaultImageUrlList;
     }
 
     /**
-     * 从插件 jar 中获取默认图片
+     * 从插件 jar 中获取默认图片列表
      *
-     * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/超越妹妹.jpg"</p>
+     * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/1.jpg"</p>
      */
-    private URL getDefaultUrl() {
+    private List<URL> init() {
         PluginId pluginId = PluginId.getId(GlobalConfig.PLUGIN_ID);
         IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
         if (plugin == null) {
             LOG.error("fail to get plugin \"" + GlobalConfig.PLUGIN_ID + "\"");
             throw new NullPointerException("fail to get plugin \"" + GlobalConfig.PLUGIN_ID + "\"");
         }
+
         File pluginPath = plugin.getPath();
         try {
-            return new URL("jar:" + pluginPath.toURI().toURL().toString() + "!/images/超越妹妹.jpg");
+            List<URL> defaultImageUrlList = new ArrayList<>(10);
+            for (int i = 1; i <= 10; i++) {
+                final String imageUrlPath = "jar:" + pluginPath.toURI().toURL().toString() + "!/images/" + i + ".jpg";
+                URL imageUrl = new URL(imageUrlPath);
+                defaultImageUrlList.add(imageUrl);
+            }
+            return defaultImageUrlList;
         } catch (MalformedURLException e) {
-            LOG.error("fail to get the default imageUrl", e);
+            LOG.error("fail to get the default image url list", e);
             throw new RuntimeException("fail to get the default imageUrl", e);
         }
     }

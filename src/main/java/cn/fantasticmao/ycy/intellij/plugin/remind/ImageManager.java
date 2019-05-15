@@ -1,7 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import javax.annotation.Nonnull;
 import java.net.URL;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 图片管理器
@@ -22,12 +23,20 @@ public interface ImageManager {
     }
 
     /**
-     * 获取即将用于展示的图片
-     *
-     * <p>URL 仅支持 "file" 和 "jar" 两种协议</p>
+     * 获取默认图片列表
      *
      * @return {@link java.net.URL}
      */
-    @Nonnull
-    URL getImageUrl();
+    List<URL> getDefaultImageUrlList();
+
+    /**
+     * 获取默认图片列表
+     *
+     * @return {@link java.lang.String}
+     */
+    default List<String> getDefaultImageList() {
+        return this.getDefaultImageUrlList().stream()
+                .map(URL::toString)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,10 +1,13 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
+import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.ui.AnActionButton;
+import com.intellij.ui.ToolbarDecorator;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.util.List;
 
 /**
  * 插件设置页面的表单对象
@@ -18,10 +21,10 @@ import java.awt.event.ActionEvent;
  */
 public class PluginSettingForm {
     private JPanel pluginSettingPanel;
+    private PluginSettingTable pluginSettingTable;
 
     private JComboBox<String> remindTypeOptions;
-    private TextFieldWithBrowseButton imageUrl;
-    private JButton useDefaultImage;
+    private JPanel imageUrlList;
     private JTextField periodMinutes;
     private JTextField notifyTitle;
     private JTextField notifyContent;
@@ -38,16 +41,22 @@ public class PluginSettingForm {
             this.remindTypeOptions.addItem(remindType.description);
         }
 
-        this.imageUrl = new TextFieldWithBrowseButton();
-        this.imageUrl.addActionListener(PluginSettingConfig.newBrowseFolderActionListener(this.imageUrl));
+        ConfigState configState = ConfigService.getInstance().getState();
+        List<String> remindImages = configState.getRemindImages();
+        this.pluginSettingTable = new PluginSettingTable(remindImages);
+        this.imageUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
+                .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Reset_to_default) {
+                    @Override
+                    public void actionPerformed(AnActionEvent e) {
+                        pluginSettingTable.resetTableList();
+                    }
 
-        this.useDefaultImage = new JButton();
-        this.useDefaultImage.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                imageUrl.setText(DefaultConfig.REMIND_IMAGE_URL);
-            }
-        });
+                    @Override
+                    public boolean isDumbAware() {
+                        return true; // 使用「后台更新」模式
+                    }
+                })
+                .createPanel();
     }
 
     /**
@@ -77,17 +86,17 @@ public class PluginSettingForm {
     }
 
     /**
-     * 获取提醒图片的绝对路径
+     * 获取提醒图片列表
      */
-    public String getImageUrl() {
-        return this.imageUrl.getText();
+    public List<String> getImageUrlList() {
+        return this.pluginSettingTable.getTableList();
     }
 
     /**
-     * 设置提醒图片的绝对路径
+     * 设置提醒图片列表
      */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl.setText(imageUrl);
+    public void setImageUrlList(List<String> imageList) {
+        this.pluginSettingTable.setTableList(imageList);
     }
 
     /**

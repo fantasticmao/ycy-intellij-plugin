@@ -1,15 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.ui.ComponentWithBrowseButton.BrowseFolderActionListener;
-import com.intellij.openapi.ui.TextComponentAccessor;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
-import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,33 +28,16 @@ public interface PluginSettingConfig {
     /**
      * 图片选择器的描述对象
      */
-    FileChooserDescriptor IMAGE_FILE_CHOOSER = new FileChooserDescriptor(true, false, false, false, false, false) {
+    FileChooserDescriptor IMAGE_FILE_CHOOSER = new FileChooserDescriptor(true, false, false, false, false, true) {
         @Override
         public void validateSelectedFiles(VirtualFile[] files) throws Exception {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
                 if (!IMAGE_EXTENSION_LIST.contains(file.getExtension())) {
-                    throw new IllegalArgumentException("请确保上传的是 " + IMAGE_EXTENSION_LIST_STR + " 文件，然后重试");
+                    throw new IllegalArgumentException("请确认选择的是 " + IMAGE_EXTENSION_LIST_STR + " 图片，然后重试");
                 }
             }
         }
     };
 
-    /**
-     * 图片选择器的监听事件
-     */
-    static BrowseFolderActionListener newBrowseFolderActionListener(TextFieldWithBrowseButton textField) {
-        return new BrowseFolderActionListener<JTextField>("图片 URL", null, textField, null,
-                PluginSettingConfig.IMAGE_FILE_CHOOSER, TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT) {
-            @NotNull
-            @Override
-            protected String chosenFileToResultingText(@NotNull VirtualFile chosenFile) {
-                try {
-                    return VfsUtil.toUri(chosenFile).toURL().toString(); // 选择图片时，返回文件完整的 URL 而不仅仅是 Path
-                } catch (MalformedURLException e) {
-                    return DefaultConfig.REMIND_IMAGE_URL;
-                }
-            }
-        };
-    }
 }

@@ -36,7 +36,6 @@ public class RemindTask {
                 configState.getPeriodMinutes(), configState.getPeriodMinutes(), TimeUnit.MINUTES);
         // 保存 ScheduledFuture 引用至 ThreadLocal 上下文中，用于后续注销定时任务
         SCHEDULED_FUTURE_CONTEXT.set(scheduledFuture);
-
     }
 
     /**
