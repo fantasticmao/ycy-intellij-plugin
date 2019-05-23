@@ -105,7 +105,8 @@ public class ConfigState {
     public String getRandomRemindImage() {
         final String imageIndexCacheKey = GlobalConfig.PLUGIN_ID + "_showedImageIndex";
         final int imageIndex;
-        if (this.remindImages.size() > 1) {
+        int remindImagesSize;
+        if ((remindImagesSize = this.remindImages.size()) > 1) {
             // 1. 获取上次展示的图片 index
             final String prevImageIndexStr = PropertiesComponent.getInstance().getValue(imageIndexCacheKey);
 
@@ -124,8 +125,10 @@ public class ConfigState {
                 // 2.2 若上次展示的图片 index 不存在，则直接随机生成下次展示的图片 index
                 imageIndex = new Random().nextInt(this.remindImages.size());
             }
-        } else {
+        } else if (remindImagesSize == 0) {
             imageIndex = 0;
+        } else {
+            return null;
         }
 
         // 保存这次展示的图片 index
