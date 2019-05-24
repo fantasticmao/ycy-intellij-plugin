@@ -89,8 +89,10 @@ public interface RemindStrategy {
 
             Notification notification = NOTIFICATION_GROUP.createNotification(configState.getNotifyTitle(),
                     configState.getNotifyContent(), NotificationType.INFORMATION, null);
-            OpenImageAction openImageAction = new OpenImageAction(configState.getNotifyAction(), notification);
-            notification.addAction(openImageAction);
+            if (!configState.getRemindImages().isEmpty()) {
+                OpenImageAction openImageAction = new OpenImageAction(configState.getNotifyAction(), notification);
+                notification.addAction(openImageAction);
+            }
             Notifications.Bus.notify(notification);
             LOG.info("notify an info message");
         }

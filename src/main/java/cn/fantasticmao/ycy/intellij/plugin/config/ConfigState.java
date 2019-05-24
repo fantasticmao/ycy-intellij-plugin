@@ -106,37 +106,37 @@ public class ConfigState {
     public String getRandomRemindImage() {
         final String imageIndexCacheKey = GlobalConfig.PLUGIN_ID + "_showedImageIndex";
         return Optional
-            .ofNullable(this.remindImages)
-            .filter(item -> !item.isEmpty())//防止没有图片时，发生数组越界异常
-            .map(remindImages -> {
-                final int imageIndex;
-                if (this.remindImages.size() > 1) {
-                    // 1. 获取上次展示的图片 index
-                    final String prevImageIndexStr = PropertiesComponent.getInstance().getValue(imageIndexCacheKey);
+                .ofNullable(this.remindImages)
+                .filter(item -> !item.isEmpty()) // 防止没有图片时，发生数组越界异常
+                .map(remindImages -> {
+                    final int imageIndex;
+                    if (this.remindImages.size() > 1) {
+                        // 1. 获取上次展示的图片 index
+                        final String prevImageIndexStr = PropertiesComponent.getInstance().getValue(imageIndexCacheKey);
 
-                    // 2. 生成下次展示的图片 index
-                    if (prevImageIndexStr != null) {
-                        // 2.1 若上次展示的图片 index 存在，则生成下次展示的图片 index 时，需要避免与上次展示的重复
-                        final int prevImageIndex = Integer.valueOf(prevImageIndexStr);
-                        for (; ; ) { // 使用 for(; ;) 而不是 while(true)，让代码看起来更酷
-                            int nextImageIndex = new Random().nextInt(this.remindImages.size());
-                            if (nextImageIndex != prevImageIndex) {
-                                imageIndex = nextImageIndex;
-                                break;
+                        // 2. 生成下次展示的图片 index
+                        if (prevImageIndexStr != null) {
+                            // 2.1 若上次展示的图片 index 存在，则生成下次展示的图片 index 时，需要避免与上次展示的重复
+                            final int prevImageIndex = Integer.valueOf(prevImageIndexStr);
+                            for (; ; ) { // 使用 for(; ;) 而不是 while(true)，让代码看起来更酷
+                                int nextImageIndex = new Random().nextInt(this.remindImages.size());
+                                if (nextImageIndex != prevImageIndex) {
+                                    imageIndex = nextImageIndex;
+                                    break;
+                                }
                             }
+                        } else {
+                            // 2.2 若上次展示的图片 index 不存在，则直接随机生成下次展示的图片 index
+                            imageIndex = new Random().nextInt(this.remindImages.size());
                         }
                     } else {
-                        // 2.2 若上次展示的图片 index 不存在，则直接随机生成下次展示的图片 index
-                        imageIndex = new Random().nextInt(this.remindImages.size());
+                        imageIndex = 0;
                     }
-                } else{
-                    imageIndex = 0;
-                }
-                // 保存这次展示的图片 index
-                PropertiesComponent.getInstance().setValue(imageIndexCacheKey, String.valueOf(imageIndex));
-                return this.remindImages.get(imageIndex);
-            })
-            .orElse(null);
+                    // 保存这次展示的图片 index
+                    PropertiesComponent.getInstance().setValue(imageIndexCacheKey, String.valueOf(imageIndex));
+                    return this.remindImages.get(imageIndex);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("image list cannot be empty"));
     }
 
     // getter and setter
