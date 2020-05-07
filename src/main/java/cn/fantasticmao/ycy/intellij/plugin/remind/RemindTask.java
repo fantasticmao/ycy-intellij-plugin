@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2019-04-16
  */
 public class RemindTask {
-    private static final ThreadLocal<ScheduledFuture> SCHEDULED_FUTURE_CONTEXT = new ThreadLocal<>();
+    private static final ThreadLocal<ScheduledFuture<?>> SCHEDULED_FUTURE_CONTEXT = new ThreadLocal<>();
 
     /**
      * 开启定时提醒任务
@@ -32,8 +32,8 @@ public class RemindTask {
         destroy();
 
         ConfigState configState = ConfigService.getInstance().getState();
-        ScheduledFuture scheduledFuture = JobScheduler.getScheduler().scheduleWithFixedDelay(new Reminder(),
-                configState.getPeriodMinutes(), configState.getPeriodMinutes(), TimeUnit.MINUTES);
+        ScheduledFuture<?> scheduledFuture = JobScheduler.getScheduler().scheduleWithFixedDelay(new Reminder(),
+            configState.getPeriodMinutes(), configState.getPeriodMinutes(), TimeUnit.MINUTES);
         // 保存 ScheduledFuture 引用至 ThreadLocal 上下文中，用于后续注销定时任务
         SCHEDULED_FUTURE_CONTEXT.set(scheduledFuture);
     }
@@ -42,7 +42,7 @@ public class RemindTask {
      * 注销定时提醒任务
      */
     private static void destroy() {
-        ScheduledFuture existScheduledFuture = SCHEDULED_FUTURE_CONTEXT.get();
+        ScheduledFuture<?> existScheduledFuture = SCHEDULED_FUTURE_CONTEXT.get();
         if (existScheduledFuture != null) {
             existScheduledFuture.cancel(true);
             SCHEDULED_FUTURE_CONTEXT.remove();
