@@ -39,11 +39,11 @@ class OpenImageAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent event) {
         /*
          * at version 1.2 fix a bug: 2017.1 版本无法打开图片问题
-         * see https://github.com/FantasticMao/ycy-intellij-plugin/issues/9
+         * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/9
          */
         DataManager.getInstance().getDataContextFromFocus()
-                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
-                .doWhenRejected((Consumer<String>) LOG::error);
+            .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
+            .doWhenRejected((Consumer<String>) LOG::error);
 
         // 使打开图片按钮失效，避免重复点击
         notification.expire();

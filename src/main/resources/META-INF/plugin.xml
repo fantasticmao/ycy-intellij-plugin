@@ -3,7 +3,7 @@
     <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
     <version>1.4</version>
 
-    <vendor email="fantasticmao@gmail.com" url="https://github.com/FantasticMao/ycy-intellij-plugin">FantasticMao</vendor>
+    <vendor email="maomao8017@gmail.com" url="https://github.com/fantasticmao/ycy-intellij-plugin">fantasticmao</vendor>
 
     <description><![CDATA[
         Coding won't be lonely anymore with Chaoyue Yang's accompany!<br>
@@ -12,16 +12,16 @@
         写代码不再孤单，有杨超越与你同在！<br>
         在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～<br>
         <br>
-        GitHub: <a href="https://github.com/FantasticMao/ycy-intellij-plugin">https://github.com/FantasticMao/ycy-intellij-plugin</a>
+        GitHub: <a href="https://github.com/fantasticmao/ycy-intellij-plugin">https://github.com/fantasticmao/ycy-intellij-plugin</a>
     ]]></description>
 
     <change-notes><![CDATA[
         <ul>
-            <li>Bugfix <a href="https://github.com/FantasticMao/ycy-intellij-plugin/pull/20">#20</a></li>
+            <li>Bugfix <a href="https://github.com/fantasticmao/ycy-intellij-plugin/pull/27">#27</a></li>
         </ul>
     ]]></change-notes>
 
-    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.platform</depends>
 
     <idea-version since-build="171.0"/>
 
@@ -34,7 +34,8 @@
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable groupId="other" instance="cn.fantasticmao.ycy.intellij.plugin.config.PluginSettingPage"/>
+        <applicationConfigurable groupId="other"
+                                 instance="cn.fantasticmao.ycy.intellij.plugin.config.PluginSettingPage"/>
 
         <applicationService serviceInterface="cn.fantasticmao.ycy.intellij.plugin.config.ConfigService"
                             serviceImplementation="cn.fantasticmao.ycy.intellij.plugin.config.ConfigServiceImpl"/>

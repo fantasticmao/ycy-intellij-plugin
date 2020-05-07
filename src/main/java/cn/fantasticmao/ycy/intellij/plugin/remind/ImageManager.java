@@ -36,7 +36,7 @@ public interface ImageManager {
      */
     default List<String> getDefaultImageList() {
         return this.getDefaultImageUrlList().stream()
-                .map(URL::toString)
-                .collect(Collectors.toList());
+            .map(URL::toString)
+            .collect(Collectors.toList());
     }
 }

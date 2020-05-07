@@ -62,8 +62,8 @@ public interface RemindStrategy {
         @Override
         public void remind() {
             DataManager.getInstance().getDataContextFromFocus()
-                    .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
-                    .doWhenRejected((Consumer<String>) LOG::error);
+                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
+                .doWhenRejected((Consumer<String>) LOG::error);
         }
     }
 
@@ -78,7 +78,7 @@ public interface RemindStrategy {
          * <code>IDEA Preferences -> Appearance & Behavior -> Notifications</code> 中可设置的通知组
          */
         private static final NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("Plugins " + GlobalConfig.PLUGIN_NAME,
-                NotificationDisplayType.STICKY_BALLOON, true);
+            NotificationDisplayType.STICKY_BALLOON, true);
 
         /**
          * {@inheritDoc}
@@ -88,7 +88,7 @@ public interface RemindStrategy {
             ConfigState configState = ConfigService.getInstance().getState();
 
             Notification notification = NOTIFICATION_GROUP.createNotification(configState.getNotifyTitle(),
-                    configState.getNotifyContent(), NotificationType.INFORMATION, null);
+                configState.getNotifyContent(), NotificationType.INFORMATION, null);
             if (!configState.getRemindImages().isEmpty()) {
                 OpenImageAction openImageAction = new OpenImageAction(configState.getNotifyAction(), notification);
                 notification.addAction(openImageAction);

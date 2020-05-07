@@ -166,17 +166,17 @@ public class PluginSettingTable extends JBTable {
             FileChooserDialog dialog = FileChooserFactory.getInstance().createFileChooser(descriptor, null, null);
             VirtualFile[] files = dialog.choose(null);
             List<String> chosenImageUrlList = Stream.of(files)
-                    .map(imageFile -> {
-                        try {
-                            return VfsUtil.toUri(imageFile).toURL().toString();
-                        } catch (MalformedURLException e) {
-                            LOG.error("parse the image \"" + imageFile.getName() + "\" to URL error", e);
-                            return null;
-                        }
-                    })
-                    .filter(Objects::nonNull)
-                    .filter(imageUrl -> !imageUrlList.contains(imageUrl))
-                    .collect(Collectors.toList());
+                .map(imageFile -> {
+                    try {
+                        return VfsUtil.toUri(imageFile).toURL().toString();
+                    } catch (MalformedURLException e) {
+                        LOG.error("parse the image \"" + imageFile.getName() + "\" to URL error", e);
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .filter(imageUrl -> !imageUrlList.contains(imageUrl))
+                .collect(Collectors.toList());
             if (chosenImageUrlList.size() != 0) {
                 imageUrlList.addAll(chosenImageUrlList);
                 LOG.info("add rows: " + chosenImageUrlList);

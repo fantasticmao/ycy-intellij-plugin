@@ -45,18 +45,22 @@ public class PluginSettingForm {
         List<String> remindImages = configState.getRemindImages();
         this.pluginSettingTable = new PluginSettingTable(remindImages);
         this.imageUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
-                .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Reset_to_default) {
-                    @Override
-                    public void actionPerformed(AnActionEvent e) {
-                        pluginSettingTable.resetTableList();
-                    }
+            /*
+             * at version 1.5 fix a bug: 2020.1 版本 AllIcons.Actions.Reset_to_default 过时问题
+             * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/27
+             */
+            .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Rollback) {
+                @Override
+                public void actionPerformed(AnActionEvent e) {
+                    pluginSettingTable.resetTableList();
+                }
 
-                    @Override
-                    public boolean isDumbAware() {
-                        return true; // 使用「后台更新」模式
-                    }
-                })
-                .createPanel();
+                @Override
+                public boolean isDumbAware() {
+                    return true; // 使用「后台更新」模式
+                }
+            })
+            .createPanel();
     }
 
     /**

@@ -18,6 +18,7 @@ repositories {
 
 intellij {
     version 'IC-2017.1'
-//    version 'IC-2018.3.5'
+//    version 'IC-2018.3'
+//    version 'IC-2020.1'
     updateSinceUntilBuild false
 }
