@@ -7,7 +7,7 @@
 
     <description><![CDATA[
         Coding won't be lonely anymore with Chaoyue Yang's accompany!<br>
-        Chaoyue Yang will remind you to have a rest when you work constantly for an hour at IntelliJ IDEA~<br>
+        Chaoyue Yang will remind you to have a rest when you have been working for an hour on IntelliJ IDEA~<br>
         <br>
         写代码不再孤单，有杨超越与你同在！<br>
         在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～<br>
@@ -27,9 +27,9 @@
 
     <application-components>
         <component>
-            <interface-class>cn.fantasticmao.ycy.intellij.plugin.remind.RemindComponent</interface-class>
+            <interface-class>cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponent</interface-class>
 
-            <implementation-class>cn.fantasticmao.ycy.intellij.plugin.remind.RemindComponentImpl</implementation-class>
+            <implementation-class>cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponentImpl</implementation-class>
         </component>
     </application-components>
 

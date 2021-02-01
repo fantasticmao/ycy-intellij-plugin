@@ -1,7 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
-import cn.fantasticmao.ycy.intellij.plugin.remind.RemindTask;
+import cn.fantasticmao.ycy.intellij.plugin.remind.ReminderTask;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -85,16 +85,16 @@ public class PluginSettingPage implements SearchableConfigurable {
         if (this.form == null) return;
 
         ConfigState configState = ConfigService.getInstance().getState();
-        configState.setRemindType(this.form.getRemindTypeOption());
-        configState.setRemindImages(this.form.getImageUrlList());
-        configState.setPeriodMinutes(this.form.getPeriodMinutes());
+        configState.setRemindMode(this.form.getRemindModeOption());
+        configState.setRemindPictures(this.form.getPictureUrlList());
+        configState.setDurationInMinutes(this.form.getDurationInMinutes());
         configState.setNotifyTitle(this.form.getNotifyTitle());
         configState.setNotifyContent(this.form.getNotifyContent());
         configState.setNotifyAction(this.form.getNotifyAction());
         ConfigService.getInstance().setState(configState);
-        LOG.info("apply and save user setting");
+        LOG.info("apply and save user settings");
 
-        RemindTask.restart();
+        ReminderTask.restart();
         LOG.info("restart scheduled remind task");
     }
 
@@ -106,13 +106,13 @@ public class PluginSettingPage implements SearchableConfigurable {
         if (form == null) return;
 
         ConfigState configState = ConfigService.getInstance().getState();
-        this.form.setRemindTypeOption(configState.getRemindType());
-        this.form.setImageUrlList(configState.getRemindImages());
-        this.form.setPeriodMinutes(configState.getPeriodMinutes());
+        this.form.setRemindModeOption(configState.getRemindMode());
+        this.form.setPictureUrlList(configState.getRemindPictures());
+        this.form.setDurationInMinutes(configState.getDurationInMinutes());
         this.form.setNotifyTitle(configState.getNotifyTitle());
         this.form.setNotifyContent(configState.getNotifyContent());
         this.form.setNotifyAction(configState.getNotifyAction());
-        LOG.info("reset user setting");
+        LOG.info("reset user settings");
     }
 
     /**

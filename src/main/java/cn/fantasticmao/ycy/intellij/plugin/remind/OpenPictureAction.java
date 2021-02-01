@@ -16,8 +16,8 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0
  * @since 2019-04-04
  */
-class OpenImageAction extends AnAction {
-    private static final Logger LOG = Logger.getInstance(OpenImageAction.class);
+class OpenPictureAction extends AnAction {
+    private static final Logger LOG = Logger.getInstance(OpenPictureAction.class);
 
     private final Notification notification;
 
@@ -27,7 +27,7 @@ class OpenImageAction extends AnAction {
      * @param text         通知中可点击的按钮的文案
      * @param notification 通知对象，在点击按钮之后需要调用 {@link Notification#expire()}
      */
-    OpenImageAction(String text, Notification notification) {
+    OpenPictureAction(String text, Notification notification) {
         super(text);
         this.notification = notification;
     }
@@ -42,7 +42,7 @@ class OpenImageAction extends AnAction {
          * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/9
          */
         DataManager.getInstance().getDataContextFromFocus()
-            .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
+            .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenPictureConsumer().accept(dataContext)))
             .doWhenRejected((Consumer<String>) LOG::error);
 
         // 使打开图片按钮失效，避免重复点击

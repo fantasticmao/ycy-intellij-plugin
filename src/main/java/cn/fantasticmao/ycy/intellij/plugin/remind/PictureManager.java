@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 2019-04-05
  */
-public interface ImageManager {
+public interface PictureManager {
 
     /**
      * 单例模式
      *
-     * @return {@link ImageManagerImpl}
+     * @return {@link PictureManagerImpl}
      */
-    static ImageManager getInstance() {
-        return ImageManagerImpl.getInstance();
+    static PictureManager getInstance() {
+        return PictureManagerImpl.getInstance();
     }
 
     /**
@@ -27,15 +27,15 @@ public interface ImageManager {
      *
      * @return {@link java.net.URL}
      */
-    List<URL> getDefaultImageUrlList();
+    List<URL> getDefaultPictureUrlList();
 
     /**
      * 获取默认图片列表
      *
      * @return {@link java.lang.String}
      */
-    default List<String> getDefaultImageList() {
-        return this.getDefaultImageUrlList().stream()
+    default List<String> getDefaultPictureList() {
+        return this.getDefaultPictureUrlList().stream()
             .map(URL::toString)
             .collect(Collectors.toList());
     }

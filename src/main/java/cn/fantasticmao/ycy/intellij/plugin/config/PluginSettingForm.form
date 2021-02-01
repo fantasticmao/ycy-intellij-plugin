@@ -17,7 +17,7 @@
           <text value="提醒方式："/>
         </properties>
       </component>
-      <component id="43e46" class="javax.swing.JComboBox" binding="remindTypeOptions" custom-create="true">
+      <component id="43e46" class="javax.swing.JComboBox" binding="remindModeOptions" custom-create="true">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="300" height="-1"/>
@@ -39,7 +39,7 @@
           <text value="图片 URL："/>
         </properties>
       </component>
-      <component id="b9ffe" class="javax.swing.JPanel" binding="imageUrlList" custom-create="true">
+      <component id="b9ffe" class="javax.swing.JPanel" binding="pictureUrlList" custom-create="true">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="300" height="250"/>
@@ -56,7 +56,7 @@
           <text value="间隔时间（分钟）："/>
         </properties>
       </component>
-      <component id="79da7" class="javax.swing.JTextField" binding="periodMinutes">
+      <component id="79da7" class="javax.swing.JTextField" binding="durationInMinutes">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="300" height="-1"/>

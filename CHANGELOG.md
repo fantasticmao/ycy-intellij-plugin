@@ -6,7 +6,7 @@
 
 ## 1.4 - 2019-05-24
 
-- Bugfix [#20](https://github.com/FantasticMao/ycy-intellij-plugin/pull/20)
+- Bugfix [#20](https://github.com/fantasticmao/ycy-intellij-plugin/pull/20)
 
 ## 1.3 - 2019-05-15
 

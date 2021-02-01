@@ -14,37 +14,37 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * {@link ImageManager} 实现类
+ * {@link PictureManager} 实现类
  *
  * @author maomao
  * @version 1.0
  * @since 2019-04-05
  */
-public class ImageManagerImpl implements ImageManager {
-    private static final Logger LOG = Logger.getInstance(ImageManagerImpl.class);
+public class PictureManagerImpl implements PictureManager {
+    private static final Logger LOG = Logger.getInstance(PictureManagerImpl.class);
 
     /**
      * 默认图片列表
      */
-    private final List<URL> defaultImageUrlList;
+    private final List<URL> defaultPictureUrlList;
 
     /**
      * 单例模式
      */
-    private static ImageManagerImpl instance;
+    private static PictureManagerImpl instance;
 
-    private ImageManagerImpl() {
+    private PictureManagerImpl() {
         // 避免修改原始的默认值
-        this.defaultImageUrlList = Collections.unmodifiableList(this.init());
+        this.defaultPictureUrlList = Collections.unmodifiableList(this.init());
     }
 
     /**
      * 单例模式
      *
-     * @return {@link ImageManagerImpl}
+     * @return {@link PictureManagerImpl}
      */
-    static ImageManagerImpl getInstance() {
-        return instance != null ? instance : (instance = new ImageManagerImpl());
+    static PictureManagerImpl getInstance() {
+        return instance != null ? instance : (instance = new PictureManagerImpl());
     }
 
 
@@ -52,14 +52,14 @@ public class ImageManagerImpl implements ImageManager {
      * {@inheritDoc}
      */
     @Override
-    public List<URL> getDefaultImageUrlList() {
-        return this.defaultImageUrlList;
+    public List<URL> getDefaultPictureUrlList() {
+        return this.defaultPictureUrlList;
     }
 
     /**
      * 从插件 jar 中获取默认图片列表
      *
-     * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/images/1.jpg"</p>
+     * <p>默认图片地址是 "jar:file://{@code ${pluginPath}}/ycy-intellij-plugin.jar!/pictures/1.jpg"</p>
      */
     private List<URL> init() {
         PluginId pluginId = PluginId.getId(GlobalConfig.PLUGIN_ID);
@@ -71,16 +71,16 @@ public class ImageManagerImpl implements ImageManager {
 
         File pluginPath = plugin.getPath();
         try {
-            List<URL> defaultImageUrlList = new ArrayList<>(10);
+            List<URL> defaultPictureUrlList = new ArrayList<>(10);
             for (int i = 1; i <= 10; i++) {
-                final String imageUrlPath = "jar:" + pluginPath.toURI().toURL().toString() + "!/images/" + i + ".jpg";
-                URL imageUrl = new URL(imageUrlPath);
-                defaultImageUrlList.add(imageUrl);
+                final String pictureUrlPath = "jar:" + pluginPath.toURI().toURL().toString() + "!/pictures/" + i + ".jpg";
+                URL pictureUrl = new URL(pictureUrlPath);
+                defaultPictureUrlList.add(pictureUrl);
             }
-            return defaultImageUrlList;
+            return defaultPictureUrlList;
         } catch (MalformedURLException e) {
-            LOG.error("fail to get the default image url list", e);
-            throw new RuntimeException("fail to get the default imageUrl", e);
+            LOG.error("fail to get default picture url list", e);
+            throw new RuntimeException("fail to get default pictures", e);
         }
     }
 }

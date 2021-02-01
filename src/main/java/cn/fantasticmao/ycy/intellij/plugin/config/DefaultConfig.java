@@ -1,6 +1,6 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
-import cn.fantasticmao.ycy.intellij.plugin.remind.ImageManager;
+import cn.fantasticmao.ycy.intellij.plugin.remind.PictureManager;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,17 +17,17 @@ public interface DefaultConfig {
     /**
      * 默认提醒方式
      */
-    Integer REMIND_TYPE = ConfigState.RemindTypeEnum.INDIRECT.index;
+    Integer REMIND_MODE = ConfigState.RemindModeEnum.INDIRECT.index;
 
     /**
      * 默认提醒图片列表
      */
-    List<String> REMIND_IMAGE_LIST = ImageManager.getInstance().getDefaultImageList();
+    List<String> REMIND_PICTURE_LIST = PictureManager.getInstance().getDefaultPictureList();
 
     /**
      * 默认提醒间隔时间
      */
-    Integer PERIOD_MINUTES = (int) TimeUnit.HOURS.toMinutes(1);
+    Integer DURATION_IN_MINUTES = (int) TimeUnit.HOURS.toMinutes(1);
 
     /**
      * 默认通知文案的标题

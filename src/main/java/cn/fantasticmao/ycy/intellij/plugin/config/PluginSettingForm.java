@@ -23,9 +23,9 @@ public class PluginSettingForm {
     private JPanel pluginSettingPanel;
     private PluginSettingTable pluginSettingTable;
 
-    private JComboBox<String> remindTypeOptions;
-    private JPanel imageUrlList;
-    private JTextField periodMinutes;
+    private JComboBox<String> remindModeOptions;
+    private JPanel pictureUrlList;
+    private JTextField durationInMinutes;
     private JTextField notifyTitle;
     private JTextField notifyContent;
     private JTextField notifyAction;
@@ -36,15 +36,15 @@ public class PluginSettingForm {
 
     private void createUIComponents() {
         // place custom component creation code here
-        this.remindTypeOptions = new ComboBox<>();
-        for (ConfigState.RemindTypeEnum remindType : ConfigState.RemindTypeEnum.values()) {
-            this.remindTypeOptions.addItem(remindType.description);
+        this.remindModeOptions = new ComboBox<>();
+        for (ConfigState.RemindModeEnum remindMode : ConfigState.RemindModeEnum.values()) {
+            this.remindModeOptions.addItem(remindMode.description);
         }
 
         ConfigState configState = ConfigService.getInstance().getState();
-        List<String> remindImages = configState.getRemindImages();
-        this.pluginSettingTable = new PluginSettingTable(remindImages);
-        this.imageUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
+        List<String> remindPictures = configState.getRemindPictures();
+        this.pluginSettingTable = new PluginSettingTable(remindPictures);
+        this.pictureUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
             /*
              * at version 1.5 fix a bug: 2020.1 版本 AllIcons.Actions.Reset_to_default 过时问题
              * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/27
@@ -66,10 +66,10 @@ public class PluginSettingForm {
     /**
      * 获取提醒方式
      *
-     * @return {@code cn.fantasticmao.ycy.intellij.plugin.config.ConfigState.RemindTypeEnum}
+     * @see cn.fantasticmao.ycy.intellij.plugin.config.ConfigState.RemindModeEnum
      */
-    public int getRemindTypeOption() {
-        return this.remindTypeOptions.getSelectedIndex();
+    public int getRemindModeOption() {
+        return this.remindModeOptions.getSelectedIndex();
     }
 
     /**
@@ -83,42 +83,42 @@ public class PluginSettingForm {
      *
      * @param optionIndex 0 或 1
      */
-    public void setRemindTypeOption(int optionIndex) {
+    public void setRemindModeOption(int optionIndex) {
         optionIndex = Math.max(optionIndex, 0);
         optionIndex = Math.min(optionIndex, 1);
-        this.remindTypeOptions.setSelectedIndex(optionIndex);
+        this.remindModeOptions.setSelectedIndex(optionIndex);
     }
 
     /**
      * 获取提醒图片列表
      */
-    public List<String> getImageUrlList() {
+    public List<String> getPictureUrlList() {
         return this.pluginSettingTable.getTableList();
     }
 
     /**
      * 设置提醒图片列表
      */
-    public void setImageUrlList(List<String> imageList) {
-        this.pluginSettingTable.setTableList(imageList);
+    public void setPictureUrlList(List<String> pictureList) {
+        this.pluginSettingTable.setTableList(pictureList);
     }
 
     /**
      * 获取提醒间隔时间，单位分钟
      */
-    public int getPeriodMinutes() {
+    public int getDurationInMinutes() {
         try {
-            return Integer.parseInt(this.periodMinutes.getText());
+            return Integer.parseInt(this.durationInMinutes.getText());
         } catch (NumberFormatException e) {
-            return DefaultConfig.PERIOD_MINUTES;
+            return DefaultConfig.DURATION_IN_MINUTES;
         }
     }
 
     /**
      * 设置提醒间隔时间，单位分钟
      */
-    public void setPeriodMinutes(int periodMinutes) {
-        this.periodMinutes.setText(String.valueOf(periodMinutes));
+    public void setDurationInMinutes(int durationInMinutes) {
+        this.durationInMinutes.setText(String.valueOf(durationInMinutes));
     }
 
     /**

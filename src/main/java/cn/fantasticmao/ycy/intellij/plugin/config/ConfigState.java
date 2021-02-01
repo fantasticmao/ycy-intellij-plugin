@@ -6,7 +6,6 @@ import com.intellij.util.xmlb.annotations.OptionTag;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -20,11 +19,11 @@ import java.util.stream.Stream;
  */
 public class ConfigState {
     @OptionTag
-    private Integer remindType;
+    private Integer remindMode;
     @OptionTag
-    private List<String> remindImages;
+    private List<String> remindPictures;
     @OptionTag
-    private Integer periodMinutes;
+    private Integer durationInMinutes;
     @OptionTag
     private String notifyTitle;
     @OptionTag
@@ -35,9 +34,9 @@ public class ConfigState {
     /**
      * 提醒方式枚举类
      *
-     * @see cn.fantasticmao.ycy.intellij.plugin.remind.RemindStrategy
+     * @see cn.fantasticmao.ycy.intellij.plugin.remind.ReminderStrategy
      */
-    public enum RemindTypeEnum {
+    public enum RemindModeEnum {
         /**
          * 直接打开图片
          */
@@ -50,14 +49,14 @@ public class ConfigState {
         public final int index;
         public final String description;
 
-        RemindTypeEnum(int index, String description) {
+        RemindModeEnum(int index, String description) {
             this.index = index;
             this.description = description;
         }
 
-        public static RemindTypeEnum valueOf(int index) {
-            return Stream.of(RemindTypeEnum.values())
-                .filter(remindType -> index == remindType.index)
+        public static RemindModeEnum valueOf(int index) {
+            return Stream.of(RemindModeEnum.values())
+                .filter(remindMode -> index == remindMode.index)
                 .findFirst()
                 .orElseThrow(NullPointerException::new);
         }
@@ -74,9 +73,9 @@ public class ConfigState {
      */
     public ConfigState() {
         // 第一次开启插件时，应该使用默认配置
-        this.remindType = DefaultConfig.REMIND_TYPE;
-        this.remindImages = DefaultConfig.REMIND_IMAGE_LIST;
-        this.periodMinutes = DefaultConfig.PERIOD_MINUTES;
+        this.remindMode = DefaultConfig.REMIND_MODE;
+        this.remindPictures = DefaultConfig.REMIND_PICTURE_LIST;
+        this.durationInMinutes = DefaultConfig.DURATION_IN_MINUTES;
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
         this.notifyContent = DefaultConfig.NOTIFY_CONTENT;
         this.notifyAction = DefaultConfig.NOTIFY_ACTION;
@@ -87,9 +86,9 @@ public class ConfigState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ConfigState that = (ConfigState) o;
-        return Objects.equals(remindType, that.remindType) &&
-            Objects.equals(remindImages, that.remindImages) &&
-            Objects.equals(periodMinutes, that.periodMinutes) &&
+        return Objects.equals(remindMode, that.remindMode) &&
+            Objects.equals(remindPictures, that.remindPictures) &&
+            Objects.equals(durationInMinutes, that.durationInMinutes) &&
             Objects.equals(notifyTitle, that.notifyTitle) &&
             Objects.equals(notifyContent, that.notifyContent) &&
             Objects.equals(notifyAction, that.notifyAction);
@@ -97,72 +96,70 @@ public class ConfigState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(remindType, remindImages, periodMinutes, notifyTitle, notifyContent, notifyAction);
+        return Objects.hash(remindMode, remindPictures, durationInMinutes, notifyTitle, notifyContent, notifyAction);
     }
 
     /**
      * 随机获取待展示的图片
      */
-    public String getRandomRemindImage() {
-        final String imageIndexCacheKey = GlobalConfig.PLUGIN_ID + "_showedImageIndex";
-        return Optional
-            .ofNullable(this.remindImages)
-            .filter(item -> !item.isEmpty()) // 防止没有图片时，发生数组越界异常
-            .map(remindImages -> {
-                final int imageIndex;
-                if (this.remindImages.size() > 1) {
-                    // 1. 获取上次展示的图片 index
-                    final String prevImageIndexStr = PropertiesComponent.getInstance().getValue(imageIndexCacheKey);
+    public String getRandomRemindPicture() {
+        if (this.remindPictures == null || this.remindPictures.size() == 0) {
+            throw new IllegalArgumentException("picture list cannot be empty");
+        }
 
-                    // 2. 生成下次展示的图片 index
-                    if (prevImageIndexStr != null) {
-                        // 2.1 若上次展示的图片 index 存在，则生成下次展示的图片 index 时，需要避免与上次展示的重复
-                        final int prevImageIndex = Integer.parseInt(prevImageIndexStr);
-                        for (; ; ) { // 使用 for(; ;) 而不是 while(true)，让代码看起来更酷
-                            int nextImageIndex = new Random().nextInt(this.remindImages.size());
-                            if (nextImageIndex != prevImageIndex) {
-                                imageIndex = nextImageIndex;
-                                break;
-                            }
-                        }
-                    } else {
-                        // 2.2 若上次展示的图片 index 不存在，则直接随机生成下次展示的图片 index
-                        imageIndex = new Random().nextInt(this.remindImages.size());
+        final String pictureIndexCacheKey = GlobalConfig.PLUGIN_ID + "_showedPictureIndex";
+        final int pictureIndex;
+        if (this.remindPictures.size() > 1) {
+            // 1. 获取上次展示的图片 index
+            final String prevPictureIndexStr = PropertiesComponent.getInstance().getValue(pictureIndexCacheKey);
+
+            // 2. 生成下次展示的图片 index
+            if (prevPictureIndexStr != null) {
+                // 2.1 若上次展示的图片 index 存在，则生成下次展示的图片 index 时，需要避免与上次展示的重复
+                final int prevPictureIndex = Integer.parseInt(prevPictureIndexStr);
+                for (; ; ) { // 使用 for(; ;) 而不是 while(true)，让代码看起来更酷
+                    int nextPictureIndex = new Random().nextInt(this.remindPictures.size());
+                    if (nextPictureIndex != prevPictureIndex) {
+                        pictureIndex = nextPictureIndex;
+                        break;
                     }
-                } else {
-                    imageIndex = 0;
                 }
-                // 保存这次展示的图片 index
-                PropertiesComponent.getInstance().setValue(imageIndexCacheKey, String.valueOf(imageIndex));
-                return this.remindImages.get(imageIndex);
-            })
-            .orElseThrow(() -> new IllegalArgumentException("image list cannot be empty"));
+            } else {
+                // 2.2 若上次展示的图片 index 不存在，则直接随机生成下次展示的图片 index
+                pictureIndex = new Random().nextInt(this.remindPictures.size());
+            }
+        } else {
+            pictureIndex = 0;
+        }
+        // 保存这次展示的图片 index
+        PropertiesComponent.getInstance().setValue(pictureIndexCacheKey, String.valueOf(pictureIndex));
+        return this.remindPictures.get(pictureIndex);
     }
 
     // getter and setter
 
-    public Integer getRemindType() {
-        return remindType;
+    public Integer getRemindMode() {
+        return remindMode;
     }
 
-    public void setRemindType(Integer remindType) {
-        this.remindType = remindType;
+    public void setRemindMode(Integer remindMode) {
+        this.remindMode = remindMode;
     }
 
-    public List<String> getRemindImages() {
-        return remindImages;
+    public List<String> getRemindPictures() {
+        return remindPictures;
     }
 
-    public void setRemindImages(List<String> remindImages) {
-        this.remindImages = remindImages;
+    public void setRemindPictures(List<String> remindPictures) {
+        this.remindPictures = remindPictures;
     }
 
-    public Integer getPeriodMinutes() {
-        return periodMinutes;
+    public Integer getDurationInMinutes() {
+        return durationInMinutes;
     }
 
-    public void setPeriodMinutes(Integer periodMinutes) {
-        this.periodMinutes = periodMinutes;
+    public void setDurationInMinutes(Integer durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
     }
 
     public String getNotifyTitle() {
