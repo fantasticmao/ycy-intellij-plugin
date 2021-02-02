@@ -10,9 +10,9 @@ import javax.swing.*;
 import java.util.List;
 
 /**
- * 插件设置页面的表单对象
+ * 插件设置页面的表单
  *
- * <p>表单对象的实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成</p>
+ * <p>表单实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成</p>
  *
  * @author maomao
  * @version 1.2
@@ -21,30 +21,46 @@ import java.util.List;
  */
 public class PluginSettingForm {
     private JPanel pluginSettingPanel;
-    private PluginSettingTable pluginSettingTable;
 
+    private JLabel remindModeLabel;
     private JComboBox<String> remindModeOptions;
-    private JPanel pictureUrlList;
-    private JTextField durationInMinutes;
-    private JTextField notifyTitle;
-    private JTextField notifyContent;
-    private JTextField notifyAction;
+
+    private JLabel pictureUrlLabel;
+    private PluginSettingPictureUrlTable pictureUrlTable;
+    private JPanel pictureUrlPanel;
+
+    private JLabel durationInMinutesLabel;
+    private JTextField durationInMinutesField;
+
+    private JLabel notifyTitleLabel;
+    private JTextField notifyTitleField;
+
+    private JLabel notifyBodyLabel;
+    private JTextField notifyBodyField;
+
+    private JLabel notifyActionLabel;
+    private JTextField notifyActionField;
 
     public JPanel getPluginSettingPanel() {
         return this.pluginSettingPanel;
     }
 
     private void createUIComponents() {
-        // place custom component creation code here
+        // create custom UI components
+        final ConfigState configState = ConfigService.getInstance().getState();
+
+        String remindModeLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_REMIND_MODE_OPTIONS);
+        this.remindModeLabel = new JLabel(remindModeLabelText);
         this.remindModeOptions = new ComboBox<>();
         for (ConfigState.RemindModeEnum remindMode : ConfigState.RemindModeEnum.values()) {
             this.remindModeOptions.addItem(remindMode.description);
         }
 
-        ConfigState configState = ConfigService.getInstance().getState();
+        String pictureUrlLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_PICTURE_URL_LIST);
+        this.pictureUrlLabel = new JLabel(pictureUrlLabelText);
         List<String> remindPictures = configState.getRemindPictures();
-        this.pluginSettingTable = new PluginSettingTable(remindPictures);
-        this.pictureUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
+        this.pictureUrlTable = new PluginSettingPictureUrlTable(remindPictures);
+        this.pictureUrlPanel = ToolbarDecorator.createDecorator(pictureUrlTable)
             /*
              * at version 1.5 fix a bug: 2020.1 版本 AllIcons.Actions.Reset_to_default 过时问题
              * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/27
@@ -52,7 +68,7 @@ public class PluginSettingForm {
             .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Rollback) {
                 @Override
                 public void actionPerformed(AnActionEvent e) {
-                    pluginSettingTable.resetTableList();
+                    pictureUrlTable.resetTableList();
                 }
 
                 @Override
@@ -61,6 +77,18 @@ public class PluginSettingForm {
                 }
             })
             .createPanel();
+
+        String durationInMinutesLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_DURATION_IN_MINUTES);
+        this.durationInMinutesLabel = new JLabel(durationInMinutesLabelText);
+
+        String notifyTitleLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_TITLE);
+        this.notifyTitleLabel = new JLabel(notifyTitleLabelText);
+
+        String notifyBodyLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_BODY);
+        this.notifyBodyLabel = new JLabel(notifyBodyLabelText);
+
+        String notifyActionLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_ACTION);
+        this.notifyActionLabel = new JLabel(notifyActionLabelText);
     }
 
     /**
@@ -93,14 +121,14 @@ public class PluginSettingForm {
      * 获取提醒图片列表
      */
     public List<String> getPictureUrlList() {
-        return this.pluginSettingTable.getTableList();
+        return this.pictureUrlTable.getTableList();
     }
 
     /**
      * 设置提醒图片列表
      */
     public void setPictureUrlList(List<String> pictureList) {
-        this.pluginSettingTable.setTableList(pictureList);
+        this.pictureUrlTable.setTableList(pictureList);
     }
 
     /**
@@ -108,7 +136,7 @@ public class PluginSettingForm {
      */
     public int getDurationInMinutes() {
         try {
-            return Integer.parseInt(this.durationInMinutes.getText());
+            return Integer.parseInt(this.durationInMinutesField.getText());
         } catch (NumberFormatException e) {
             return DefaultConfig.DURATION_IN_MINUTES;
         }
@@ -118,48 +146,48 @@ public class PluginSettingForm {
      * 设置提醒间隔时间，单位分钟
      */
     public void setDurationInMinutes(int durationInMinutes) {
-        this.durationInMinutes.setText(String.valueOf(durationInMinutes));
+        this.durationInMinutesField.setText(String.valueOf(durationInMinutes));
     }
 
     /**
      * 获取通知文案的标题
      */
     public String getNotifyTitle() {
-        return this.notifyTitle.getText();
+        return this.notifyTitleField.getText();
     }
 
     /**
      * 设置通知文案的标题
      */
     public void setNotifyTitle(String notifyTitle) {
-        this.notifyTitle.setText(notifyTitle);
+        this.notifyTitleField.setText(notifyTitle);
     }
 
     /**
      * 获取通知文案的内容
      */
-    public String getNotifyContent() {
-        return this.notifyContent.getText();
+    public String getNotifyBody() {
+        return this.notifyBodyField.getText();
     }
 
     /**
      * 设置通知文案的内容
      */
-    public void setNotifyContent(String notifyContent) {
-        this.notifyContent.setText(notifyContent);
+    public void setNotifyBody(String notifyContent) {
+        this.notifyBodyField.setText(notifyContent);
     }
 
     /**
      * 获取通知文案的按钮
      */
     public String getNotifyAction() {
-        return this.notifyAction.getText();
+        return this.notifyActionField.getText();
     }
 
     /**
      * 设置通知文案的按钮
      */
     public void setNotifyAction(String notifyAction) {
-        this.notifyAction.setText(notifyAction);
+        this.notifyActionField.setText(notifyAction);
     }
 }

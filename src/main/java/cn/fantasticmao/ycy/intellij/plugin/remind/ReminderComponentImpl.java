@@ -18,7 +18,7 @@ public class ReminderComponentImpl implements ReminderComponent {
             LOG.info("=== Programmer Motivator: Chaoyue Yang(超越鼓励师) ===");
 
             ReminderTask.init();
-            LOG.info("start scheduled remind task");
+            LOG.info("start scheduled reminder task");
         });
     }
 

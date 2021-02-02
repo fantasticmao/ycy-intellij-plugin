@@ -32,15 +32,15 @@ public interface DefaultConfig {
     /**
      * 默认通知文案的标题
      */
-    String NOTIFY_TITLE = "超越妹妹";
+    String NOTIFY_TITLE = I18nBundle.message(I18nBundle.Key.CONFIG_VALUE_NOTIFY_CONTENT_TITLE);
 
     /**
      * 默认通知文案的内容
      */
-    String NOTIFY_CONTENT = "小哥哥，代码写好久了，该休息一下啦～";
+    String NOTIFY_BODY = I18nBundle.message(I18nBundle.Key.CONFIG_VALUE_NOTIFY_CONTENT_BODY);
 
     /**
      * 默认通知文案的按钮
      */
-    String NOTIFY_ACTION = "来看看我吧";
+    String NOTIFY_ACTION = I18nBundle.message(I18nBundle.Key.CONFIG_VALUE_NOTIFY_CONTENT_ACTION);
 }

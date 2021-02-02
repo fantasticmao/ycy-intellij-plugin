@@ -4,6 +4,7 @@ import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.concurrency.JobScheduler;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2019-04-16
  */
 public class ReminderTask {
+    private static final Logger LOG = Logger.getInstance(ReminderTask.class);
     private static final ThreadLocal<ScheduledFuture<?>> SCHEDULED_FUTURE_CONTEXT = new ThreadLocal<>();
 
     /**
@@ -47,7 +49,7 @@ public class ReminderTask {
             existScheduledFuture.cancel(true);
             SCHEDULED_FUTURE_CONTEXT.remove();
         } else {
-            // 还未开启定时任务
+            LOG.warn("reminder task has not been started");
         }
     }
 

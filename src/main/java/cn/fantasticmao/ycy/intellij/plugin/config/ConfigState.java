@@ -27,7 +27,7 @@ public class ConfigState {
     @OptionTag
     private String notifyTitle;
     @OptionTag
-    private String notifyContent;
+    private String notifyBody;
     @OptionTag
     private String notifyAction;
 
@@ -40,11 +40,11 @@ public class ConfigState {
         /**
          * 直接打开图片
          */
-        DIRECT(0, "打开图片"),
+        DIRECT(0, I18nBundle.message(I18nBundle.Key.CONFIG_VALUE_REMIND_MODE_DIRECT)),
         /**
          * 间接打开图片
          */
-        INDIRECT(1, "消息通知 -> 打开图片");
+        INDIRECT(1, I18nBundle.message(I18nBundle.Key.CONFIG_VALUE_REMIND_MODE_INDIRECT));
 
         public final int index;
         public final String description;
@@ -77,7 +77,7 @@ public class ConfigState {
         this.remindPictures = DefaultConfig.REMIND_PICTURE_LIST;
         this.durationInMinutes = DefaultConfig.DURATION_IN_MINUTES;
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
-        this.notifyContent = DefaultConfig.NOTIFY_CONTENT;
+        this.notifyBody = DefaultConfig.NOTIFY_BODY;
         this.notifyAction = DefaultConfig.NOTIFY_ACTION;
     }
 
@@ -90,13 +90,13 @@ public class ConfigState {
             Objects.equals(remindPictures, that.remindPictures) &&
             Objects.equals(durationInMinutes, that.durationInMinutes) &&
             Objects.equals(notifyTitle, that.notifyTitle) &&
-            Objects.equals(notifyContent, that.notifyContent) &&
+            Objects.equals(notifyBody, that.notifyBody) &&
             Objects.equals(notifyAction, that.notifyAction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(remindMode, remindPictures, durationInMinutes, notifyTitle, notifyContent, notifyAction);
+        return Objects.hash(remindMode, remindPictures, durationInMinutes, notifyTitle, notifyBody, notifyAction);
     }
 
     /**
@@ -170,12 +170,12 @@ public class ConfigState {
         this.notifyTitle = notifyTitle;
     }
 
-    public String getNotifyContent() {
-        return notifyContent;
+    public String getNotifyBody() {
+        return notifyBody;
     }
 
-    public void setNotifyContent(String notifyContent) {
-        this.notifyContent = notifyContent;
+    public void setNotifyBody(String notifyBody) {
+        this.notifyBody = notifyBody;
     }
 
     public String getNotifyAction() {

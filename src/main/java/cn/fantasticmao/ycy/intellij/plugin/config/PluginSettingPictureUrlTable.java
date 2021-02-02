@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * 插件设置页面的表格对象
+ * 插件设置页面的表格
  *
  * @author maomao
  * @version 1.3
  * @since 2019-05-05
  */
-public class PluginSettingTable extends JBTable {
-    private static final Logger LOG = Logger.getInstance(PluginSettingTable.class);
+public class PluginSettingPictureUrlTable extends JBTable {
+    private static final Logger LOG = Logger.getInstance(PluginSettingPictureUrlTable.class);
 
     /**
      * 序号列
@@ -41,7 +41,7 @@ public class PluginSettingTable extends JBTable {
      */
     private static final int URL_COLUMN = 1;
 
-    public PluginSettingTable(List<String> defaultPictureUrlList) {
+    public PluginSettingPictureUrlTable(List<String> defaultPictureUrlList) {
         super(new ModelAdapter(defaultPictureUrlList));
         super.setStriped(true);
 
@@ -91,7 +91,7 @@ public class PluginSettingTable extends JBTable {
     }
 
     /**
-     * 插件设置页面的表格对象的 {@link javax.swing.table.TableModel}
+     * 插件设置页面的表格的 {@link javax.swing.table.TableModel}
      *
      * <p>实现 {@link com.intellij.util.ui.EditableModel} 表示表格是可编辑的</p>
      */
@@ -134,7 +134,7 @@ public class PluginSettingTable extends JBTable {
         }
 
         /**
-         * 设置单元格对象的 {@link java.lang.Class}
+         * 设置单元格的 {@link java.lang.Class}
          */
         @Override
         public Class<?> getColumnClass(int columnIndex) {

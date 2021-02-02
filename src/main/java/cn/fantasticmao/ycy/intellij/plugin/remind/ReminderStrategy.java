@@ -88,7 +88,7 @@ public interface ReminderStrategy {
             ConfigState configState = ConfigService.getInstance().getState();
 
             Notification notification = NOTIFICATION_GROUP.createNotification(configState.getNotifyTitle(),
-                configState.getNotifyContent(), NotificationType.INFORMATION, null);
+                configState.getNotifyBody(), NotificationType.INFORMATION, null);
             if (!configState.getRemindPictures().isEmpty()) {
                 OpenPictureAction openPictureAction = new OpenPictureAction(configState.getNotifyAction(), notification);
                 notification.addAction(openPictureAction);

@@ -21,12 +21,7 @@ public interface PluginSettingConfig {
     List<String> PICTURE_EXTENSION_LIST = Arrays.asList("jpg", "jpeg", "png", "bmp", "gif");
 
     /**
-     * 支持的图片格式的拼接字符串，用于弹窗提示
-     */
-    String PICTURE_EXTENSION_LIST_STR = String.join(",", PICTURE_EXTENSION_LIST);
-
-    /**
-     * 图片选择器的描述对象
+     * 图片选择器的描述
      */
     FileChooserDescriptor PICTURE_FILE_CHOOSER = new FileChooserDescriptor(true, false, false, false, false, true) {
         @Override
@@ -34,7 +29,10 @@ public interface PluginSettingConfig {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
                 if (!PICTURE_EXTENSION_LIST.contains(file.getExtension())) {
-                    throw new IllegalArgumentException("请确认选择的是 " + PICTURE_EXTENSION_LIST_STR + " 图片，然后重试");
+                    String delimiter = I18nBundle.message(I18nBundle.Key.SYMBOL_DELIMITER);
+                    String message = I18nBundle.message(I18nBundle.Key.ERROR_PICTURE_FORMAT,
+                        String.join(delimiter, PICTURE_EXTENSION_LIST));
+                    throw new IllegalArgumentException(message);
                 }
             }
         }
