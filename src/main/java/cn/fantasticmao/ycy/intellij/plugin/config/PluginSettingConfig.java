@@ -23,19 +23,33 @@ public interface PluginSettingConfig {
     /**
      * 图片选择器的描述
      */
-    FileChooserDescriptor PICTURE_FILE_CHOOSER = new FileChooserDescriptor(true, false, false, false, false, true) {
+    FileChooserDescriptor PICTURE_FILE_CHOOSER_DESCRIPTOR = new PictureChooserDescriptor();
+
+    class PictureChooserDescriptor extends FileChooserDescriptor {
+
+        public PictureChooserDescriptor() {
+            super(true, false, false, false, false, true);
+            super.withFileFilter(file -> PICTURE_EXTENSION_LIST.contains(file.getExtension()))
+                .withTitle(I18nBundle.message(I18nBundle.Key.PICTURE_CHOOSER_TITLE));
+        }
+
+        @Override
+        public boolean isFileSelectable(VirtualFile file) {
+            return super.isFileSelectable(file) && PICTURE_EXTENSION_LIST.contains(file.getExtension());
+        }
+
         @Override
         public void validateSelectedFiles(VirtualFile[] files) throws Exception {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
                 if (!PICTURE_EXTENSION_LIST.contains(file.getExtension())) {
                     String delimiter = I18nBundle.message(I18nBundle.Key.SYMBOL_DELIMITER);
-                    String message = I18nBundle.message(I18nBundle.Key.ERROR_PICTURE_FORMAT,
+                    String message = I18nBundle.message(I18nBundle.Key.PICTURE_CHOOSER_ERROR_FORMAT,
                         String.join(delimiter, PICTURE_EXTENSION_LIST));
                     throw new IllegalArgumentException(message);
                 }
             }
         }
-    };
+    }
 
 }

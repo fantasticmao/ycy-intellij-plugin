@@ -51,8 +51,9 @@ public class I18nBundle extends AbstractBundle {
         CONFIG_VALUE_NOTIFY_CONTENT_BODY("config.value.notify.content.body"),
         CONFIG_VALUE_NOTIFY_CONTENT_ACTION("config.value.notify.content.action"),
 
-        // 错误消息
-        ERROR_PICTURE_FORMAT("error.picture.format"),
+        // 图片选择器
+        PICTURE_CHOOSER_TITLE("picture.chooser.title"),
+        PICTURE_CHOOSER_ERROR_FORMAT("picture.chooser.error.format"),
 
         // 符号
         SYMBOL_DELIMITER("symbol.delimiter");

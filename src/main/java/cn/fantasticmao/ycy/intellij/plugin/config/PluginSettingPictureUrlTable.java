@@ -1,11 +1,9 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.fileChooser.FileChooserDialog;
-import com.intellij.openapi.fileChooser.FileChooserFactory;
 import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.EditableModel;
 
@@ -19,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 插件设置页面的表格
@@ -162,28 +159,28 @@ public class PluginSettingPictureUrlTable extends JBTable {
          */
         @Override
         public void addRow() {
-            FileChooserDescriptor descriptor = PluginSettingConfig.PICTURE_FILE_CHOOSER;
-            FileChooserDialog dialog = FileChooserFactory.getInstance().createFileChooser(descriptor, null, null);
-            VirtualFile[] files = dialog.choose(null);
-            List<String> chosenPictureUrlList = Stream.of(files)
-                .map(pictureFile -> {
-                    try {
-                        return VfsUtil.toUri(pictureFile).toURL().toString();
-                    } catch (MalformedURLException e) {
-                        LOG.error("parse the picture \"" + pictureFile.getName() + "\" to URL error", e);
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .filter(pictureUrl -> !pictureUrlList.contains(pictureUrl))
-                .collect(Collectors.toList());
-            if (chosenPictureUrlList.size() != 0) {
-                pictureUrlList.addAll(chosenPictureUrlList);
-                LOG.info("add rows: " + chosenPictureUrlList);
-                super.fireTableRowsInserted(pictureUrlList.size() - 1 - files.length, pictureUrlList.size() - 1);
-            } else {
-                LOG.info("choose no files");
-            }
+            FileChooserDescriptor descriptor = PluginSettingConfig.PICTURE_FILE_CHOOSER_DESCRIPTOR;
+            FileChooser.chooseFiles(descriptor, null, null, fileList -> {
+                List<String> chosenPictureUrlList = fileList.stream()
+                    .map(pictureFile -> {
+                        try {
+                            return VfsUtil.toUri(pictureFile).toURL().toString();
+                        } catch (MalformedURLException e) {
+                            LOG.error("parse the picture \"" + pictureFile.getName() + "\" to URL error", e);
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .filter(pictureUrl -> !pictureUrlList.contains(pictureUrl))
+                    .collect(Collectors.toList());
+                if (chosenPictureUrlList.size() != 0) {
+                    pictureUrlList.addAll(chosenPictureUrlList);
+                    LOG.info("add rows: " + chosenPictureUrlList);
+                    super.fireTableRowsInserted(pictureUrlList.size() - 1 - fileList.size(), pictureUrlList.size() - 1);
+                } else {
+                    LOG.info("choose no files");
+                }
+            });
         }
 
         /**
