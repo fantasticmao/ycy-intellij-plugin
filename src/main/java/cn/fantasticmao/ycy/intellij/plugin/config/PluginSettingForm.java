@@ -41,6 +41,9 @@ public class PluginSettingForm {
     private JLabel notifyActionLabel;
     private JTextField notifyActionField;
 
+    private JLabel disabledLabel;
+    private JCheckBox disabledField;
+
     public JPanel getPluginSettingPanel() {
         return this.pluginSettingPanel;
     }
@@ -89,6 +92,9 @@ public class PluginSettingForm {
 
         String notifyActionLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_ACTION);
         this.notifyActionLabel = new JLabel(notifyActionLabelText);
+
+        String disabledLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_DISABLED);
+        this.disabledLabel = new JLabel(disabledLabelText);
     }
 
     /**
@@ -189,5 +195,19 @@ public class PluginSettingForm {
      */
     public void setNotifyAction(String notifyAction) {
         this.notifyActionField.setText(notifyAction);
+    }
+
+    /**
+     * 获取禁用状态
+     */
+    public Boolean getDisabled() {
+        return this.disabledField.isSelected();
+    }
+
+    /**
+     * 设置禁用状态
+     */
+    public void setDisabled(Boolean disabled) {
+        this.disabledField.setSelected(disabled);
     }
 }

@@ -42,6 +42,7 @@ public class I18nBundle extends AbstractBundle {
         CONFIG_LABEL_NOTIFY_CONTENT_TITLE("config.label.notify.content.title"),
         CONFIG_LABEL_NOTIFY_CONTENT_BODY("config.label.notify.content.body"),
         CONFIG_LABEL_NOTIFY_CONTENT_ACTION("config.label.notify.content.action"),
+        CONFIG_LABEL_DISABLED("config.label.disabled"),
 
         // 配置界面 - 表单值
         CONFIG_VALUE_REMIND_MODE_DIRECT("config.value.remind.mode.direct"),

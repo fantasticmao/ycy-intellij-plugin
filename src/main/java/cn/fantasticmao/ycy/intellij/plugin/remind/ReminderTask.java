@@ -63,8 +63,12 @@ public class ReminderTask {
         @Override
         public void run() {
             ConfigState configState = ConfigService.getInstance().getState();
-            ConfigState.RemindModeEnum remindMode = ConfigState.RemindModeEnum.valueOf(configState.getRemindMode());
+            if (configState.getDisabled()) {
+                LOG.warn("reminder task has been disabled");
+                return;
+            }
 
+            ConfigState.RemindModeEnum remindMode = ConfigState.RemindModeEnum.valueOf(configState.getRemindMode());
             ReminderStrategy reminderStrategy = ReminderStrategy.getRemindStrategy(remindMode);
             /*
              * 2019-04-18 fix a bug: Access is allowed from event dispatch thread only. according to:

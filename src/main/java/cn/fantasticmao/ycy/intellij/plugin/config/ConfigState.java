@@ -30,6 +30,8 @@ public class ConfigState {
     private String notifyBody;
     @OptionTag
     private String notifyAction;
+    @OptionTag
+    private Boolean disabled;
 
     /**
      * 提醒方式枚举类
@@ -79,6 +81,7 @@ public class ConfigState {
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
         this.notifyBody = DefaultConfig.NOTIFY_BODY;
         this.notifyAction = DefaultConfig.NOTIFY_ACTION;
+        this.disabled = DefaultConfig.DISABLED;
     }
 
     @Override
@@ -91,12 +94,14 @@ public class ConfigState {
             Objects.equals(durationInMinutes, that.durationInMinutes) &&
             Objects.equals(notifyTitle, that.notifyTitle) &&
             Objects.equals(notifyBody, that.notifyBody) &&
-            Objects.equals(notifyAction, that.notifyAction);
+            Objects.equals(notifyAction, that.notifyAction) &&
+            Objects.equals(disabled, that.disabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(remindMode, remindPictures, durationInMinutes, notifyTitle, notifyBody, notifyAction);
+        return Objects.hash(remindMode, remindPictures, durationInMinutes,
+            notifyTitle, notifyBody, notifyAction, disabled);
     }
 
     /**
@@ -184,5 +189,13 @@ public class ConfigState {
 
     public void setNotifyAction(String notifyAction) {
         this.notifyAction = notifyAction;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 }

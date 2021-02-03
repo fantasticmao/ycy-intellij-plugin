@@ -43,4 +43,9 @@ public interface DefaultConfig {
      * 默认通知文案的按钮
      */
     String NOTIFY_ACTION = I18nBundle.message(I18nBundle.Key.CONFIG_VALUE_NOTIFY_CONTENT_ACTION);
+
+    /**
+     * 默认禁用状态
+     */
+    Boolean DISABLED = Boolean.FALSE;
 }

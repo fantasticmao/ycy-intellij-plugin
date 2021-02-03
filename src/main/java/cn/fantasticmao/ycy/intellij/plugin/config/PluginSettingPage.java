@@ -90,6 +90,7 @@ public class PluginSettingPage implements SearchableConfigurable {
         configState.setNotifyTitle(this.form.getNotifyTitle());
         configState.setNotifyBody(this.form.getNotifyBody());
         configState.setNotifyAction(this.form.getNotifyAction());
+        configState.setDisabled(this.form.getDisabled());
         ConfigService.getInstance().setState(configState);
         LOG.info("apply and save user settings");
 
@@ -111,6 +112,7 @@ public class PluginSettingPage implements SearchableConfigurable {
         this.form.setNotifyTitle(configState.getNotifyTitle());
         this.form.setNotifyBody(configState.getNotifyBody());
         this.form.setNotifyAction(configState.getNotifyAction());
+        this.form.setDisabled(configState.getDisabled());
         LOG.info("reset user settings");
     }
 
