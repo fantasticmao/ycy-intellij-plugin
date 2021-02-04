@@ -125,7 +125,9 @@ public class PluginSettingPictureUrlTable extends JBTable {
          */
         @Override
         public String getColumnName(int column) {
-            return column == ORDER_COLUMN ? "序号" : "图片 URL";
+            return column == ORDER_COLUMN
+                ? I18nBundle.message(I18nBundle.Key.CONFIG_TABLE_COLUMN_0)
+                : I18nBundle.message(I18nBundle.Key.CONFIG_TABLE_COLUMN_1);
         }
 
         /**

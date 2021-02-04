@@ -51,6 +51,10 @@ public class I18nBundle extends AbstractBundle {
         CONFIG_VALUE_NOTIFY_CONTENT_BODY("config.value.notify.content.body"),
         CONFIG_VALUE_NOTIFY_CONTENT_ACTION("config.value.notify.content.action"),
 
+        // 配置界面 - 表格
+        CONFIG_TABLE_COLUMN_0("config.table.column.0"),
+        CONFIG_TABLE_COLUMN_1("config.table.column.1"),
+
         // 图片选择器
         PICTURE_CHOOSER_TITLE("picture.chooser.title"),
         PICTURE_CHOOSER_ERROR_FORMAT("picture.chooser.error.format"),
