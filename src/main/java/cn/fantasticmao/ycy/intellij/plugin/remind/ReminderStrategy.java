@@ -5,9 +5,7 @@ import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.ide.DataManager;
 import com.intellij.notification.*;
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -61,9 +59,9 @@ public interface ReminderStrategy {
          */
         @Override
         public void remind() {
-            DataManager.getInstance().getDataContextFromFocus()
-                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenPictureConsumer().accept(dataContext)))
-                .doWhenRejected((Consumer<String>) LOG::error);
+            DataManager.getInstance().getDataContextFromFocusAsync()
+                .onSuccess(dataContext -> new OpenPictureConsumer().accept(dataContext))
+                .onError(LOG::error);
         }
     }
 

@@ -8,12 +8,10 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
 import com.intellij.openapi.fileEditor.impl.EditorWindow;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 
 import javax.swing.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.function.Consumer;
 
 /**
@@ -40,17 +38,10 @@ public class OpenPictureConsumer implements Consumer<DataContext> {
 
         // 2. 获取即将用于展示的图片
         ConfigState configState = ConfigService.getInstance().getState();
-        String pictureUrlStr = configState.getRandomRemindPicture();
-        URL pictureUrl;
-        try {
-            pictureUrl = new URL(pictureUrlStr);
-        } catch (MalformedURLException e) {
-            LOG.error("parse the picture URL \"" + pictureUrlStr + "\" error", e);
-            return;
-        }
-        VirtualFile picture = VfsUtil.findFileByURL(pictureUrl);
+        String pictureUrl = configState.getRandomRemindPicture();
+        VirtualFile picture = VirtualFileManager.getInstance().findFileByUrl(pictureUrl);
         if (picture == null) {
-            LOG.error("cannot find the picture by URL: " + pictureUrl.toString());
+            LOG.error("find picture by URL error: " + pictureUrl);
             return;
         }
 
@@ -72,6 +63,6 @@ public class OpenPictureConsumer implements Consumer<DataContext> {
                 fileEditorManager.openFileWithProviders(picture, true, nextWindow);
             }
         }
-        LOG.info("picture has been opened");
+        LOG.info("the picture has been shown");
     }
 }

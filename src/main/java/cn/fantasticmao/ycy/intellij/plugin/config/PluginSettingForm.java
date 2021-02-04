@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.List;
@@ -70,7 +71,7 @@ public class PluginSettingForm {
              */
             .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Rollback) {
                 @Override
-                public void actionPerformed(AnActionEvent e) {
+                public void actionPerformed(@NotNull AnActionEvent e) {
                     pictureUrlTable.resetTableList();
                 }
 

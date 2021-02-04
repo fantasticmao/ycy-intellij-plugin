@@ -4,6 +4,7 @@ import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.util.xmlb.annotations.OptionTag;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -76,7 +77,7 @@ public class ConfigState {
     public ConfigState() {
         // 第一次开启插件时，应该使用默认配置
         this.remindMode = DefaultConfig.REMIND_MODE;
-        this.remindPictures = DefaultConfig.REMIND_PICTURE_LIST;
+        this.remindPictures = new ArrayList<>(DefaultConfig.REMIND_PICTURE_LIST);
         this.durationInMinutes = DefaultConfig.DURATION_IN_MINUTES;
         this.notifyTitle = DefaultConfig.NOTIFY_TITLE;
         this.notifyBody = DefaultConfig.NOTIFY_BODY;

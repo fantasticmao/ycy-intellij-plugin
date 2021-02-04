@@ -4,9 +4,7 @@ import com.intellij.ide.DataManager;
 import com.intellij.notification.Notification;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -41,9 +39,9 @@ class OpenPictureAction extends AnAction {
          * at version 1.2 fix a bug: 2017.1 版本无法打开图片问题
          * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/9
          */
-        DataManager.getInstance().getDataContextFromFocus()
-            .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenPictureConsumer().accept(dataContext)))
-            .doWhenRejected((Consumer<String>) LOG::error);
+        DataManager.getInstance().getDataContextFromFocusAsync()
+            .onSuccess(dataContext -> new OpenPictureConsumer().accept(dataContext))
+            .onError(LOG::error);
 
         // 使打开图片按钮失效，避免重复点击
         notification.expire();

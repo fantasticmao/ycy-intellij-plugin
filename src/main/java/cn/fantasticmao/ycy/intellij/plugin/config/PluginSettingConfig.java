@@ -2,6 +2,7 @@ package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +35,7 @@ public interface PluginSettingConfig {
         }
 
         @Override
-        public boolean isFileSelectable(VirtualFile file) {
-            return super.isFileSelectable(file) && PICTURE_EXTENSION_LIST.contains(file.getExtension());
-        }
-
-        @Override
-        public void validateSelectedFiles(VirtualFile[] files) throws Exception {
+        public void validateSelectedFiles(@NotNull VirtualFile[] files) throws Exception {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
                 if (!PICTURE_EXTENSION_LIST.contains(file.getExtension())) {

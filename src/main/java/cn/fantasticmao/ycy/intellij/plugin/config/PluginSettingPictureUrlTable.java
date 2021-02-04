@@ -3,7 +3,7 @@ package cn.fantasticmao.ycy.intellij.plugin.config;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.EditableModel;
 
@@ -11,11 +11,9 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -162,21 +160,13 @@ public class PluginSettingPictureUrlTable extends JBTable {
             FileChooserDescriptor descriptor = PluginSettingConfig.PICTURE_FILE_CHOOSER_DESCRIPTOR;
             FileChooser.chooseFiles(descriptor, null, null, fileList -> {
                 List<String> chosenPictureUrlList = fileList.stream()
-                    .map(pictureFile -> {
-                        try {
-                            return VfsUtil.toUri(pictureFile).toURL().toString();
-                        } catch (MalformedURLException e) {
-                            LOG.error("parse the picture \"" + pictureFile.getName() + "\" to URL error", e);
-                            return null;
-                        }
-                    })
-                    .filter(Objects::nonNull)
+                    .map(VirtualFile::getUrl)
                     .filter(pictureUrl -> !pictureUrlList.contains(pictureUrl))
                     .collect(Collectors.toList());
                 if (chosenPictureUrlList.size() != 0) {
                     pictureUrlList.addAll(chosenPictureUrlList);
                     LOG.info("add rows: " + chosenPictureUrlList);
-                    super.fireTableRowsInserted(pictureUrlList.size() - 1 - fileList.size(), pictureUrlList.size() - 1);
+                    super.fireTableRowsInserted(pictureUrlList.size() - 1 - chosenPictureUrlList.size(), pictureUrlList.size() - 1);
                 } else {
                     LOG.info("choose no files");
                 }

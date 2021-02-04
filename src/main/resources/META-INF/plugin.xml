@@ -1,7 +1,7 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
-    <version>1.5</version>
+    <version>1.6-SNAPSHOT</version>
 
     <vendor email="maomao8017@gmail.com" url="https://github.com/fantasticmao/ycy-intellij-plugin">fantasticmao</vendor>
 
@@ -17,19 +17,24 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Bugfix <a href="https://github.com/fantasticmao/ycy-intellij-plugin/issues/27">#27</a></li>
+            <li>Support internationalization and localization</li>
+            <li>Support for disable plugin</li>
         </ul>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <idea-version since-build="171.0"/>
+    <idea-version since-build="201"/>
 
     <application-components>
         <component>
-            <interface-class>cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponent</interface-class>
+            <interface-class>
+                cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponent
+            </interface-class>
 
-            <implementation-class>cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponentImpl</implementation-class>
+            <implementation-class>
+                cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponentImpl
+            </implementation-class>
         </component>
     </application-components>
 

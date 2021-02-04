@@ -2,6 +2,7 @@ package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import cn.fantasticmao.ycy.intellij.plugin.remind.PictureManager;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +23,8 @@ public interface DefaultConfig {
     /**
      * 默认提醒图片列表
      */
-    List<String> REMIND_PICTURE_LIST = PictureManager.getInstance().getDefaultPictureList();
+    // Immutable
+    List<String> REMIND_PICTURE_LIST = Collections.unmodifiableList(PictureManager.getDefaultPictureList());
 
     /**
      * 默认提醒间隔时间
