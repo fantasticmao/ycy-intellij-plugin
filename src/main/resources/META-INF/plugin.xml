@@ -1,13 +1,13 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
-    <version>1.5</version>
+    <version>1.6</version>
 
     <vendor email="maomao8017@gmail.com" url="https://github.com/fantasticmao/ycy-intellij-plugin">fantasticmao</vendor>
 
     <description><![CDATA[
         Coding won't be lonely anymore with Chaoyue Yang's accompany!<br>
-        Chaoyue Yang will remind you to have a rest when you work constantly for an hour at IntelliJ IDEA~<br>
+        Chaoyue Yang will remind you to have a rest when you have been working for an hour on IntelliJ IDEA~<br>
         <br>
         写代码不再孤单，有杨超越与你同在！<br>
         在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～<br>
@@ -17,19 +17,24 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Bugfix <a href="https://github.com/fantasticmao/ycy-intellij-plugin/issues/27">#27</a></li>
+            <li>Support internationalization and localization</li>
+            <li>Support plugin disability</li>
         </ul>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <idea-version since-build="171.0"/>
+    <idea-version since-build="201"/>
 
     <application-components>
         <component>
-            <interface-class>cn.fantasticmao.ycy.intellij.plugin.remind.RemindComponent</interface-class>
+            <interface-class>
+                cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponent
+            </interface-class>
 
-            <implementation-class>cn.fantasticmao.ycy.intellij.plugin.remind.RemindComponentImpl</implementation-class>
+            <implementation-class>
+                cn.fantasticmao.ycy.intellij.plugin.remind.ReminderComponentImpl
+            </implementation-class>
         </component>
     </application-components>
 

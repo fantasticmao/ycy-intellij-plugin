@@ -1,9 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
-import cn.fantasticmao.ycy.intellij.plugin.remind.RemindTask;
+import cn.fantasticmao.ycy.intellij.plugin.remind.ReminderTask;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +21,7 @@ import javax.swing.*;
 public class PluginSettingPage implements SearchableConfigurable {
     private static final Logger LOG = Logger.getInstance(PluginSettingPage.class);
     /**
-     * 插件设置页面的表单对象
+     * 插件设置页面的表单
      */
     private PluginSettingForm form;
 
@@ -81,21 +80,22 @@ public class PluginSettingPage implements SearchableConfigurable {
      * 用户点击 "Apply" 按钮或 "OK" 按钮之后，会调用此方法
      */
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         if (this.form == null) return;
 
         ConfigState configState = ConfigService.getInstance().getState();
-        configState.setRemindType(this.form.getRemindTypeOption());
-        configState.setRemindImages(this.form.getImageUrlList());
-        configState.setPeriodMinutes(this.form.getPeriodMinutes());
+        configState.setRemindMode(this.form.getRemindModeOption());
+        configState.setRemindPictures(this.form.getPictureUrlList());
+        configState.setDurationInMinutes(this.form.getDurationInMinutes());
         configState.setNotifyTitle(this.form.getNotifyTitle());
-        configState.setNotifyContent(this.form.getNotifyContent());
+        configState.setNotifyBody(this.form.getNotifyBody());
         configState.setNotifyAction(this.form.getNotifyAction());
+        configState.setDisabled(this.form.getDisabled());
         ConfigService.getInstance().setState(configState);
-        LOG.info("apply and save user setting");
+        LOG.info("apply and save user settings");
 
-        RemindTask.restart();
-        LOG.info("restart scheduled remind task");
+        ReminderTask.restart();
+        LOG.info("restart scheduled reminder task");
     }
 
     /**
@@ -106,13 +106,14 @@ public class PluginSettingPage implements SearchableConfigurable {
         if (form == null) return;
 
         ConfigState configState = ConfigService.getInstance().getState();
-        this.form.setRemindTypeOption(configState.getRemindType());
-        this.form.setImageUrlList(configState.getRemindImages());
-        this.form.setPeriodMinutes(configState.getPeriodMinutes());
+        this.form.setRemindModeOption(configState.getRemindMode());
+        this.form.setPictureUrlList(configState.getRemindPictures());
+        this.form.setDurationInMinutes(configState.getDurationInMinutes());
         this.form.setNotifyTitle(configState.getNotifyTitle());
-        this.form.setNotifyContent(configState.getNotifyContent());
+        this.form.setNotifyBody(configState.getNotifyBody());
         this.form.setNotifyAction(configState.getNotifyAction());
-        LOG.info("reset user setting");
+        this.form.setDisabled(configState.getDisabled());
+        LOG.info("reset user settings");
     }
 
     /**

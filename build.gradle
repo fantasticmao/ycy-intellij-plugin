@@ -13,12 +13,15 @@ dependencies {
 
 repositories {
     mavenCentral()
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven {
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
 }
 
 intellij {
-    version 'IC-2017.1'
+//    version 'IC-2017.1'
 //    version 'IC-2018.3'
-//    version 'IC-2020.1'
+    version 'IC-2020.1'
+//    version 'IC-2020.3'
     updateSinceUntilBuild false
 }

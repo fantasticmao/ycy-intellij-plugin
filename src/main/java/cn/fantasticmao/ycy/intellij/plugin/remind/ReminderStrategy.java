@@ -5,9 +5,7 @@ import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.ide.DataManager;
 import com.intellij.notification.*;
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -18,30 +16,30 @@ import org.jetbrains.annotations.NotNull;
  * @since 2019-04-17
  */
 @FunctionalInterface
-public interface RemindStrategy {
-    Logger LOG = Logger.getInstance(RemindStrategy.class);
-    RemindStrategy INSTANCE_REMIND_DIRECT = new RemindDirect();
-    RemindStrategy INSTANCE_REMIND_INDIRECT = new RemindIndirect();
+public interface ReminderStrategy {
+    Logger LOG = Logger.getInstance(ReminderStrategy.class);
+    ReminderStrategy INSTANCE_REMINDER_DIRECT = new ReminderDirect();
+    ReminderStrategy INSTANCE_REMINDER_INDIRECT = new ReminderIndirect();
 
     /**
      * 策略模式的工厂方法
      *
-     * @see ConfigState.RemindTypeEnum
+     * @see ConfigState.RemindModeEnum
      */
     @NotNull
-    static RemindStrategy getRemindStrategy(ConfigState.RemindTypeEnum type) {
-        RemindStrategy remindStrategy;
-        switch (type) {
+    static ReminderStrategy getRemindStrategy(ConfigState.RemindModeEnum mode) {
+        ReminderStrategy reminderStrategy;
+        switch (mode) {
             case DIRECT:
-                remindStrategy = INSTANCE_REMIND_DIRECT;
+                reminderStrategy = INSTANCE_REMINDER_DIRECT;
                 break;
             case INDIRECT:
-                remindStrategy = INSTANCE_REMIND_INDIRECT;
+                reminderStrategy = INSTANCE_REMINDER_INDIRECT;
                 break;
             default:
-                remindStrategy = null;
+                reminderStrategy = null;
         }
-        return remindStrategy;
+        return reminderStrategy;
     }
 
     /**
@@ -52,28 +50,28 @@ public interface RemindStrategy {
     /**
      * 直接打开图片
      *
-     * @see ConfigState.RemindTypeEnum#DIRECT
+     * @see ConfigState.RemindModeEnum#DIRECT
      */
-    class RemindDirect implements RemindStrategy {
+    class ReminderDirect implements ReminderStrategy {
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void remind() {
-            DataManager.getInstance().getDataContextFromFocus()
-                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
-                .doWhenRejected((Consumer<String>) LOG::error);
+            DataManager.getInstance().getDataContextFromFocusAsync()
+                .onSuccess(dataContext -> new OpenPictureConsumer().accept(dataContext))
+                .onError(LOG::error);
         }
     }
 
     /**
      * 间接打开图片
      *
-     * @see ConfigState.RemindTypeEnum#INDIRECT
+     * @see ConfigState.RemindModeEnum#INDIRECT
      */
-    class RemindIndirect implements RemindStrategy {
-        private static final Logger LOG = Logger.getInstance(RemindIndirect.class);
+    class ReminderIndirect implements ReminderStrategy {
+        private static final Logger LOG = Logger.getInstance(ReminderIndirect.class);
         /**
          * <code>IDEA Preferences -> Appearance & Behavior -> Notifications</code> 中可设置的通知组
          */
@@ -88,10 +86,10 @@ public interface RemindStrategy {
             ConfigState configState = ConfigService.getInstance().getState();
 
             Notification notification = NOTIFICATION_GROUP.createNotification(configState.getNotifyTitle(),
-                configState.getNotifyContent(), NotificationType.INFORMATION, null);
-            if (!configState.getRemindImages().isEmpty()) {
-                OpenImageAction openImageAction = new OpenImageAction(configState.getNotifyAction(), notification);
-                notification.addAction(openImageAction);
+                configState.getNotifyBody(), NotificationType.INFORMATION, null);
+            if (!configState.getRemindPictures().isEmpty()) {
+                OpenPictureAction openPictureAction = new OpenPictureAction(configState.getNotifyAction(), notification);
+                notification.addAction(openPictureAction);
             }
             Notifications.Bus.notify(notification);
             LOG.info("notify an info message");

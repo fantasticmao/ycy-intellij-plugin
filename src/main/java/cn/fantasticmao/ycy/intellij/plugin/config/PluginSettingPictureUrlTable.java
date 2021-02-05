@@ -1,10 +1,8 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.fileChooser.FileChooserDialog;
-import com.intellij.openapi.fileChooser.FileChooserFactory;
-import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.EditableModel;
@@ -13,23 +11,20 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
- * 插件设置页面的表格对象
+ * 插件设置页面的表格
  *
  * @author maomao
  * @version 1.3
  * @since 2019-05-05
  */
-public class PluginSettingTable extends JBTable {
-    private static final Logger LOG = Logger.getInstance(PluginSettingTable.class);
+public class PluginSettingPictureUrlTable extends JBTable {
+    private static final Logger LOG = Logger.getInstance(PluginSettingPictureUrlTable.class);
 
     /**
      * 序号列
@@ -41,8 +36,8 @@ public class PluginSettingTable extends JBTable {
      */
     private static final int URL_COLUMN = 1;
 
-    public PluginSettingTable(List<String> defaultImageUrlList) {
-        super(new ModelAdapter(defaultImageUrlList));
+    public PluginSettingPictureUrlTable(List<String> defaultPictureUrlList) {
+        super(new ModelAdapter(defaultPictureUrlList));
         super.setStriped(true);
 
         final TableColumnModel columnModel = getColumnModel();
@@ -69,29 +64,29 @@ public class PluginSettingTable extends JBTable {
      * 重置表格数据
      */
     public void resetTableList() {
-        this.getModel().setRowsData(DefaultConfig.REMIND_IMAGE_LIST);
-        LOG.info("reset image url list to default");
+        this.getModel().setRowsData(DefaultConfig.REMIND_PICTURE_LIST);
+        LOG.info("reset picture url list to default");
     }
 
     /**
      * 获取表格数据
      */
     public List<String> getTableList() {
-        List<String> imageList = this.getModel().getRowsData();
-        LOG.info("get image url list: " + imageList);
-        return imageList;
+        List<String> pictureList = this.getModel().getRowsData();
+        LOG.info("get picture url list: " + pictureList);
+        return pictureList;
     }
 
     /**
      * 设置表格数据
      */
-    public void setTableList(List<String> imageList) {
-        this.getModel().setRowsData(imageList);
-        LOG.info("set image url list to: " + imageList);
+    public void setTableList(List<String> pictureList) {
+        this.getModel().setRowsData(pictureList);
+        LOG.info("set picture url list to: " + pictureList);
     }
 
     /**
-     * 插件设置页面的表格对象的 {@link javax.swing.table.TableModel}
+     * 插件设置页面的表格的 {@link javax.swing.table.TableModel}
      *
      * <p>实现 {@link com.intellij.util.ui.EditableModel} 表示表格是可编辑的</p>
      */
@@ -101,12 +96,12 @@ public class PluginSettingTable extends JBTable {
         /**
          * 图片 URL 列表数据
          */
-        private final List<String> imageUrlList;
+        private final List<String> pictureUrlList;
 
-        public ModelAdapter(List<String> defaultImageUrlList) {
+        public ModelAdapter(List<String> defaultPictureUrlList) {
             // 复制表格数据（使用深拷贝模式），避免修改默认图片配置
-            this.imageUrlList = new ArrayList<>(defaultImageUrlList.size());
-            this.imageUrlList.addAll(defaultImageUrlList);
+            this.pictureUrlList = new ArrayList<>(defaultPictureUrlList.size());
+            this.pictureUrlList.addAll(defaultPictureUrlList);
         }
 
         /**
@@ -114,7 +109,7 @@ public class PluginSettingTable extends JBTable {
          */
         @Override
         public int getRowCount() {
-            return imageUrlList.size();
+            return pictureUrlList.size();
         }
 
         /**
@@ -130,11 +125,13 @@ public class PluginSettingTable extends JBTable {
          */
         @Override
         public String getColumnName(int column) {
-            return column == ORDER_COLUMN ? "序号" : "图片 URL";
+            return column == ORDER_COLUMN
+                ? I18nBundle.message(I18nBundle.Key.CONFIG_TABLE_COLUMN_0)
+                : I18nBundle.message(I18nBundle.Key.CONFIG_TABLE_COLUMN_1);
         }
 
         /**
-         * 设置单元格对象的 {@link java.lang.Class}
+         * 设置单元格的 {@link java.lang.Class}
          */
         @Override
         public Class<?> getColumnClass(int columnIndex) {
@@ -154,7 +151,7 @@ public class PluginSettingTable extends JBTable {
          */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            return columnIndex == ORDER_COLUMN ? String.valueOf(rowIndex) : imageUrlList.get(rowIndex);
+            return columnIndex == ORDER_COLUMN ? String.valueOf(rowIndex) : pictureUrlList.get(rowIndex);
         }
 
         /**
@@ -162,28 +159,20 @@ public class PluginSettingTable extends JBTable {
          */
         @Override
         public void addRow() {
-            FileChooserDescriptor descriptor = PluginSettingConfig.IMAGE_FILE_CHOOSER;
-            FileChooserDialog dialog = FileChooserFactory.getInstance().createFileChooser(descriptor, null, null);
-            VirtualFile[] files = dialog.choose(null);
-            List<String> chosenImageUrlList = Stream.of(files)
-                .map(imageFile -> {
-                    try {
-                        return VfsUtil.toUri(imageFile).toURL().toString();
-                    } catch (MalformedURLException e) {
-                        LOG.error("parse the image \"" + imageFile.getName() + "\" to URL error", e);
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .filter(imageUrl -> !imageUrlList.contains(imageUrl))
-                .collect(Collectors.toList());
-            if (chosenImageUrlList.size() != 0) {
-                imageUrlList.addAll(chosenImageUrlList);
-                LOG.info("add rows: " + chosenImageUrlList);
-                super.fireTableRowsInserted(imageUrlList.size() - 1 - files.length, imageUrlList.size() - 1);
-            } else {
-                LOG.info("choose no files");
-            }
+            FileChooserDescriptor descriptor = PluginSettingConfig.PICTURE_FILE_CHOOSER_DESCRIPTOR;
+            FileChooser.chooseFiles(descriptor, null, null, fileList -> {
+                List<String> chosenPictureUrlList = fileList.stream()
+                    .map(VirtualFile::getUrl)
+                    .filter(pictureUrl -> !pictureUrlList.contains(pictureUrl))
+                    .collect(Collectors.toList());
+                if (chosenPictureUrlList.size() != 0) {
+                    pictureUrlList.addAll(chosenPictureUrlList);
+                    LOG.info("add rows: " + chosenPictureUrlList);
+                    super.fireTableRowsInserted(pictureUrlList.size() - 1 - chosenPictureUrlList.size(), pictureUrlList.size() - 1);
+                } else {
+                    LOG.info("choose no files");
+                }
+            });
         }
 
         /**
@@ -191,10 +180,10 @@ public class PluginSettingTable extends JBTable {
          */
         @Override
         public void exchangeRows(int oldIndex, int newIndex) {
-            final String oldImgUrl = imageUrlList.get(oldIndex);
-            final String newImgUrl = imageUrlList.get(newIndex);
-            imageUrlList.set(oldIndex, newImgUrl);
-            imageUrlList.set(newIndex, oldImgUrl);
+            final String oldPictureUrl = pictureUrlList.get(oldIndex);
+            final String newPictureUrl = pictureUrlList.get(newIndex);
+            pictureUrlList.set(oldIndex, newPictureUrl);
+            pictureUrlList.set(newIndex, oldPictureUrl);
             LOG.info(String.format("exchange rows index: %d -> %d", oldIndex, newIndex));
             super.fireTableRowsUpdated(Math.min(oldIndex, newIndex), Math.max(oldIndex, newIndex));
         }
@@ -212,7 +201,7 @@ public class PluginSettingTable extends JBTable {
          */
         @Override
         public void removeRow(int idx) {
-            imageUrlList.remove(idx);
+            pictureUrlList.remove(idx);
             LOG.info("remove row index: " + idx);
             super.fireTableRowsDeleted(idx, idx);
         }
@@ -221,7 +210,7 @@ public class PluginSettingTable extends JBTable {
          * 获取表格行数据
          */
         public List<String> getRowsData() {
-            List<String> rows = Collections.unmodifiableList(new ArrayList<>(imageUrlList));
+            List<String> rows = Collections.unmodifiableList(new ArrayList<>(pictureUrlList));
             LOG.info("get rows data: " + rows);
             return rows;
         }
@@ -230,8 +219,8 @@ public class PluginSettingTable extends JBTable {
          * 设置表格行数据
          */
         public void setRowsData(List<String> list) {
-            imageUrlList.clear();
-            imageUrlList.addAll(list);
+            pictureUrlList.clear();
+            pictureUrlList.addAll(list);
             LOG.info("set rows data: " + list);
             super.fireTableDataChanged();
         }

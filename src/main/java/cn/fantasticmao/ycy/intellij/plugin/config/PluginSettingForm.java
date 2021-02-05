@@ -5,14 +5,15 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.List;
 
 /**
- * 插件设置页面的表单对象
+ * 插件设置页面的表单
  *
- * <p>表单对象的实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成</p>
+ * <p>表单实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成</p>
  *
  * @author maomao
  * @version 1.2
@@ -21,38 +22,57 @@ import java.util.List;
  */
 public class PluginSettingForm {
     private JPanel pluginSettingPanel;
-    private PluginSettingTable pluginSettingTable;
 
-    private JComboBox<String> remindTypeOptions;
-    private JPanel imageUrlList;
-    private JTextField periodMinutes;
-    private JTextField notifyTitle;
-    private JTextField notifyContent;
-    private JTextField notifyAction;
+    private JLabel remindModeLabel;
+    private JComboBox<String> remindModeOptions;
+
+    private JLabel pictureUrlLabel;
+    private PluginSettingPictureUrlTable pictureUrlTable;
+    private JPanel pictureUrlPanel;
+
+    private JLabel durationInMinutesLabel;
+    private JTextField durationInMinutesField;
+
+    private JLabel notifyTitleLabel;
+    private JTextField notifyTitleField;
+
+    private JLabel notifyBodyLabel;
+    private JTextField notifyBodyField;
+
+    private JLabel notifyActionLabel;
+    private JTextField notifyActionField;
+
+    private JLabel disabledLabel;
+    private JCheckBox disabledField;
 
     public JPanel getPluginSettingPanel() {
         return this.pluginSettingPanel;
     }
 
     private void createUIComponents() {
-        // place custom component creation code here
-        this.remindTypeOptions = new ComboBox<>();
-        for (ConfigState.RemindTypeEnum remindType : ConfigState.RemindTypeEnum.values()) {
-            this.remindTypeOptions.addItem(remindType.description);
+        // create custom UI components
+        final ConfigState configState = ConfigService.getInstance().getState();
+
+        String remindModeLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_REMIND_MODE_OPTIONS);
+        this.remindModeLabel = new JLabel(remindModeLabelText);
+        this.remindModeOptions = new ComboBox<>();
+        for (ConfigState.RemindModeEnum remindMode : ConfigState.RemindModeEnum.values()) {
+            this.remindModeOptions.addItem(remindMode.description);
         }
 
-        ConfigState configState = ConfigService.getInstance().getState();
-        List<String> remindImages = configState.getRemindImages();
-        this.pluginSettingTable = new PluginSettingTable(remindImages);
-        this.imageUrlList = ToolbarDecorator.createDecorator(pluginSettingTable)
+        String pictureUrlLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_PICTURE_URL_LIST);
+        this.pictureUrlLabel = new JLabel(pictureUrlLabelText);
+        List<String> remindPictures = configState.getRemindPictures();
+        this.pictureUrlTable = new PluginSettingPictureUrlTable(remindPictures);
+        this.pictureUrlPanel = ToolbarDecorator.createDecorator(pictureUrlTable)
             /*
              * at version 1.5 fix a bug: 2020.1 版本 AllIcons.Actions.Reset_to_default 过时问题
              * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/27
              */
             .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Rollback) {
                 @Override
-                public void actionPerformed(AnActionEvent e) {
-                    pluginSettingTable.resetTableList();
+                public void actionPerformed(@NotNull AnActionEvent e) {
+                    pictureUrlTable.resetTableList();
                 }
 
                 @Override
@@ -61,15 +81,30 @@ public class PluginSettingForm {
                 }
             })
             .createPanel();
+
+        String durationInMinutesLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_DURATION_IN_MINUTES);
+        this.durationInMinutesLabel = new JLabel(durationInMinutesLabelText);
+
+        String notifyTitleLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_TITLE);
+        this.notifyTitleLabel = new JLabel(notifyTitleLabelText);
+
+        String notifyBodyLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_BODY);
+        this.notifyBodyLabel = new JLabel(notifyBodyLabelText);
+
+        String notifyActionLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_NOTIFY_CONTENT_ACTION);
+        this.notifyActionLabel = new JLabel(notifyActionLabelText);
+
+        String disabledLabelText = I18nBundle.message(I18nBundle.Key.CONFIG_LABEL_DISABLED);
+        this.disabledLabel = new JLabel(disabledLabelText);
     }
 
     /**
      * 获取提醒方式
      *
-     * @return {@code cn.fantasticmao.ycy.intellij.plugin.config.ConfigState.RemindTypeEnum}
+     * @see cn.fantasticmao.ycy.intellij.plugin.config.ConfigState.RemindModeEnum
      */
-    public int getRemindTypeOption() {
-        return this.remindTypeOptions.getSelectedIndex();
+    public int getRemindModeOption() {
+        return this.remindModeOptions.getSelectedIndex();
     }
 
     /**
@@ -83,83 +118,97 @@ public class PluginSettingForm {
      *
      * @param optionIndex 0 或 1
      */
-    public void setRemindTypeOption(int optionIndex) {
+    public void setRemindModeOption(int optionIndex) {
         optionIndex = Math.max(optionIndex, 0);
         optionIndex = Math.min(optionIndex, 1);
-        this.remindTypeOptions.setSelectedIndex(optionIndex);
+        this.remindModeOptions.setSelectedIndex(optionIndex);
     }
 
     /**
      * 获取提醒图片列表
      */
-    public List<String> getImageUrlList() {
-        return this.pluginSettingTable.getTableList();
+    public List<String> getPictureUrlList() {
+        return this.pictureUrlTable.getTableList();
     }
 
     /**
      * 设置提醒图片列表
      */
-    public void setImageUrlList(List<String> imageList) {
-        this.pluginSettingTable.setTableList(imageList);
+    public void setPictureUrlList(List<String> pictureList) {
+        this.pictureUrlTable.setTableList(pictureList);
     }
 
     /**
      * 获取提醒间隔时间，单位分钟
      */
-    public int getPeriodMinutes() {
+    public int getDurationInMinutes() {
         try {
-            return Integer.parseInt(this.periodMinutes.getText());
+            return Integer.parseInt(this.durationInMinutesField.getText());
         } catch (NumberFormatException e) {
-            return DefaultConfig.PERIOD_MINUTES;
+            return DefaultConfig.DURATION_IN_MINUTES;
         }
     }
 
     /**
      * 设置提醒间隔时间，单位分钟
      */
-    public void setPeriodMinutes(int periodMinutes) {
-        this.periodMinutes.setText(String.valueOf(periodMinutes));
+    public void setDurationInMinutes(int durationInMinutes) {
+        this.durationInMinutesField.setText(String.valueOf(durationInMinutes));
     }
 
     /**
      * 获取通知文案的标题
      */
     public String getNotifyTitle() {
-        return this.notifyTitle.getText();
+        return this.notifyTitleField.getText();
     }
 
     /**
      * 设置通知文案的标题
      */
     public void setNotifyTitle(String notifyTitle) {
-        this.notifyTitle.setText(notifyTitle);
+        this.notifyTitleField.setText(notifyTitle);
     }
 
     /**
      * 获取通知文案的内容
      */
-    public String getNotifyContent() {
-        return this.notifyContent.getText();
+    public String getNotifyBody() {
+        return this.notifyBodyField.getText();
     }
 
     /**
      * 设置通知文案的内容
      */
-    public void setNotifyContent(String notifyContent) {
-        this.notifyContent.setText(notifyContent);
+    public void setNotifyBody(String notifyContent) {
+        this.notifyBodyField.setText(notifyContent);
     }
 
     /**
      * 获取通知文案的按钮
      */
     public String getNotifyAction() {
-        return this.notifyAction.getText();
+        return this.notifyActionField.getText();
     }
 
     /**
      * 设置通知文案的按钮
      */
     public void setNotifyAction(String notifyAction) {
-        this.notifyAction.setText(notifyAction);
+        this.notifyActionField.setText(notifyAction);
+    }
+
+    /**
+     * 获取禁用状态
+     */
+    public Boolean getDisabled() {
+        return this.disabledField.isSelected();
+    }
+
+    /**
+     * 设置禁用状态
+     */
+    public void setDisabled(Boolean disabled) {
+        this.disabledField.setSelected(disabled);
     }
 }

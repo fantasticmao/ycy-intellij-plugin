@@ -1,5 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin;
 
+import cn.fantasticmao.ycy.intellij.plugin.config.I18nBundle;
+
 /**
  * 全局配置接口
  *
@@ -18,10 +20,5 @@ public interface GlobalConfig {
     /**
      * 插件名称
      */
-    String PLUGIN_NAME = "超越鼓励师";
-
-    /**
-     * 插件打包后的 jar 包名称
-     */
-    String JAR_NAME = "ycy-intellij-plugin.jar";
+    String PLUGIN_NAME = I18nBundle.message(I18nBundle.Key.PLUGIN_NAME);
 }

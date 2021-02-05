@@ -6,16 +6,16 @@ import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCa
 import com.intellij.util.Consumer;
 
 /**
- * OpenImageConsumerTest
+ * OpenPictureConsumerTest
  *
  * @author maomao
  * @since 2019-04-17
  */
-public class OpenImageConsumerTest extends LightPlatformCodeInsightFixtureTestCase {
+public class OpenPictureConsumerTest extends LightPlatformCodeInsightFixtureTestCase {
 
     public void testAccept() {
         DataManager.getInstance().getDataContextFromFocus()
-                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenImageConsumer().accept(dataContext)))
+                .doWhenDone((Consumer<DataContext>) (dataContext -> new OpenPictureConsumer().accept(dataContext)))
                 .doWhenRejected((Consumer<String>) System.out::println);
     }
 }
