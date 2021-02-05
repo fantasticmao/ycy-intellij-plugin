@@ -1,7 +1,7 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6</version>
 
     <vendor email="maomao8017@gmail.com" url="https://github.com/fantasticmao/ycy-intellij-plugin">fantasticmao</vendor>
 
@@ -18,7 +18,7 @@
     <change-notes><![CDATA[
         <ul>
             <li>Support internationalization and localization</li>
-            <li>Support for disable plugin</li>
+            <li>Support plugin disability</li>
         </ul>
     ]]></change-notes>
 

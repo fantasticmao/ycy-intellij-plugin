@@ -20,3 +20,4 @@ Chaoyue Yang will remind you to have a rest when you have been working for an ho
 * [x] Configurable reminder duration
 * [x] Configurable reminder content
 * [x] Configurable multiple pictures
+* [x] Support internationalization and localization
