@@ -30,15 +30,16 @@ public interface PluginSettingConfig {
 
         public PictureChooserDescriptor() {
             super(true, false, false, false, false, true);
-            super.withFileFilter(file -> PICTURE_EXTENSION_LIST.contains(file.getExtension()))
-                .withTitle(I18nBundle.message(I18nBundle.Key.PICTURE_CHOOSER_TITLE));
+            super.withFileFilter(file ->
+                file.getExtension() != null && PICTURE_EXTENSION_LIST.contains(file.getExtension().toLowerCase())
+            ).withTitle(I18nBundle.message(I18nBundle.Key.PICTURE_CHOOSER_TITLE));
         }
 
         @Override
         public void validateSelectedFiles(@NotNull VirtualFile[] files) throws Exception {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
-                if (!PICTURE_EXTENSION_LIST.contains(file.getExtension())) {
+                if (file.getExtension() == null || !PICTURE_EXTENSION_LIST.contains(file.getExtension().toLowerCase())) {
                     String delimiter = I18nBundle.message(I18nBundle.Key.SYMBOL_DELIMITER);
                     String message = I18nBundle.message(I18nBundle.Key.PICTURE_CHOOSER_ERROR_FORMAT,
                         String.join(delimiter, PICTURE_EXTENSION_LIST));
