@@ -1,7 +1,7 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>Programmer Motivator: Chaoyue Yang(超越鼓励师)</name>
-    <version>1.6</version>
+    <version>1.7</version>
 
     <vendor email="maomao8017@gmail.com" url="https://github.com/fantasticmao/ycy-intellij-plugin">fantasticmao</vendor>
 
@@ -17,14 +17,15 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Support internationalization and localization</li>
-            <li>Support plugin disability</li>
+            <li>Adapt to IntelliJ Platform 2020.3</li>
+            <li>Upgrade to Gradle Wrapper 7.2</li>
         </ul>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <idea-version since-build="201"/>
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html for description -->
+    <idea-version since-build="203.5981.155"/>
 
     <application-components>
         <component>
@@ -44,5 +45,7 @@
 
         <applicationService serviceInterface="cn.fantasticmao.ycy.intellij.plugin.config.ConfigService"
                             serviceImplementation="cn.fantasticmao.ycy.intellij.plugin.config.ConfigServiceImpl"/>
+
+        <notificationGroup id="Plugins Programmer Motivator: Chaoyue Yang" displayType="STICKY_BALLOON"/>
     </extensions>
 </idea-plugin>

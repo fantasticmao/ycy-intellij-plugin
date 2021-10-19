@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7 - 2021-10-17
+
+- Adapt to IntelliJ Platform 2020.3
+- Upgrade to Gradle Wrapper 7.2
+
 ## 1.6 - 2021-02-06
 
 - Support internationalization and localization
