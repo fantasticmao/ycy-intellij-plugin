@@ -1,9 +1,9 @@
-/.idea
-/.gradle
+.idea/
+.gradle/
 
-/build
-/out
-/javadoc
+build/
+out/
+javadoc/
 
 *.iml
 *.ipr

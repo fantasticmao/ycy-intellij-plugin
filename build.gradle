@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.intellij' version '0.4.7'
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.2.0'
 }
 
 group 'cn.fantasticmao.ycy'
@@ -7,21 +8,19 @@ group 'cn.fantasticmao.ycy'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
 repositories {
     mavenCentral()
-    maven {
-        url "http://maven.aliyun.com/nexus/content/groups/public/"
-    }
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 intellij {
-//    version 'IC-2017.1'
-//    version 'IC-2018.3'
-    version 'IC-2020.1'
-//    version 'IC-2020.3'
-    updateSinceUntilBuild false
+//    version = 'IC-2017.1'
+//    version = 'IC-2018.3'
+//    version = 'IC-2020.1'
+    version = 'IC-2020.3'
+//    version = 'IC-2021.2'
+    updateSinceUntilBuild = false
 }

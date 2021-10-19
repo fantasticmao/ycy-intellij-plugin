@@ -1,7 +1,7 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,7 +20,7 @@ public interface ConfigService extends PersistentStateComponent<ConfigState> {
      * 由 Intellij Platform 保证的单例模式
      */
     static ConfigService getInstance() {
-        return ServiceManager.getService(ConfigService.class);
+        return ApplicationManager.getApplication().getService(ConfigService.class);
     }
 
     /**

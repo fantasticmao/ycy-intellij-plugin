@@ -1,10 +1,12 @@
 package cn.fantasticmao.ycy.intellij.plugin.remind;
 
-import cn.fantasticmao.ycy.intellij.plugin.GlobalConfig;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigService;
 import cn.fantasticmao.ycy.intellij.plugin.config.ConfigState;
 import com.intellij.ide.DataManager;
-import com.intellij.notification.*;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationGroupManager;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 
@@ -72,11 +74,6 @@ public interface ReminderStrategy {
      */
     class ReminderIndirect implements ReminderStrategy {
         private static final Logger LOG = Logger.getInstance(ReminderIndirect.class);
-        /**
-         * <code>IDEA Preferences -> Appearance & Behavior -> Notifications</code> 中可设置的通知组
-         */
-        private static final NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("Plugins " + GlobalConfig.PLUGIN_NAME,
-            NotificationDisplayType.STICKY_BALLOON, true);
 
         /**
          * {@inheritDoc}
@@ -85,8 +82,15 @@ public interface ReminderStrategy {
         public void remind() {
             ConfigState configState = ConfigService.getInstance().getState();
 
-            Notification notification = NOTIFICATION_GROUP.createNotification(configState.getNotifyTitle(),
-                configState.getNotifyBody(), NotificationType.INFORMATION, null);
+            /*
+             * at version 1.7 fix a bug: 2020.3 版本 NotificationGroup.<init> 过时问题
+             * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/32
+             * see https://plugins.jetbrains.com/docs/intellij/notifications.html#top-level-notifications-balloons
+             */
+            final String groupId = "Plugins Programmer Motivator: Chaoyue Yang";
+            Notification notification = NotificationGroupManager.getInstance().getNotificationGroup(groupId)
+                .createNotification(configState.getNotifyTitle(), configState.getNotifyBody(),
+                    NotificationType.INFORMATION, null);
             if (!configState.getRemindPictures().isEmpty()) {
                 OpenPictureAction openPictureAction = new OpenPictureAction(configState.getNotifyAction(), notification);
                 notification.addAction(openPictureAction);
