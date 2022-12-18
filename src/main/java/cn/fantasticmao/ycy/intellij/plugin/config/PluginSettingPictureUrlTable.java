@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * 插件设置页面的表格
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.3
  * @since 2019-05-05
  */

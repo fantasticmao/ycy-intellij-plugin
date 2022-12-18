@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * PictureManagerTest
  *
- * @author maomao
+ * @author fantasticmao
  * @since 2019-04-17
  */
 public class PictureManagerTest extends BasePlatformTestCase {

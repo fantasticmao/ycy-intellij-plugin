@@ -5,7 +5,7 @@ package cn.fantasticmao.ycy.intellij.plugin.remind;
  *
  * <p>依赖于 Intellij Platform 组件实现</p>
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.0
  * @since 2019-04-03
  */

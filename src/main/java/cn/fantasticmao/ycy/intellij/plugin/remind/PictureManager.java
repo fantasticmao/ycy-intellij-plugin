@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * 图片管理器
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.0
  * @since 2019-04-05
  */

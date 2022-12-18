@@ -5,7 +5,7 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 /**
  * ConfigServiceTest
  *
- * @author maomao
+ * @author fantasticmao
  * @since 2021-02-06
  */
 public class ConfigServiceTest extends BasePlatformTestCase {

@@ -13,7 +13,7 @@ import javax.swing.*;
 /**
  * 插件设置页面
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @see <a href="http://corochann.com/intellij-plugin-development-introduction-applicationconfigurable-projectconfigurable-873.html">一篇很不错的关于开发 Intellij Plugin 配置页面的博客</a>
  * @since 2019-04-12

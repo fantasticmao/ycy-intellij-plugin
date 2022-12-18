@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 默认配置接口
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.0
  * @since 2019-04-14
  */

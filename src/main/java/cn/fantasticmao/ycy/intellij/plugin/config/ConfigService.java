@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>依赖于 Intellij Platform 的 {@link PersistentStateComponent} 组件实现</p>
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
  * @since 2019-04-14

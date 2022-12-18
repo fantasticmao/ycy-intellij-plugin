@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>依赖于 {@link com.intellij.AbstractBundle} 组件实现</p>
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.6
  * @since 2021-02-01
  */

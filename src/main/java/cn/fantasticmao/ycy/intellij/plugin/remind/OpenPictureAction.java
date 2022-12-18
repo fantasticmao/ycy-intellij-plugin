@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 打开图片的动作事件
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.0
  * @since 2019-04-04
  */

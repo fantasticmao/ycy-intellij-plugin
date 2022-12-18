@@ -15,7 +15,7 @@ import java.util.List;
  *
  * <p>表单实例化由插件 {@code UI Designer} 根据 {@code PluginSettingForm.form} 配置文件生成</p>
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @see PluginSettingPage#createComponent()
  * @since 2019-04-13

@@ -5,6 +5,8 @@
 
 > [Visual Studio Code Version](https://github.com/formulahendry/vscode-ycy)
 
+README [English](README.md) | [中文](README_ZH.md)
+
 Coding won't be lonely anymore with Chaoyue Yang's accompany!
 
 Chaoyue Yang will remind you to have a rest when you have been working for an hour on IntelliJ IDEA~
