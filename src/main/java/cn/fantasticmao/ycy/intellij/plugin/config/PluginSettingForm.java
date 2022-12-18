@@ -1,9 +1,9 @@
 package cn.fantasticmao.ycy.intellij.plugin.config;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
 import org.jetbrains.annotations.NotNull;
 
@@ -69,7 +69,7 @@ public class PluginSettingForm {
              * at version 1.5 fix a bug: 2020.1 版本 AllIcons.Actions.Reset_to_default 过时问题
              * see https://github.com/fantasticmao/ycy-intellij-plugin/issues/27
              */
-            .addExtraAction(new AnActionButton("Reset", AllIcons.Actions.Rollback) {
+            .addExtraAction(new AnAction(() -> "Reset", AllIcons.Actions.Rollback) {
                 @Override
                 public void actionPerformed(@NotNull AnActionEvent e) {
                     pictureUrlTable.resetTableList();

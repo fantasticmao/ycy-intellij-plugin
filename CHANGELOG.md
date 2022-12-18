@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8 - 2022-12-18
+
+- Adapt to IntelliJ Platform 2022.3
+- Upgrade to Gradle Wrapper 7.6
+
 ## 1.7 - 2021-10-17
 
 - Adapt to IntelliJ Platform 2020.3

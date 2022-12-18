@@ -36,7 +36,7 @@ public interface PluginSettingConfig {
         }
 
         @Override
-        public void validateSelectedFiles(@NotNull VirtualFile[] files) throws Exception {
+        public void validateSelectedFiles(VirtualFile @NotNull [] files) throws Exception {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
                 if (file.getExtension() == null || !PICTURE_EXTENSION_LIST.contains(file.getExtension().toLowerCase())) {

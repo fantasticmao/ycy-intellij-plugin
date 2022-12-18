@@ -1,26 +1,28 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.2.0'
+    id 'org.jetbrains.intellij' version '1.11.0'
 }
 
 group 'cn.fantasticmao.ycy'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 17
+targetCompatibility = 17
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.1'
 }
 
 intellij {
 //    version = 'IC-2017.1'
 //    version = 'IC-2018.3'
 //    version = 'IC-2020.1'
-    version = 'IC-2020.3'
+//    version = 'IC-2020.3'
 //    version = 'IC-2021.2'
+    version = '2022.3'
+    type = 'IC'
     updateSinceUntilBuild = false
 }

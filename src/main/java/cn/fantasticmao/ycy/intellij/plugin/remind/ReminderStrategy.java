@@ -90,7 +90,7 @@ public interface ReminderStrategy {
             final String groupId = "Plugins Programmer Motivator: Chaoyue Yang";
             Notification notification = NotificationGroupManager.getInstance().getNotificationGroup(groupId)
                 .createNotification(configState.getNotifyTitle(), configState.getNotifyBody(),
-                    NotificationType.INFORMATION, null);
+                    NotificationType.INFORMATION);
             if (!configState.getRemindPictures().isEmpty()) {
                 OpenPictureAction openPictureAction = new OpenPictureAction(configState.getNotifyAction(), notification);
                 notification.addAction(openPictureAction);
