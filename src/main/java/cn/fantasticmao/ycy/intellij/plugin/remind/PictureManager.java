@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 图片管理器
@@ -44,6 +43,6 @@ public class PictureManager {
     public static List<String> getDefaultPictureList() {
         return INSTANCE.defaultPictureUrlList.stream()
             .map(VfsUtil::convertFromUrl)
-            .collect(Collectors.toList());
+            .toList();
     }
 }

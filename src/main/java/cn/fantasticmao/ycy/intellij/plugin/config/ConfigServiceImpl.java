@@ -24,7 +24,8 @@ public class ConfigServiceImpl implements ConfigService {
     /**
      * {@inheritDoc}
      *
-     * <p>若用户是第一次开启插件时，则使用默认配置对象 {@code new ConfigState()}，否则使用从 {@code ycyReminder.xml} 配置文件中解析生成的配置对象</p>
+     * <p>若用户是第一次开启插件时，则使用默认配置对象 {@code new ConfigState()}，
+     * 否则使用从 {@code ycyReminder.xml} 配置文件中解析生成的配置对象</p>
      */
     @NotNull
     @Override

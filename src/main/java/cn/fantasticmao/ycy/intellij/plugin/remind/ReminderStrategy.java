@@ -30,18 +30,10 @@ public interface ReminderStrategy {
      */
     @NotNull
     static ReminderStrategy getRemindStrategy(ConfigState.RemindModeEnum mode) {
-        ReminderStrategy reminderStrategy;
-        switch (mode) {
-            case DIRECT:
-                reminderStrategy = INSTANCE_REMINDER_DIRECT;
-                break;
-            case INDIRECT:
-                reminderStrategy = INSTANCE_REMINDER_INDIRECT;
-                break;
-            default:
-                reminderStrategy = null;
-        }
-        return reminderStrategy;
+        return switch (mode) {
+            case DIRECT -> INSTANCE_REMINDER_DIRECT;
+            case INDIRECT -> INSTANCE_REMINDER_INDIRECT;
+        };
     }
 
     /**
