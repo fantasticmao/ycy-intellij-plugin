@@ -6,7 +6,7 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 /**
  * OpenPictureConsumerTest
  *
- * @author maomao
+ * @author fantasticmao
  * @since 2019-04-17
  */
 public class OpenPictureConsumerTest extends BasePlatformTestCase {

@@ -14,12 +14,11 @@ import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 插件设置页面的表格
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.3
  * @since 2019-05-05
  */
@@ -164,7 +163,7 @@ public class PluginSettingPictureUrlTable extends JBTable {
                 List<String> chosenPictureUrlList = fileList.stream()
                     .map(VirtualFile::getUrl)
                     .filter(pictureUrl -> !pictureUrlList.contains(pictureUrl))
-                    .collect(Collectors.toList());
+                    .toList();
                 if (chosenPictureUrlList.size() != 0) {
                     pictureUrlList.addAll(chosenPictureUrlList);
                     LOG.info("add rows: " + chosenPictureUrlList);

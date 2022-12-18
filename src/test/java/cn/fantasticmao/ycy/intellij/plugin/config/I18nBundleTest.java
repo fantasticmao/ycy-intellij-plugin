@@ -5,7 +5,7 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 /**
  * I18nBundleTest
  *
- * @author maomao
+ * @author fantasticmao
  * @since 2021-02-06
  */
 public class I18nBundleTest extends BasePlatformTestCase {

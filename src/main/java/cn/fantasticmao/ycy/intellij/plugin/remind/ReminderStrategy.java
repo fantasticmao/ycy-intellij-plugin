@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 打开图片的策略模式
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @since 2019-04-17
  */
@@ -30,18 +30,10 @@ public interface ReminderStrategy {
      */
     @NotNull
     static ReminderStrategy getRemindStrategy(ConfigState.RemindModeEnum mode) {
-        ReminderStrategy reminderStrategy;
-        switch (mode) {
-            case DIRECT:
-                reminderStrategy = INSTANCE_REMINDER_DIRECT;
-                break;
-            case INDIRECT:
-                reminderStrategy = INSTANCE_REMINDER_INDIRECT;
-                break;
-            default:
-                reminderStrategy = null;
-        }
-        return reminderStrategy;
+        return switch (mode) {
+            case DIRECT -> INSTANCE_REMINDER_DIRECT;
+            case INDIRECT -> INSTANCE_REMINDER_INDIRECT;
+        };
     }
 
     /**
@@ -90,7 +82,7 @@ public interface ReminderStrategy {
             final String groupId = "Plugins Programmer Motivator: Chaoyue Yang";
             Notification notification = NotificationGroupManager.getInstance().getNotificationGroup(groupId)
                 .createNotification(configState.getNotifyTitle(), configState.getNotifyBody(),
-                    NotificationType.INFORMATION, null);
+                    NotificationType.INFORMATION);
             if (!configState.getRemindPictures().isEmpty()) {
                 OpenPictureAction openPictureAction = new OpenPictureAction(configState.getNotifyAction(), notification);
                 notification.addAction(openPictureAction);

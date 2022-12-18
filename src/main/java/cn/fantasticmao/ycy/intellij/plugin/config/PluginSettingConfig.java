@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 插件设置页面的配置参数
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @since 2019-04-18
  */
@@ -36,7 +36,7 @@ public interface PluginSettingConfig {
         }
 
         @Override
-        public void validateSelectedFiles(@NotNull VirtualFile[] files) throws Exception {
+        public void validateSelectedFiles(VirtualFile @NotNull [] files) throws Exception {
             super.validateSelectedFiles(files);
             for (VirtualFile file : files) {
                 if (file.getExtension() == null || !PICTURE_EXTENSION_LIST.contains(file.getExtension().toLowerCase())) {

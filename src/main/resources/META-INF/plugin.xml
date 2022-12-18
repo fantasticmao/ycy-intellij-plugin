@@ -1,7 +1,10 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <id>cn.fantasticmao.ycy.intellij.plugin</id>
     <name>Programmer Motivator: Chaoyue Yang</name>
-    <version>1.7</version>
+    <version>1.8</version>
+
+    <!-- For more details see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html -->
+    <idea-version since-build="223.7571.182"/>
 
     <vendor email="maomao8017@gmail.com" url="https://github.com/fantasticmao/ycy-intellij-plugin">fantasticmao</vendor>
 
@@ -17,15 +20,12 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Adapt to IntelliJ Platform 2020.3</li>
-            <li>Upgrade to Gradle Wrapper 7.2</li>
+            <li>Adapt to IntelliJ Platform 2022.3</li>
+            <li>Upgrade to Gradle Wrapper 7.6</li>
         </ul>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
-
-    <!-- please see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html for description -->
-    <idea-version since-build="203.5981.155"/>
 
     <application-components>
         <component>

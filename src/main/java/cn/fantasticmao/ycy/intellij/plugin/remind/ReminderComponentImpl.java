@@ -6,7 +6,7 @@ import com.intellij.openapi.diagnostic.Logger;
 /**
  * {@link ReminderComponent} 实现类
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.0
  * @since 2019-04-03
  */

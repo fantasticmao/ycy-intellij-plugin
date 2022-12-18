@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 /**
  * 打开图片的具体实现
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @since 2019-04-17
  */

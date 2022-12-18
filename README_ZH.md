@@ -5,6 +5,8 @@
 
 > [Visual Studio Code 版本](https://github.com/formulahendry/vscode-ycy)
 
+README [English](README.md) | [中文](README_ZH.md)
+
 写代码不再孤单，有杨超越与你同在！
 
 在 IntelliJ IDEA 中连续编写代码一小时，会有杨超越提醒你该休息啦～

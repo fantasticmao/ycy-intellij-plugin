@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * {@link ConfigService} 实现类
  *
- * @author maomao
+ * @author fantasticmao
  * @version 1.2
  * @see <a href="https://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html">SDK DevGuide</a>
  * @since 2019-04-14
@@ -24,7 +24,8 @@ public class ConfigServiceImpl implements ConfigService {
     /**
      * {@inheritDoc}
      *
-     * <p>若用户是第一次开启插件时，则使用默认配置对象 {@code new ConfigState()}，否则使用从 {@code ycyReminder.xml} 配置文件中解析生成的配置对象</p>
+     * <p>若用户是第一次开启插件时，则使用默认配置对象 {@code new ConfigState()}，
+     * 否则使用从 {@code ycyReminder.xml} 配置文件中解析生成的配置对象</p>
      */
     @NotNull
     @Override

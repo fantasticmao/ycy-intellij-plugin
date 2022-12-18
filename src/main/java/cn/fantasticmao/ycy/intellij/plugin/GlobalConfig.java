@@ -5,7 +5,7 @@ import cn.fantasticmao.ycy.intellij.plugin.config.I18nBundle;
 /**
  * 全局配置接口
  *
- * @author maomao
+ * @author fantasticmao
  * @since 2019-04-05
  */
 public interface GlobalConfig {
